@@ -248,6 +248,10 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on http://0.0.0.0:${PORT} (v2.0 - Postgres Ready)`);
-});
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+    app.listen(PORT, '0.0.0.0', () => {
+        console.log(`Server running on http://0.0.0.0:${PORT} (v2.0 - Postgres Ready)`);
+    });
+}
+
+module.exports = app;
