@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Blinkit-inspired Palette */
+  /* Primary Yellow/Green vibe or keep it "Print" focused? User said "Blinkit Print" */
+  /* Let's go with a fresh Yellow/Black/Green combo like Blinkit */
+
+  --primary: 151 70% 50%;
+  /* Fresh Green #2ecc71 */
+  --primary-content: 0 0% 100%;
+
+  --secondary: 0 0% 10%;
+  /* Dark Black/Gray */
+  --secondary-content: 0 0% 100%;
+
+  --bg-app: 0 0% 98%;
+  /* Light Gray Background */
+  --bg-card: 0 0% 100%;
+
+  --text-main: 0 0% 10%;
+  --text-muted: 0 0% 60%;
+  --border: 0 0% 92%;
+
+  --success: 142 76% 36%;
+  --error: 0 84% 60%;
+  --warning: 48 96% 53%;
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: hsl(var(--bg-app));
+  color: hsl(var(--text-main));
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+}
+
+.card {
+  background: hsl(var(--bg-card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-lg);
+}
