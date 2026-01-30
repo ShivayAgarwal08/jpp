@@ -1,11 +1,13 @@
 [phases.setup]
-nixPkgs = ["nodejs-22_x", "npm"]
+nixPkgs = ["nodejs-22_x", "npm", "openssl"]
 
 [phases.install]
 cmds = ["npm ci"]
 
 [phases.build]
 cmds = ["npm run build"]
+# Pass the DATABASE_URL environment variable to the build phase
+dependsOn = ["setup", "install"]
 
 [start]
 cmd = "npm start"
