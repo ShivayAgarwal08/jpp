@@ -4,7 +4,7 @@ const cors = require('cors');
 const db = require('./db-adapter.cjs');
 
 const app = express();
-const PORT = process.env.PORT || 5002;
+// PORT moved to app.listen call below
 
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
@@ -248,10 +248,10 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
 });
 
-if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
-    app.listen(PORT, '0.0.0.0', () => {
-        console.log(`Server running on http://0.0.0.0:${PORT} (v2.0 - Postgres Ready)`);
-    });
-}
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on http://0.0.0.0:${PORT}`);
+});
 
 module.exports = app;
