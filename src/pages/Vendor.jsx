@@ -103,7 +103,7 @@ export default function Vendor() {
                             </div>
                             <div>
                                 <p className="text-xs text-white/40 font-bold uppercase">Vendor</p>
-                                <p className="font-bold text-sm">Kartik Guleria</p>
+                                <p className="font-bold text-sm">{user?.name || 'Admin'}</p>
                             </div>
                         </div>
                         <button onClick={handleLogout} className="w-full bg-white text-black py-3 rounded-2xl font-bold text-xs hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">

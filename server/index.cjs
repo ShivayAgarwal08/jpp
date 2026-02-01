@@ -111,10 +111,12 @@ app.post('/api/login', async (req, res) => {
             where: { email: normalizedEmail }
         });
 
-        // 1. Check for hardcoded vendor first (if that's the intention)
+        // 1. Check for hardcoded vendor from ENV
         if (role === 'vendor') {
-            const vendorEmail = 'kartikguleria12@gmail.com';
-            if (normalizedEmail === vendorEmail && password === 'kk@123') {
+            const vendorEmail = process.env.VENDOR_EMAIL || 'admin@jprint.com';
+            const vendorPass = process.env.VENDOR_PASSWORD || 'admin123';
+            
+            if (normalizedEmail === vendorEmail.toLowerCase().trim() && password === vendorPass) {
                 const vendorUser = {
                     id: 'vendor_admin',
                     name: 'Kartik Guleria',
