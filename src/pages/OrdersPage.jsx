@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, Clock, CheckCircle, Printer, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { clsx } from 'clsx';
+import clsx from 'clsx';
 
 export default function OrdersPage() {
     const { orders } = useOrder();

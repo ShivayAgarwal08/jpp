@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
 import { Loader2, ShieldCheck, Lock, Mail } from 'lucide-react';
-import { clsx } from 'clsx';
+import clsx from 'clsx';
 
 export default function VendorLogin() {
     const [email, setEmail] = useState('');

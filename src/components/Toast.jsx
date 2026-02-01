@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, CheckCircle, AlertCircle, Info } from 'lucide-react';
 import { createContext, useContext, useState, useCallback } from 'react';
-import { clsx } from 'clsx';
+import clsx from 'clsx';
 
 const ToastContext = createContext();
 
