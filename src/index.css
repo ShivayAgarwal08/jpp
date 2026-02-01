@@ -1,77 +1,163 @@
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --primary: 151 70% 50%;
-  --primary-content: 0 0% 100%;
-  --secondary: 0 0% 10%;
-  --secondary-content: 0 0% 100%;
-  --bg-app: 0 0% 98%;
+  /* Premium Apple-inspired Palette */
+  --primary: 212 100% 48%; /* Deep Royal Blue */
+  --primary-glow: 212 100% 48% / 0.15;
+  --bg-app: 210 20% 98%;
   --bg-card: 0 0% 100%;
-  --text-main: 0 0% 10%;
-  --text-muted: 0 0% 60%;
-  --border: 0 0% 92%;
-  --success: 142 76% 36%;
+  --text-main: 210 20% 12%;
+  --text-muted: 210 10% 45%;
+  --border: 210 20% 90%;
+  --success: 142 70% 45%;
   --error: 0 84% 60%;
-  --warning: 48 96% 53%;
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
+  --warning: 38 92% 50%;
+  
+  /* Radii */
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2.25rem;
 }
 
+/* Base Styles */
 body {
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: hsl(var(--bg-app));
   color: hsl(var(--text-main));
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  height: 100%;
-  width: 100%;
+  line-height: 1.5;
 }
 
-h1,
-h2,
-h3,
-h4 {
+h1, h2, h3, h4, .font-display {
   font-family: "Outfit", sans-serif;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  font-weight: 700;
 }
 
-.btn {
-  @apply inline-flex items-center justify-center transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+/* --- Dynamic UI Components --- */
+
+.glass {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-.card {
-  background: hsl(var(--bg-card));
-  border: 1px solid hsl(var(--border));
+.glass-dark {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.premium-shadow {
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.03), 
+    0 2px 4px -1px rgba(0, 0, 0, 0.02),
+    0 10px 15px -3px rgba(0, 0, 0, 0.05),
+    0 20px 25px -5px rgba(0, 0, 0, 0.02);
+}
+
+.premium-card {
+  @apply bg-white border border-gray-100 transition-all duration-500 shadow-xl shadow-black/[0.02];
+  border-radius: var(--radius-xl);
+}
+
+.premium-card:hover {
+  @apply border-gray-200 transform -translate-y-1 shadow-2xl shadow-black/[0.04];
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #000 0%, #444 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.primary-gradient {
+  background: linear-gradient(135deg, #007AFF 0%, #00C6FF 100%);
+}
+
+.card-dynamic {
+  @apply bg-white border border-gray-100 transition-all duration-300;
   border-radius: var(--radius-lg);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
 }
 
-/* Safari Glassmorphism Compatibility */
-.backdrop-blur-xl {
-  -webkit-backdrop-filter: blur(24px) !important;
-  backdrop-filter: blur(24px) !important;
+.card-dynamic:hover {
+  @apply border-gray-200 transform -translate-y-1;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
 }
-.backdrop-blur-lg {
-  -webkit-backdrop-filter: blur(16px) !important;
-  backdrop-filter: blur(16px) !important;
+
+.btn-dynamic {
+  @apply inline-flex items-center justify-center transition-all duration-300 font-bold active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
 }
-.backdrop-blur-md {
-  -webkit-backdrop-filter: blur(12px) !important;
-  backdrop-filter: blur(12px) !important;
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }
-.backdrop-blur-sm {
-  -webkit-backdrop-filter: blur(4px) !important;
-  backdrop-filter: blur(4px) !important;
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(0.98); }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 3s ease-in-out infinite;
+}
+
+/* Custom Scrollbar for modern look */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,0,0,0.2);
+}
+
+/* Utility for smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
+
+::selection {
+  background: hsl(var(--primary) / 0.1);
+  color: hsl(var(--primary));
+}
+
+/* --- Safari Blur Overrides --- */
+.backdrop-blur-xl { -webkit-backdrop-filter: blur(24px) !important; backdrop-filter: blur(24px) !important; }
+.backdrop-blur-lg { -webkit-backdrop-filter: blur(16px) !important; backdrop-filter: blur(16px) !important; }
+.backdrop-blur-md { -webkit-backdrop-filter: blur(12px) !important; backdrop-filter: blur(12px) !important; }
+.backdrop-blur-sm { -webkit-backdrop-filter: blur(4px) !important; backdrop-filter: blur(4px) !important; }
