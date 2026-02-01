@@ -16,7 +16,8 @@ import {
     Settings,
     LogOut,
     CheckCircle2,
-    Loader2
+    Loader2,
+    MessageCircle
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useOrder } from '../context/OrderContext';
@@ -246,8 +247,14 @@ export default function Home() {
                         <Zap size={28} className="fill-current group-hover:scale-110 transition-transform" />
                     </motion.button>
                 </div>
-                {user?.role === 'vendor' && (
+                {user?.role === 'vendor' ? (
                     <MobileNavItem icon={<LayoutDashboard size={24} />} label="Stats" onClick={() => navigate('/database')} />
+                ) : (
+                    <MobileNavItem 
+                        icon={<MessageCircle size={24} />} 
+                        label="Support" 
+                        onClick={() => window.open('https://chat.whatsapp.com/KnC17YZEiB15oNV5S3bTO6', '_blank')} 
+                    />
                 )}
                 <MobileNavItem icon={<User size={24} />} label="Me" onClick={() => navigate('/profile')} />
             </div>
