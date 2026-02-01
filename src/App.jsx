@@ -12,14 +12,12 @@ import VendorLogin from './pages/VendorLogin';
 import Register from './pages/Register';
 import OrdersPage from './pages/OrdersPage';
 import DatabaseView from './pages/DatabaseView';
-import Landing from './pages/Landing';
 
 function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<Landing />} />
-                <Route path="/home" element={<Home />} />
+                <Route path="/" element={<Home />} />
                 {/* <Route path="/auth" element={<Auth />} /> */}
                 {/* <Route path="/account" element={<Account />} /> */}
 
