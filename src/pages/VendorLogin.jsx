@@ -41,15 +41,9 @@ export default function VendorLogin() {
                 className="w-full max-w-sm relative z-10"
             >
                 <div className="text-center mb-12">
-                    <motion.div 
-                        whileHover={{ rotate: 15 }}
-                        className="w-20 h-20 bg-blue-600 text-white rounded-[2.25rem] flex items-center justify-center mx-auto mb-10 shadow-[0_30px_60px_-15px_rgba(37,99,235,0.4)] relative group"
-                    >
-                        <ShieldCheck size={40} className="relative z-10" />
-                        <div className="absolute inset-0 bg-blue-400 rounded-[2.25rem] animate-ping opacity-20" />
-                    </motion.div>
-                    <h1 className="text-4xl font-black mb-3 tracking-tighter italic uppercase">Admin Uplink.</h1>
-                    <p className="text-white/30 text-xs font-black uppercase tracking-[0.4em]">Operational Restricted Area</p>
+                    <img src="/assets/logo.png" className="w-24 h-24 rounded-[2.5rem] shadow-2xl shadow-blue-600/20 mx-auto mb-10 rotate-3 object-cover border-2 border-blue-600/20" alt="Logo" />
+                    <h1 className="text-5xl font-black tracking-tighter mb-4 italic">Station V.</h1>
+                    <p className="text-white/40 font-bold text-sm tracking-widest uppercase italic">Secure Operational Access</p>
                 </div>
 
                 <div className="bg-white/5 backdrop-blur-3xl p-10 rounded-[3rem] border border-white/5 shadow-2xl relative">

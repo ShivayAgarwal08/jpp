@@ -75,8 +75,8 @@ export default function Vendor() {
             {/* Desktop Sidebar - Dark & Elite */}
             <aside className="hidden lg:flex flex-col w-72 fixed inset-y-0 bg-[#0F0F0F] border-r border-white/5 z-50">
                 <div className="p-8">
-                    <div className="flex items-center gap-3 mb-12">
-                        <div className="w-12 h-12 bg-blue-600 text-white rounded-2xl flex items-center justify-center font-black text-3xl shadow-2xl shadow-blue-600/20 rotate-3">V.</div>
+                    <div className="flex items-center gap-4 mb-14 px-2">
+                        <img src="/assets/logo.png" className="w-12 h-12 rounded-2xl shadow-2xl shadow-blue-600/20 object-cover border border-blue-600/20" alt="Logo" />
                         <span className="font-black text-2xl tracking-tighter">FLEET HUB.</span>
                     </div>
                     
@@ -117,7 +117,7 @@ export default function Vendor() {
                             <span className="text-[11px] font-black uppercase tracking-[0.2em]">Fleet Operational</span>
                         </div>
                         <h1 className="text-2xl font-black tracking-tighter lg:hidden flex items-center gap-3">
-                             <div className="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center font-black text-2xl shadow-xl shadow-blue-600/10">V.</div>
+                             <img src="/assets/logo.png" className="w-10 h-10 rounded-xl shadow-xl shadow-blue-600/10 object-cover border border-blue-600/10" alt="Logo" />
                              HUB
                         </h1>
                     </div>

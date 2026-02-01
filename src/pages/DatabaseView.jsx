@@ -43,14 +43,7 @@ export default function DatabaseView() {
                 {/* Master Header */}
                 <header className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-16">
                     <div className="flex items-center gap-6">
-                        <motion.button 
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                            onClick={() => navigate('/vendor')}
-                            className="w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all shadow-xl"
-                        >
-                            <ArrowLeft size={28} />
-                        </motion.button>
+                        <img src="/assets/logo.png" className="w-14 h-14 rounded-2xl shadow-2xl shadow-blue-600/20 object-cover border border-blue-600/20" alt="Logo" />
                         <div>
                             <div className="flex items-center gap-3 mb-1">
                                 <h1 className="text-4xl font-black tracking-tighter italic uppercase">Master Terminal.</h1>
@@ -77,6 +70,12 @@ export default function DatabaseView() {
                             className="bg-white text-black p-5 rounded-2xl font-black hover:scale-110 active:scale-95 transition-all shadow-2xl shadow-white/10 flex items-center justify-center group"
                         >
                             <RefreshCw size={24} className={clsx(loading && "animate-spin")} />
+                        </button>
+                        <button 
+                            onClick={() => navigate('/vendor')}
+                            className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all shadow-xl"
+                        >
+                            <ArrowLeft size={24} />
                         </button>
                     </div>
                 </header>
