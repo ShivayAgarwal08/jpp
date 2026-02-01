@@ -8,19 +8,25 @@ const OrderContext = createContext();
 export const useOrder = () => useContext(OrderContext);
 
 export const OrderProvider = ({ children }) => {
-    const { user } = useAuth();
+    const { user, token } = useAuth();
     const [orders, setOrders] = useState([]);
 
-    // Order Creation State
-    const [currentOrder, setCurrentOrder] = useState({
-        files: [],
-        settings: {
-            copies: 1,
-            color: false, // false = B/W, true = Color
-            doubleSided: false,
-        },
-        status: 'draft',
+    const [currentOrder, setCurrentOrder] = useState(() => {
+        const saved = localStorage.getItem('jprint_cart');
+        return saved ? JSON.parse(saved) : {
+            files: [],
+            settings: {
+                copies: 1,
+                color: false,
+                doubleSided: false,
+            },
+            status: 'draft',
+        };
     });
+
+    useEffect(() => {
+        localStorage.setItem('jprint_cart', JSON.stringify(currentOrder));
+    }, [currentOrder]);
 
     const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
@@ -33,7 +39,9 @@ export const OrderProvider = ({ children }) => {
                 url += `?userId=${user.id}`;
             }
 
-            const res = await fetch(url);
+            const res = await fetch(url, {
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {}
+            });
             if (!res.ok) throw new Error(res.statusText);
 
             // Check content type to avoid JSON parse errors on 404 HTML responses
@@ -170,7 +178,10 @@ export const OrderProvider = ({ children }) => {
 
             const response = await fetch(getApiUrl('api/orders'), {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+                },
                 body: JSON.stringify(orderData)
             });
 
@@ -236,7 +247,10 @@ export const OrderProvider = ({ children }) => {
 
         await fetch(getApiUrl(`api/orders/${orderId}`), {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+            },
             body: JSON.stringify({ status: 'printed' })
         });
     };
@@ -247,7 +261,10 @@ export const OrderProvider = ({ children }) => {
 
         await fetch(getApiUrl(`api/orders/${orderId}`), {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+            },
             body: JSON.stringify({ status: 'collected' })
         });
     };

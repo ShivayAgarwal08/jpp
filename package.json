@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@neondatabase/neon-js": "^0.1.0-beta.22",
+    "@prisma/client": "6.10.1",
     "autoprefixer": "^10.4.23",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
@@ -26,6 +27,7 @@
     "express": "^4.19.2",
     "firebase": "^12.8.0",
     "framer-motion": "^12.26.2",
+    "jsonwebtoken": "^9.0.3",
     "lucide-react": "^0.562.0",
     "nodemon": "^3.1.0",
     "pdfjs-dist": "^5.4.530",
@@ -38,8 +40,7 @@
     "sqlite3": "^5.1.7",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^3.4.1",
-    "vite": "^6.2.0",
-    "@prisma/client": "6.10.1"
+    "vite": "^6.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

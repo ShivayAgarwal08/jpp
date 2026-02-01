@@ -1,7 +1,12 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const db = require('./db-adapter.cjs');
+const auth = require('./auth-middleware.cjs');
+
+const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 
 const app = express();
 // PORT moved to app.listen call below
@@ -65,17 +70,25 @@ app.post('/api/register', async (req, res) => {
     const id = 'user_' + Buffer.from(normalizedEmail).toString('base64').substring(0, 10);
 
     try {
+        const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await db.user.create({
             data: {
                 id,
                 name,
                 email: normalizedEmail,
-                password,
+                password: hashedPassword,
                 role: role || 'user'
             }
         });
+        
+        const token = jwt.sign(
+            { id: newUser.id, email: newUser.email, role: newUser.role },
+            JWT_SECRET,
+            { expiresIn: '7d' }
+        );
+
         console.log('User registered:', normalizedEmail);
-        res.json(newUser);
+        res.json({ user: newUser, token });
     } catch (err) {
         console.error('Register Error:', err.message);
         return res.status(400).json({ error: 'Email already exists' });
@@ -114,18 +127,29 @@ app.post('/api/login', async (req, res) => {
     try {
         const user = await db.user.findFirst({
             where: {
-                email: email.toLowerCase().trim(),
-                password
+                email: email.toLowerCase().trim()
             }
         });
 
         if (!user) {
-            console.warn('Login failed: Invalid credentials for', email);
+            console.warn('Login failed: User not found', email);
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            console.warn('Login failed: Wrong password for', email);
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+
+        const token = jwt.sign(
+            { id: user.id, email: user.email, role: user.role },
+            JWT_SECRET,
+            { expiresIn: '7d' }
+        );
+
         console.log('User login success:', user.email);
-        res.json(user);
+        res.json({ user, token });
     } catch (err) {
         console.error('Login DB Error:', err.message);
         return res.status(500).json({ error: err.message });

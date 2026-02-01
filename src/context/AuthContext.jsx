@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
         const saved = localStorage.getItem('jprint_user');
         return saved ? JSON.parse(saved) : null;
     });
+    const [token, setToken] = useState(() => localStorage.getItem('jprint_token'));
 
     useEffect(() => {
         if (user) {
@@ -18,6 +19,14 @@ export const AuthProvider = ({ children }) => {
             localStorage.removeItem('jprint_user');
         }
     }, [user]);
+
+    useEffect(() => {
+        if (token) {
+            localStorage.setItem('jprint_token', token);
+        } else {
+            localStorage.removeItem('jprint_token');
+        }
+    }, [token]);
 
     const login = async (email, password, role = 'user') => {
         const response = await fetch(getApiUrl('api/login'), {
@@ -32,7 +41,8 @@ export const AuthProvider = ({ children }) => {
             throw data.error || 'Login failed';
         }
 
-        setUser(data);
+        setUser(data.user);
+        setToken(data.token);
         return data;
     };
 
@@ -49,16 +59,18 @@ export const AuthProvider = ({ children }) => {
             throw data.error || 'Registration failed';
         }
 
-        setUser(data);
+        setUser(data.user);
+        setToken(data.token);
         return data;
     };
 
     const logout = () => {
         setUser(null);
+        setToken(null);
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, register, logout }}>
+        <AuthContext.Provider value={{ user, token, login, register, logout }}>
             {children}
         </AuthContext.Provider>
     );
