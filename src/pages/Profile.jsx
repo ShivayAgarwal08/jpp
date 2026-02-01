@@ -73,7 +73,7 @@ export default function Profile() {
             </header>
 
             <div className="max-w-6xl mx-auto p-6 md:p-12 lg:py-20 relative z-10">
-                <div className="grid lg:grid-cols-12 gap-12">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
                     
                     {/* Left Column: Premium Profile Card */}
                     <motion.div 
@@ -124,7 +124,7 @@ export default function Profile() {
                         </div>
 
                         {/* Staggered Stats Cards */}
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="grid grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">
                             <StatCard 
                                 value={myOrders.length} 
                                 label="Logistics" 
@@ -246,21 +246,21 @@ function ProfileOrderCard({ order, active, delay = 0 }) {
                 active ? "bg-black text-white border-black shadow-[0_40px_80px_-20px_rgba(0,0,0,0.4)]" : "bg-white border-gray-100 hover:border-gray-300 hover:shadow-xl hover:shadow-black/[0.02]"
             )}
         >
-            <div className="flex items-center gap-8">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-8">
                 <div className={clsx(
-                    "w-16 h-16 rounded-2xl flex items-center justify-center font-mono font-black text-2xl shadow-inner rotate-3 transition-transform group-hover:rotate-0",
+                    "w-16 h-16 rounded-2xl flex items-center justify-center font-mono font-black text-2xl shadow-inner rotate-3 transition-transform group-hover:rotate-0 shrink-0",
                     active ? "bg-white/10 text-white" : "bg-gray-50 text-gray-500"
                 )}>
                     {order.otp}
                 </div>
-                <div>
-                    <h4 className="font-black text-xl tracking-tighter">₹{order.totalAmount} • {order.files?.length} Unit{order.files?.length > 1 ? 's' : ''}</h4>
+                <div className="flex-1 min-w-0">
+                    <h4 className="font-black text-xl tracking-tighter truncate">₹{order.totalAmount} • {order.files?.length} Unit{order.files?.length > 1 ? 's' : ''}</h4>
                     <p className={clsx("text-[10px] font-black uppercase tracking-[0.2em] mt-2 opacity-50", active ? "text-white" : "text-gray-500")}>
                         Manifest: {new Date(order.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                     </p>
                 </div>
             </div>
-            <div className="flex items-center gap-6">
+            <div className="flex items-center justify-between sm:justify-end gap-6 mt-6 sm:mt-0">
                  <span className={clsx(
                     "px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg",
                     active ? (order.status === 'printed' ? "bg-blue-600 text-white shadow-blue-600/30" : "bg-white text-black") : "bg-gray-50 text-gray-400"

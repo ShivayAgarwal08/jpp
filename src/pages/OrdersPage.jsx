@@ -112,18 +112,18 @@ function OrderCard({ order, active, delay = 0 }) {
                 active ? (order.status === 'printed' ? "border-orange-200 ring-4 ring-orange-500/5" : "border-blue-600/20 ring-4 ring-blue-600/5") : "border-gray-100"
             )}
         >
-            <div className="relative z-10 space-y-8">
+            <div className="relative z-10 space-y-6 sm:space-y-8">
                 
-                <div className="flex justify-between items-start">
-                    <div className="flex items-center gap-6">
+                <div className="flex flex-col sm:flex-row justify-between items-start gap-6 sm:gap-8">
+                    <div className="flex items-center gap-4 sm:gap-6">
                         <div className={clsx(
-                            "w-16 h-16 rounded-2xl flex items-center justify-center transition-all group-hover:rotate-6 duration-500 shadow-sm shadow-inner",
+                            "w-14 h-14 sm:w-16 sm:h-16 rounded-2xl flex items-center justify-center transition-all group-hover:rotate-6 duration-500 shadow-sm shadow-inner shrink-0",
                             status.bg, status.color
                         )}>
                             {status.icon}
                         </div>
                         <div>
-                            <h3 className="font-black text-gray-950 text-xl tracking-tighter">REC #{order.id.slice(-4).toUpperCase()}</h3>
+                            <h3 className="font-black text-gray-950 text-lg sm:text-xl tracking-tighter">REC #{order.id.slice(-4).toUpperCase()}</h3>
                             <div className="flex items-center gap-3 mt-1.5 grayscale group-hover:grayscale-0 transition-all">
                                 <Clock size={14} className="text-gray-400" />
                                 <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest">
@@ -132,9 +132,9 @@ function OrderCard({ order, active, delay = 0 }) {
                             </div>
                         </div>
                     </div>
-                    <div className="text-right">
-                        <p className="text-3xl font-black text-gray-950 tracking-tighter">₹{order.totalAmount}</p>
-                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1.5 bg-gray-50 px-3 py-1 rounded-full">{order.files.length} UNIT{order.files.length > 1 ? 'S' : ''}</p>
+                    <div className="text-left sm:text-right w-full sm:w-auto flex sm:flex-col justify-between items-center sm:items-end">
+                        <p className="text-2xl sm:text-3xl font-black text-gray-950 tracking-tighter">₹{order.totalAmount}</p>
+                        <p className="text-[9px] sm:text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1.5 bg-gray-50 px-3 py-1 rounded-full">{order.files.length} UNIT{order.files.length > 1 ? 'S' : ''}</p>
                     </div>
                 </div>
 
@@ -142,27 +142,27 @@ function OrderCard({ order, active, delay = 0 }) {
                     <motion.div 
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="bg-gray-50 rounded-[2rem] p-8 flex justify-between items-center border border-gray-100 group-hover:bg-white group-hover:border-blue-600/10 transition-all duration-700"
+                        className="bg-gray-50 rounded-[2rem] p-6 sm:p-8 flex justify-between items-center border border-gray-100 group-hover:bg-white group-hover:border-blue-600/10 transition-all duration-700"
                     >
                         <div className="space-y-1">
-                            <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em]">Hardware Auth PIN</p>
-                            <p className="text-xs text-gray-400 font-bold">Present at Terminal</p>
+                            <p className="text-[9px] sm:text-[10px] text-gray-400 font-black uppercase tracking-[0.3em]">Hardware Auth PIN</p>
+                            <p className="hidden sm:block text-xs text-gray-400 font-bold">Present at Terminal</p>
                         </div>
-                        <div className="text-5xl font-mono font-black text-gray-950 tracking-[0.1em] bg-white px-6 py-4 rounded-2xl shadow-xl shadow-black/[0.04] border border-gray-100 group-hover:scale-110 group-hover:text-blue-600 transition-all duration-700 leading-none">
+                        <div className="text-4xl sm:text-5xl font-mono font-black text-gray-950 tracking-[0.1em] bg-white px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-xl shadow-black/[0.04] border border-gray-100 group-hover:scale-110 group-hover:text-blue-600 transition-all duration-700 leading-none">
                             {order.otp}
                         </div>
                     </motion.div>
                 )}
 
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4">
                     <div className={clsx(
-                        "px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-3 shadow-lg",
+                        "px-5 py-2.5 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center justify-center sm:justify-start gap-3 shadow-lg w-fit",
                         status.bg, status.color
                     )}>
                         <div className={clsx("w-2 h-2 rounded-full", active ? "bg-current animate-pulse shadow-[0_0_10px_currentColor]" : "bg-current")} />
                         {status.label}
                     </div>
-                    <button className="text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-black transition-all flex items-center gap-2 group/btn">
+                    <button className="text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-black transition-all flex items-center justify-center sm:justify-end gap-2 group/btn py-2">
                         Access Receipt <ChevronRight size={18} className="group-hover/btn:translate-x-2 transition-transform" />
                     </button>
                 </div>
