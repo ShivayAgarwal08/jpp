@@ -12,16 +12,23 @@ export const OrderProvider = ({ children }) => {
     const [orders, setOrders] = useState([]);
 
     const [currentOrder, setCurrentOrder] = useState(() => {
-        const saved = localStorage.getItem('jprint_cart');
-        return saved ? JSON.parse(saved) : {
-            files: [],
-            settings: {
-                copies: 1,
-                color: false,
-                doubleSided: false,
-            },
-            status: 'draft',
-        };
+        try {
+            const saved = localStorage.getItem('jprint_cart');
+            if (!saved) throw new Error();
+            const parsed = JSON.parse(saved);
+            if (!Array.isArray(parsed.files)) throw new Error();
+            return parsed;
+        } catch (e) {
+            return {
+                files: [],
+                settings: {
+                    copies: 1,
+                    color: false,
+                    doubleSided: false,
+                },
+                status: 'draft',
+            };
+        }
     });
 
     useEffect(() => {

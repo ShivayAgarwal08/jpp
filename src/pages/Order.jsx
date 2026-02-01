@@ -20,7 +20,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useOrder } from '../context/OrderContext';
-import { clsx } from 'clsx';
+import clsx from 'clsx';
 
 export default function Order() {
     const { currentOrder, addFile, removeFile, updateSettings, calculateTotal, placeOrder } = useOrder();
