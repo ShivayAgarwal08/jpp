@@ -41,7 +41,7 @@ export default function VendorLogin() {
                 className="w-full max-w-sm relative z-10"
             >
                 <div className="text-center mb-12">
-                    <img src="/assets/logo.png" className="w-24 h-24 rounded-[2.5rem] shadow-2xl shadow-blue-600/20 mx-auto mb-10 rotate-3 object-cover border-2 border-blue-600/20" alt="Logo" />
+                    <img src="/assets/hero-logo.jpg" className="w-24 h-24 rounded-[2.5rem] shadow-2xl shadow-blue-600/20 mx-auto mb-10 rotate-3 object-cover border-2 border-blue-600/20" alt="Logo" />
                     <h1 className="text-5xl font-black tracking-tighter mb-4">Station V.</h1>
                     <p className="text-white/40 font-bold text-sm tracking-widest uppercase">Secure Operational Access</p>
                 </div>

@@ -49,9 +49,7 @@ export default function Landing() {
                 <div className="max-w-7xl mx-auto px-6">
                     <div className={`glass rounded-[2rem] px-8 h-16 flex items-center justify-between transition-all duration-500 ${scrolled ? 'shadow-2xl shadow-black/5 bg-white/70' : 'bg-white/40 border-transparent shadow-none'}`}>
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-black text-white rounded-2xl flex items-center justify-center font-bold text-2xl shadow-xl shadow-black/20 group cursor-pointer hover:rotate-6 transition-transform">
-                                J.
-                            </div>
+                            <img src="/assets/hero-logo.jpg" className="w-10 h-10 rounded-2xl shadow-xl shadow-black/20 hover:rotate-6 transition-transform cursor-pointer object-cover" alt="Logo" />
                             <span className="font-extrabold text-2xl tracking-tighter hidden sm:block">JPRINT<span className="text-blue-600">.</span></span>
                         </div>
                         
@@ -237,7 +235,7 @@ export default function Landing() {
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left">
                     <div>
                         <div className="flex items-center gap-3 mb-6 justify-center md:justify-start">
-                            <div className="w-10 h-10 bg-black text-white rounded-2xl flex items-center justify-center font-bold text-2xl">J.</div>
+                            <img src="/assets/hero-logo.jpg" className="w-10 h-10 rounded-2xl shadow-xl shadow-black/20 object-cover" alt="Logo" />
                             <span className="font-black text-2xl tracking-tighter">JPRINT.</span>
                         </div>
                         <p className="text-gray-400 font-bold text-sm max-w-xs uppercase tracking-widest">Premium Campus Logistics for Jaypee Institutes.</p>
@@ -270,10 +268,8 @@ export default function Landing() {
                             className="bg-white w-full max-w-md rounded-[3rem] overflow-hidden relative z-10 p-10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]"
                         >
                             <div className="text-center mb-10">
-                                <div className="w-20 h-20 bg-black text-white rounded-[2rem] flex items-center justify-center font-black text-4xl mx-auto mb-6 rotate-6 shadow-2xl shadow-black/20">
-                                    J.
-                                </div>
-                                <h2 className="text-3xl font-black tracking-tight">Access Portal</h2>
+                                <img src="/assets/hero-logo.jpg" className="w-20 h-20 rounded-[2rem] shadow-2xl shadow-black/20 mx-auto mb-6 rotate-6 object-cover" alt="Logo" />
+                                <h1 className="text-3xl font-black tracking-tight">Access Portal</h1>
                                 <p className="text-gray-500 font-bold text-sm uppercase tracking-widest mt-2 px-6 opacity-60">Verified Campus Entry Only</p>
                             </div>
 

@@ -43,7 +43,7 @@ export default function DatabaseView() {
                 {/* Master Header */}
                 <header className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-16">
                     <div className="flex items-center gap-6">
-                        <img src="/assets/logo.png" className="w-14 h-14 rounded-2xl shadow-2xl shadow-blue-600/20 object-cover border border-blue-600/20" alt="Logo" />
+                        <img src="/assets/hero-logo.jpg" className="w-14 h-14 rounded-2xl shadow-2xl shadow-blue-600/20 object-cover border border-blue-600/20" alt="Logo" />
                         <div>
                             <div className="flex items-center gap-3 mb-1">
                                 <h1 className="text-4xl font-black tracking-tighter uppercase">Master Terminal.</h1>

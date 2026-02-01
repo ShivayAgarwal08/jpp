@@ -51,7 +51,7 @@ export default function Home() {
                         animate={{ opacity: 1, scale: 1 }}
                         className="flex items-center gap-3 mb-12"
                     >
-                        <img src="/assets/logo.png" className="w-12 h-12 rounded-2xl shadow-2xl shadow-black/20 rotate-3 object-cover" alt="Logo" />
+                        <img src="/assets/hero-logo.jpg" className="w-12 h-12 rounded-2xl shadow-2xl shadow-black/20 rotate-3 object-cover" alt="Logo" />
                         <span className="font-black text-2xl tracking-tighter text-gray-950">JPRINT.</span>
                     </motion.div>
                     
@@ -93,7 +93,7 @@ export default function Home() {
                             animate={{ opacity: 1, x: 0 }}
                         >
                             <h1 className="text-2xl font-black tracking-tighter lg:hidden flex items-center gap-3">
-                                <img src="/assets/logo.png" className="w-10 h-10 rounded-xl shadow-xl shadow-black/10 object-cover" alt="Logo" />
+                                <img src="/assets/hero-logo.jpg" className="w-10 h-10 rounded-xl shadow-xl shadow-black/10 object-cover" alt="Logo" />
                                 JPRINT
                             </h1>
                             <div className="hidden lg:block">
