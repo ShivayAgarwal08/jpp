@@ -24,7 +24,7 @@ export default function Register() {
         setIsLoading(true);
         try {
             await register(name, email, password, role);
-            navigate('/');
+            navigate('/home');
         } catch (err) {
             setError(err || 'Failed to register');
         } finally {

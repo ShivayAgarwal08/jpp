@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Lock, School, Store, User } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export default function Landing() {
+    const { user } = useAuth();
     const navigate = useNavigate();
     const [show128Options, setShow128Options] = useState(false);
     const [show62Popup, setShow62Popup] = useState(false);
+
+    useEffect(() => {
+        if (user) {
+            navigate('/home');
+        }
+    }, [user, navigate]);
 
     const handle128Click = () => {
         setShow128Options(true);
