@@ -17,7 +17,8 @@ import {
     Bell,
     Settings,
     HelpCircle,
-    ShoppingBag
+    ShoppingBag,
+    Zap
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import clsx from 'clsx';
