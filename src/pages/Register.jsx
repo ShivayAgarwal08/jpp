@@ -47,7 +47,7 @@ export default function Register() {
                     </Link>
                 </div>
 
-                <div className="bg-white/70 backdrop-blur-3xl p-10 md:p-12 rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.06)] border border-white/50 relative">
+                <div className="bg-white/70 backdrop-blur-3xl p-8 sm:p-12 rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.06)] border border-white/50 relative">
                     <div className="mb-10 text-center">
                         <img src="/assets/hero-logo.jpg" className="w-20 h-20 rounded-[2.25rem] shadow-2xl shadow-black/20 mx-auto mb-8 -rotate-6 object-cover" alt="Logo" />
                         <h1 className="text-4xl font-black tracking-tighter mb-4">Enroll.</h1>

@@ -168,15 +168,15 @@ export default function Order() {
                                     onChange={(e) => Array.from(e.target.files).forEach(addFile)}
                                     className="absolute inset-0 opacity-0 cursor-pointer z-10"
                                 />
-                                <div className="border-2 border-dashed border-gray-200 bg-white/50 backdrop-blur-xl rounded-[3rem] p-20 text-center transition-all duration-700 group-hover:border-blue-600/30 group-hover:bg-blue-600/[0.03] group-hover:scale-[1.01] relative">
-                                    <div className="w-24 h-24 bg-gray-50 rounded-[2.25rem] flex items-center justify-center mx-auto mb-8 text-gray-400 group-hover:scale-110 group-hover:text-blue-600 group-hover:bg-blue-600/10 group-hover:rotate-6 transition-all duration-700 shadow-xl shadow-black/[0.02]">
-                                        <Upload size={40} />
-                                    </div>
-                                    <h3 className="font-black text-3xl mb-3 tracking-tighter">Initialize Upload.</h3>
-                                    <p className="text-sm text-gray-500 font-bold uppercase tracking-widest">PDF or Images • End-to-End Encryption</p>
-                                    
-                                    <div className="absolute inset-0 pointer-events-none border-2 border-blue-600/0 group-hover:border-blue-600/20 rounded-[3rem] transition-all duration-700 animate-pulse-soft" />
-                                </div>
+                                <div className="border-2 border-dashed border-gray-200 bg-white/50 backdrop-blur-xl rounded-[3rem] p-10 sm:p-20 text-center transition-all duration-700 group-hover:border-blue-600/30 group-hover:bg-blue-600/[0.03] group-hover:scale-[1.01] relative">
+                                     <div className="w-24 h-24 bg-gray-50 rounded-[2.25rem] flex items-center justify-center mx-auto mb-8 text-gray-400 group-hover:scale-110 group-hover:text-blue-600 group-hover:bg-blue-600/10 group-hover:rotate-6 transition-all duration-700 shadow-xl shadow-black/[0.02]">
+                                         <Upload size={40} />
+                                     </div>
+                                     <h3 className="font-black text-2xl sm:text-3xl mb-3 tracking-tighter text-gray-950">Initialize Upload.</h3>
+                                     <p className="text-[10px] sm:text-sm text-gray-500 font-bold uppercase tracking-widest px-4">PDF or Images • End-to-End Encryption</p>
+                                     
+                                     <div className="absolute inset-0 pointer-events-none border-2 border-blue-600/0 group-hover:border-blue-600/20 rounded-[3rem] transition-all duration-700 animate-pulse-soft" />
+                                 </div>
                             </div>
 
                             {/* Elevated Asset List */}
@@ -237,7 +237,7 @@ export default function Order() {
                                                 </h3>
                                                 <span className="text-[9px] font-black text-white/30 uppercase tracking-[0.3em]">Hardware Sync Active</span>
                                             </div>
-                                            <div className="grid grid-cols-2 gap-8">
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
                                                 <SettingToggle 
                                                     label="Color Gamut" 
                                                     active={currentOrder.settings.color} 
@@ -253,14 +253,14 @@ export default function Order() {
                                                     offLabel="Simplex"
                                                 />
                                             </div>
-                                            <div className="mt-12 pt-12 border-t border-white/5 flex items-center justify-between">
-                                                <div className="space-y-1">
+                                            <div className="mt-8 sm:mt-12 pt-8 sm:pt-12 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-6">
+                                                <div className="space-y-1 text-center sm:text-left">
                                                     <p className="text-xs font-black text-white uppercase tracking-[0.2em]">Batch Quantity</p>
                                                     <p className="text-[10px] text-white/40 font-bold uppercase tracking-widest">Multi-copy multiplier</p>
                                                 </div>
-                                                <div className="flex items-center gap-10 bg-white/5 p-3 rounded-3xl border border-white/10 shadow-inner">
+                                                <div className="flex items-center gap-8 sm:gap-10 bg-white/5 p-3 rounded-3xl border border-white/10 shadow-inner">
                                                     <button onClick={() => updateSettings('copies', Math.max(1, currentOrder.settings.copies - 1))} className="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors font-black text-2xl text-blue-500 active:scale-90">-</button>
-                                                    <span className="font-black text-4xl w-10 text-center tracking-tighter">{currentOrder.settings.copies}</span>
+                                                    <span className="font-black text-3xl sm:text-4xl w-10 text-center tracking-tighter">{currentOrder.settings.copies}</span>
                                                     <button onClick={() => updateSettings('copies', currentOrder.settings.copies + 1)} className="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors font-black text-2xl text-blue-500 active:scale-90">+</button>
                                                 </div>
                                             </div>
@@ -281,14 +281,14 @@ export default function Order() {
                             className="space-y-12"
                         >
                             {/* Pro Review Card */}
-                            <div className="bg-white rounded-[3.5rem] p-12 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col gap-10">
+                            <div className="bg-white rounded-[3rem] sm:rounded-[3.5rem] p-8 sm:p-12 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col gap-8 sm:gap-10">
                                 <div className="flex items-center justify-between">
-                                    <h3 className="text-3xl font-black tracking-tighter">Manifest Review.</h3>
+                                    <h3 className="text-2xl sm:text-3xl font-black tracking-tighter text-gray-950">Manifest Review.</h3>
                                     <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-400">
                                         <ShieldCheck size={24} />
                                     </div>
                                 </div>
-                                <div className="space-y-8">
+                                <div className="space-y-6 sm:space-y-8">
                                     <SummaryLine label="Payload Units" value={`${currentOrder.files.length} Assets`} />
                                     {!isAllStationery && (
                                         <>
@@ -298,12 +298,12 @@ export default function Order() {
                                         </>
                                     )}
                                     <div className="h-px bg-gray-100/50" />
-                                    <div className="flex justify-between items-center">
+                                    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
                                         <div className="space-y-1">
-                                            <p className="text-3xl font-black tracking-tighter italic text-gray-950">Grand Total</p>
+                                            <p className="text-2xl sm:text-3xl font-black tracking-tighter italic text-gray-950">Grand Total</p>
                                             <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest pl-1">All protocols included</p>
                                         </div>
-                                        <span className="text-6xl font-black text-blue-600 tracking-tighter italic">₹{total}</span>
+                                        <span className="text-5xl sm:text-6xl font-black text-blue-600 tracking-tighter italic">₹{total}</span>
                                     </div>
                                 </div>
                             </div>
@@ -351,12 +351,12 @@ export default function Order() {
                             animate={{ opacity: 1, y: 0 }}
                             onClick={handleNext}
                             disabled={!hasFiles}
-                            className="w-full bg-black text-white h-24 rounded-[2.5rem] font-black text-2xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] disabled:opacity-10 disabled:grayscale flex items-center justify-between px-12 hover:bg-gray-900 active:scale-[0.98] transition-all group border border-white/5"
+                            className="w-full bg-black text-white h-20 sm:h-24 rounded-[2rem] sm:rounded-[2.5rem] font-black text-lg sm:text-2xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] disabled:opacity-10 disabled:grayscale flex items-center justify-between px-8 sm:px-12 hover:bg-gray-900 active:scale-[0.98] transition-all group border border-white/5"
                         >
                             <span className="italic tracking-tighter">Review Shipment</span>
                             <div className="flex items-center gap-4">
-                                <span className="text-[10px] font-black uppercase tracking-[0.3em] opacity-30 group-hover:opacity-100 transition-opacity">Proceed</span>
-                                <ChevronRight size={32} className="group-hover:translate-x-2 transition-transform" />
+                                <span className="hidden sm:block text-[10px] font-black uppercase tracking-[0.3em] opacity-30 group-hover:opacity-100 transition-opacity">Proceed</span>
+                                <ChevronRight size={28} className="group-hover:translate-x-2 transition-transform" />
                             </div>
                         </motion.button>
                     ) : (
@@ -365,17 +365,17 @@ export default function Order() {
                             animate={{ opacity: 1, y: 0 }}
                             onClick={handlePay}
                             disabled={isProcessing}
-                            className="w-full bg-blue-600 text-white h-24 rounded-[2.5rem] font-black text-2xl shadow-[0_30px_60px_-15px_rgba(37,99,235,0.4)] flex items-center justify-between px-12 disabled:opacity-70 active:scale-[0.98] transition-all relative overflow-hidden group border border-blue-400/20"
+                            className="w-full bg-blue-600 text-white h-20 sm:h-24 rounded-[2rem] sm:rounded-[2.5rem] font-black text-lg sm:text-2xl shadow-[0_30px_60px_-15px_rgba(37,99,235,0.4)] flex items-center justify-between px-8 sm:px-12 disabled:opacity-70 active:scale-[0.98] transition-all relative overflow-hidden group border border-blue-400/20"
                         >
                             <div className="relative z-10 flex flex-col items-start leading-none gap-1">
                                 <span className="text-[10px] opacity-40 font-black tracking-[0.3em] uppercase">Authorize</span>
                                 <span className="italic tracking-tighter">₹{total}</span>
                             </div>
-                            <div className="relative z-10 flex items-center gap-5">
-                                <span className="text-[11px] font-black uppercase tracking-[0.3em] italic">
+                            <div className="relative z-10 flex items-center gap-3 sm:gap-5">
+                                <span className="text-[9px] sm:text-[11px] font-black uppercase tracking-[0.3em] italic">
                                     {isProcessing ? 'SYNCHING...' : 'INITIALIZE'}
                                 </span>
-                                {isProcessing ? <Loader2 className="animate-spin" size={32} /> : <ChevronRight size={32} className="group-hover:translate-x-2 transition-transform" />}
+                                {isProcessing ? <Loader2 className="animate-spin" size={24} /> : <ChevronRight size={28} className="group-hover:translate-x-2 transition-transform" />}
                             </div>
                             {/* Dynamic engine bar */}
                             {isProcessing && (
