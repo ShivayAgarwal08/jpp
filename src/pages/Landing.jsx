@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
     ArrowRight, 
@@ -160,6 +160,9 @@ export default function Landing() {
                     <ChevronDown size={32} />
                 </div>
             </section>
+
+            {/* Video Showcase Section */}
+            <ShowcaseSection />
 
             {/* Features: The Aesthetic Shift */}
             <section id="features" className="py-32 px-6">
@@ -335,6 +338,114 @@ export default function Landing() {
                 )}
             </AnimatePresence>
         </div>
+    );
+}
+
+function ShowcaseSection() {
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    const springConfig = { damping: 25, stiffness: 150, mass: 0.5 };
+    const x = useSpring(mouseX, springConfig);
+    const y = useSpring(mouseY, springConfig);
+
+    const [activeMedia, setActiveMedia] = useState(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            mouseX.set(e.clientX);
+            mouseY.set(e.clientY);
+        };
+        window.addEventListener('mousemove', handleMouseMove);
+        return () => window.removeEventListener('mousemove', handleMouseMove);
+    }, [mouseX, mouseY]);
+
+    const items = [
+        { id: 'A', title: 'Still Standing\nin long queue?', video: '/videos/1_gif.mp4' },
+        { id: 'B', title: 'Still Waiting\nfor your turn?', video: '/videos/2 (2).mp4' },
+        { id: 'C', title: 'Start using\nJPRINT Now!!', video: '/videos/3.mp4' },
+        { id: 'D', title: 'Side Effects of\nJPRINT (:', video: '/videos/4.mp4' },
+    ];
+
+    return (
+        <section className="py-32 bg-[#030712] text-white relative overflow-hidden">
+            {/* Ambient Background */}
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+                <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-indigo-600/20 blur-[120px] animate-pulse" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-purple-600/20 blur-[120px] animate-pulse" style={{ animationDelay: '-5s' }} />
+                <div className="absolute top-[40%] left-[60%] w-[30vw] h-[30vw] rounded-full bg-cyan-600/10 blur-[100px] animate-pulse" style={{ animationDelay: '-10s' }} />
+                
+                {/* Subtle Grid */}
+                <div 
+                    className="absolute inset-0 opacity-[0.03]"
+                    style={{
+                        backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`,
+                        backgroundSize: '50px 50px',
+                        maskImage: 'radial-gradient(circle at center, black 40%, transparent 100%)'
+                    }}
+                />
+            </div>
+
+            <div className="max-w-[1400px] mx-auto px-6 relative z-10">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 border-l border-white/10">
+                    {items.map((item, idx) => (
+                        <div 
+                            key={item.id}
+                            className={`group relative p-12 min-h-[450px] border-r border-white/10 flex flex-col gap-6 cursor-pointer hover:bg-white/5 transition-colors duration-300 ${idx % 2 !== 0 ? 'lg:pt-48' : ''}`}
+                            onMouseEnter={() => {
+                                setActiveMedia(item.video);
+                                setIsVisible(true);
+                            }}
+                            onMouseLeave={() => setIsVisible(false)}
+                        >
+                            <div className="w-12 h-12 border border-white/30 rounded-full flex items-center justify-center font-bold text-gray-400 group-hover:border-indigo-500 group-hover:text-indigo-400 group-hover:bg-indigo-500/10 group-hover:scale-110 transition-all duration-300">
+                                {item.id}
+                            </div>
+                            <h3 className="text-3xl font-black leading-tight whitespace-pre-line group-hover:text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 group-hover:from-indigo-400 group-hover:to-cyan-400 transition-all duration-300">
+                                {item.title}
+                            </h3>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Hover Reveal Cursor Follower */}
+            <AnimatePresence>
+                {isVisible && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+                        animate={{ 
+                            opacity: 1, 
+                            scale: 1, 
+                            rotate: 0,
+                        }}
+                        exit={{ opacity: 0, scale: 0.8, rotate: 5 }}
+                        style={{ 
+                            x, 
+                            y,
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            pointerEvents: 'none',
+                            zIndex: 100,
+                            translateX: '-50%',
+                            translateY: '-50%'
+                        }}
+                        className="w-[320px] h-[220px] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/20"
+                    >
+                        <video 
+                            src={activeMedia} 
+                            autoPlay 
+                            loop 
+                            muted 
+                            playsInline 
+                            className="w-full h-full object-cover"
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </section>
     );
 }
 
