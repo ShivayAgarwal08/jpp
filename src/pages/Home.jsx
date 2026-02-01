@@ -246,7 +246,9 @@ export default function Home() {
                         <Zap size={28} className="fill-current group-hover:scale-110 transition-transform" />
                     </motion.button>
                 </div>
-                <MobileNavItem icon={<LayoutDashboard size={24} />} label="Stats" onClick={() => navigate('/database')} />
+                {user?.role === 'vendor' && (
+                    <MobileNavItem icon={<LayoutDashboard size={24} />} label="Stats" onClick={() => navigate('/database')} />
+                )}
                 <MobileNavItem icon={<User size={24} />} label="Me" onClick={() => navigate('/profile')} />
             </div>
 
