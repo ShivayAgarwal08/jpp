@@ -10,7 +10,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client": "vite",
     "server": "nodemon server/index.cjs",
-    "build": "npx prisma generate && vite build",
+    "build": "rm -rf dist && npx prisma generate && vite build",
     "start": "node server/index.cjs",
     "lint": "eslint .",
     "preview": "vite preview"
