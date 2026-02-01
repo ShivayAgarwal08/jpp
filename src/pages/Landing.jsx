@@ -85,7 +85,7 @@ export default function Landing() {
                                 <Zap size={14} className="fill-current" />
                                 <span>Future of Campus Logistics</span>
                             </div>
-                            <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-[0.9] text-gray-950">
+                            <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter mb-8 leading-[0.9] text-gray-950 px-4">
                                 Print like it's <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-orange-500">instant magic.</span>
                             </h1>
@@ -410,7 +410,7 @@ function ShowcaseSection() {
                 </div>
             </div>
 
-            {/* Hover Reveal Cursor Follower */}
+            {/* Hover Reveal Cursor Follower - Desktop Only */}
             <AnimatePresence>
                 {isVisible && (
                     <motion.div
@@ -432,7 +432,7 @@ function ShowcaseSection() {
                             translateX: '-50%',
                             translateY: '-50%'
                         }}
-                        className="w-[320px] h-[220px] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/20"
+                        className="hidden lg:block w-[320px] h-[220px] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/20"
                     >
                         <video 
                             src={activeMedia} 
@@ -477,7 +477,7 @@ function CampusCard({ name, full, onClick, locked, active }) {
     return (
         <div 
             onClick={onClick}
-            className={`w-full max-w-sm p-10 rounded-[3rem] text-left cursor-pointer transition-all duration-500 relative overflow-hidden flex flex-col justify-between aspect-square group ${active ? 'bg-black text-white shadow-3xl shadow-black/20 scale-105' : 'bg-white border-2 border-gray-100 grayscale hover:grayscale-0'}`}
+            className={`w-full max-w-sm p-8 sm:p-10 rounded-[3rem] text-left cursor-pointer transition-all duration-500 relative overflow-hidden flex flex-col justify-between aspect-[4/5] sm:aspect-square group ${active ? 'bg-black text-white shadow-3xl shadow-black/20 scale-105' : 'bg-white border-2 border-gray-100 grayscale hover:grayscale-0'}`}
         >
             <div>
                 <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-10 ${active ? 'bg-white text-black' : 'bg-gray-100 text-gray-400'}`}>

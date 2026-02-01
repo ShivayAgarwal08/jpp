@@ -174,7 +174,7 @@ export default function Home() {
                                 transition: { staggerChildren: 0.1 }
                             }
                         }}
-                        className="grid md:grid-cols-3 gap-6 mb-16"
+                        className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
                     >
                         <QuickCard 
                             to="/order"
@@ -217,7 +217,7 @@ export default function Home() {
                             <button className="text-[10px] font-black text-gray-400 hover:text-black uppercase tracking-widest transition-colors">Explore All</button>
                         </div>
 
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             <StationeryItem 
                                 name="Pentonic Ball Pen" 
                                 price={10} 
