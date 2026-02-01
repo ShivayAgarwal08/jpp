@@ -121,7 +121,7 @@ export default function Landing() {
                         <div className="rounded-[3rem] overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border-8 border-white bg-gray-100/50 backdrop-blur-3xl relative">
                             {/* Visual Placeholder for high-end graphic */}
                             <div className="aspect-[16/9] w-full bg-gradient-to-br from-gray-900 to-black overflow-hidden">
-                                <img src="/hero.png" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" alt="JPrint Workspace" />
+                                <img src="/hero.png" className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-1000" alt="JPrint Workspace" />
                             </div>
                         </div>
 
