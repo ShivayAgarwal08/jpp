@@ -74,7 +74,7 @@ export default function Profile() {
                         animate={{ opacity: 1, x: 0 }}
                         className="lg:col-span-1 space-y-8"
                     >
-                        <div className="bg-white rounded-[2.5rem] p-10 shadow-xl shadow-black/[0.02] border border-gray-100/50 text-center relative overflow-hidden group">
+                        <div className="bg-white rounded-[2.5rem] p-6 sm:p-10 shadow-xl shadow-black/[0.02] border border-gray-100/50 text-center relative overflow-hidden group">
                             <div className="relative z-10">
                                 <motion.div 
                                     animate={{ y: [0, -5, 0] }}

@@ -137,7 +137,7 @@ function OrderCard({ order, active, delay = 0 }) {
                             <p className="text-[10px] text-gray-300 font-black uppercase tracking-[0.2em] mb-1">Pick up token</p>
                             <p className="text-[11px] text-gray-400 font-bold">Present this to the shop</p>
                         </div>
-                        <div className="text-4xl font-mono font-black text-gray-900 tracking-[0.1em] bg-white px-5 py-3 rounded-2xl shadow-xl shadow-black/[0.03] border border-gray-100 group-hover:scale-105 transition-transform duration-500">
+                        <div className="text-3xl sm:text-4xl font-mono font-black text-gray-900 tracking-[0.1em] bg-white px-4 sm:px-5 py-3 rounded-2xl shadow-xl shadow-black/[0.03] border border-gray-100 group-hover:scale-105 transition-transform duration-500">
                             {order.otp}
                         </div>
                     </motion.div>

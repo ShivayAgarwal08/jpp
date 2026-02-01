@@ -307,13 +307,13 @@ function QuickCard({ title, desc, icon, color, to, className = "" }) {
     return (
         <div 
             onClick={() => navigate(to)}
-            className={`cursor-pointer rounded-[2.5rem] p-8 relative overflow-hidden group border border-gray-100 bg-white hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 ${className}`}
+            className={`cursor-pointer rounded-[2.5rem] p-6 sm:p-8 relative overflow-hidden group border border-gray-100 bg-white hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 ${className}`}
         >
-            <div className={`w-14 h-14 ${color} text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-current/20 group-hover:scale-110 transition-transform duration-500`}>
+            <div className={`w-12 h-12 sm:w-14 sm:h-14 ${color} text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-current/20 group-hover:scale-110 transition-transform duration-500`}>
                 {icon}
             </div>
-            <h3 className="text-2xl font-bold mb-2 tracking-tight">{title}</h3>
-            <p className="text-gray-400 text-sm font-medium leading-relaxed">{desc}</p>
+            <h3 className="text-xl sm:text-2xl font-bold mb-2 tracking-tight">{title}</h3>
+            <p className="text-gray-400 text-xs sm:text-sm font-medium leading-relaxed">{desc}</p>
             <div className="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
         </div>
     );

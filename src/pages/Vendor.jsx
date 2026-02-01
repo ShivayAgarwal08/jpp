@@ -189,7 +189,7 @@ export default function Vendor() {
                     </section>
 
                     {/* Stats Horizontal */}
-                    <section className="grid md:grid-cols-4 gap-6 mb-12">
+                    <section className="grid grid-cols-2 md:grid-cols-4 gap-4 px-2 md:px-0 md:gap-6 mb-12">
                         <StatsCard label="Pending" value={pendingOrders.length} color="bg-blue-500" />
                         <StatsCard label="Printed" value={printedOrders.length} color="bg-orange-500" />
                         <StatsCard label="Collected" value={collectedOrders.length} color="bg-green-500" />

@@ -65,42 +65,43 @@ export default function Landing() {
             </nav>
 
             {/* Hero Section */}
-            <section className="pt-32 pb-20 px-6 relative overflow-hidden">
+            <section className="pt-24 pb-16 md:pt-32 md:pb-20 px-6 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none" />
                 
-                <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+                <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 lg:gap-12 items-center">
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8 }}
+                        className="text-center lg:text-left"
                     >
-                        <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+                        <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider mb-6">
                             <Zap size={14} />
                             <span>Campus Printing Reimagined</span>
                         </div>
-                        <h1 className="text-6xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
                             Print your docs <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-black to-gray-500">without the wait.</span>
                         </h1>
-                        <p className="text-lg text-gray-500 font-medium mb-10 max-w-lg leading-relaxed">
+                        <p className="text-base md:text-lg text-gray-500 font-medium mb-10 max-w-lg mx-auto lg:mx-0 leading-relaxed">
                             The fastest way to get your assignments, notes, and documents printed on campus. No queues, no hassle.
                         </p>
-                        <div className="flex flex-col sm:flex-row gap-4">
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                             <button 
                                 onClick={() => setShowSelection(true)}
-                                className="bg-black text-white px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-gray-800 transition-all shadow-xl shadow-black/10 group"
+                                className="bg-black text-white px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-gray-800 transition-all shadow-xl shadow-black/10 group order-1 sm:order-2"
                             >
                                 Start Printing <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                             </button>
                             <button 
                                 onClick={() => navigate('/vendor-login')}
-                                className="bg-white text-gray-900 border border-gray-200 px-8 py-4 rounded-2xl font-bold hover:bg-gray-50 transition-all"
+                                className="bg-white text-gray-900 border border-gray-200 px-8 py-4 rounded-2xl font-bold hover:bg-gray-50 transition-all order-2 sm:order-1"
                             >
                                 Vendor Portal
                             </button>
                         </div>
 
-                        <div className="mt-12 flex items-center gap-6">
+                        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
                             <div className="flex -space-x-3">
                                 {[1, 2, 3, 4].map(i => (
                                     <div key={i} className={`w-10 h-10 rounded-full border-2 border-white bg-gray-200 flex items-center justify-center text-xs font-bold`}>
@@ -108,8 +109,8 @@ export default function Landing() {
                                     </div>
                                 ))}
                             </div>
-                            <div className="text-sm">
-                                <span className="font-bold text-black">500+ Students</span>
+                            <div className="text-sm text-center sm:text-left">
+                                <p className="font-bold text-black">500+ Students</p>
                                 <p className="text-gray-400">trust JPRINT every day</p>
                             </div>
                         </div>
@@ -119,7 +120,7 @@ export default function Landing() {
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
-                        className="relative"
+                        className="relative hidden sm:block"
                     >
                         <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl shadow-black/20 border-8 border-white">
                             <img 
@@ -133,7 +134,7 @@ export default function Landing() {
                         <motion.div 
                             animate={{ y: [0, -10, 0] }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                            className="absolute -top-6 -left-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 border border-gray-100"
+                            className="absolute -top-6 -left-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 border border-gray-100 hidden md:flex"
                         >
                             <div className="w-10 h-10 bg-green-500 text-white rounded-xl flex items-center justify-center">
                                 <Check size={20} />
@@ -147,7 +148,7 @@ export default function Landing() {
                         <motion.div 
                             animate={{ y: [0, 10, 0] }}
                             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                            className="absolute -bottom-6 -right-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 border border-gray-100"
+                            className="absolute -bottom-6 -right-6 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 border border-gray-100 hidden md:flex"
                         >
                             <div className="w-10 h-10 bg-orange-500 text-white rounded-xl flex items-center justify-center">
                                 <Printer size={20} />

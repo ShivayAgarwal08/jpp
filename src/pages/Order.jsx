@@ -184,7 +184,7 @@ export default function Order() {
                                             exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
                                             transition={{ delay: idx * 0.05 }}
                                             key={file.id} 
-                                            className="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100/50 flex items-center gap-5 group hover:border-gray-200 transition-all duration-300 hover:shadow-xl hover:shadow-black/[0.02]"
+                                            className="bg-white p-4 sm:p-6 rounded-[2rem] shadow-sm border border-gray-100/50 flex items-center gap-3 sm:gap-5 group hover:border-gray-200 transition-all duration-300 hover:shadow-xl hover:shadow-black/[0.02]"
                                         >
                                             <div className="w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-black group-hover:text-white transition-all duration-500 shrink-0">
                                                 {file.type === 'stationery' ? <PenTool size={28} /> :
