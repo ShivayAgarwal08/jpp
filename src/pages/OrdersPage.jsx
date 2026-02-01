@@ -33,7 +33,7 @@ export default function OrdersPage() {
                         <ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
                     </motion.button>
                     <div>
-                        <h1 className="text-3xl font-black tracking-tighter italic">Logistics Archive.</h1>
+                        <h1 className="text-3xl font-black tracking-tighter">Logistics Archive.</h1>
                         <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mt-1">Real-time Terminal Sync</p>
                     </div>
                 </div>
@@ -60,7 +60,7 @@ export default function OrdersPage() {
                                 <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-8 text-gray-200">
                                     <Clock size={40} />
                                 </div>
-                                <p className="text-gray-400 font-black text-lg mb-8 tracking-tight uppercase tracking-widest italic">Terminal Queue Empty</p>
+                                <p className="text-gray-400 font-black text-lg mb-8 tracking-tight uppercase tracking-widest">Terminal Queue Empty</p>
                                 <Link to="/order" className="bg-black text-white px-10 py-4 rounded-[1.25rem] font-black text-sm shadow-2xl shadow-black/10 hover:scale-105 active:scale-95 transition-all inline-block uppercase tracking-widest">Initial Shipment</Link>
                             </motion.div>
                         ) : (
@@ -77,7 +77,7 @@ export default function OrdersPage() {
                 <section>
                     <h2 className="text-xs font-black text-gray-500 uppercase tracking-[0.3em] mb-10 ml-1">Historical Logs</h2>
                     {pastOrders.length === 0 ? (
-                        <div className="text-center py-20 text-gray-300 font-black text-xs uppercase tracking-widest italic opacity-40">No historical data available</div>
+                        <div className="text-center py-20 text-gray-300 font-black text-xs uppercase tracking-widest opacity-40">No historical data available</div>
                     ) : (
                         <div className="grid gap-8">
                             {pastOrders.map((order, idx) => (
@@ -123,7 +123,7 @@ function OrderCard({ order, active, delay = 0 }) {
                             {status.icon}
                         </div>
                         <div>
-                            <h3 className="font-black text-gray-950 text-xl tracking-tighter italic">REC #{order.id.slice(-4).toUpperCase()}</h3>
+                            <h3 className="font-black text-gray-950 text-xl tracking-tighter">REC #{order.id.slice(-4).toUpperCase()}</h3>
                             <div className="flex items-center gap-3 mt-1.5 grayscale group-hover:grayscale-0 transition-all">
                                 <Clock size={14} className="text-gray-400" />
                                 <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest">
@@ -133,7 +133,7 @@ function OrderCard({ order, active, delay = 0 }) {
                         </div>
                     </div>
                     <div className="text-right">
-                        <p className="text-3xl font-black text-gray-950 tracking-tighter italic">₹{order.totalAmount}</p>
+                        <p className="text-3xl font-black text-gray-950 tracking-tighter">₹{order.totalAmount}</p>
                         <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1.5 bg-gray-50 px-3 py-1 rounded-full">{order.files.length} UNIT{order.files.length > 1 ? 'S' : ''}</p>
                     </div>
                 </div>
@@ -146,9 +146,9 @@ function OrderCard({ order, active, delay = 0 }) {
                     >
                         <div className="space-y-1">
                             <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em]">Hardware Auth PIN</p>
-                            <p className="text-xs text-gray-400 font-bold italic">Present at Terminal</p>
+                            <p className="text-xs text-gray-400 font-bold">Present at Terminal</p>
                         </div>
-                        <div className="text-5xl font-mono font-black text-gray-950 tracking-[0.1em] bg-white px-6 py-4 rounded-2xl shadow-xl shadow-black/[0.04] border border-gray-100 group-hover:scale-110 group-hover:text-blue-600 transition-all duration-700 leading-none italic">
+                        <div className="text-5xl font-mono font-black text-gray-950 tracking-[0.1em] bg-white px-6 py-4 rounded-2xl shadow-xl shadow-black/[0.04] border border-gray-100 group-hover:scale-110 group-hover:text-blue-600 transition-all duration-700 leading-none">
                             {order.otp}
                         </div>
                     </motion.div>
@@ -162,7 +162,7 @@ function OrderCard({ order, active, delay = 0 }) {
                         <div className={clsx("w-2 h-2 rounded-full", active ? "bg-current animate-pulse shadow-[0_0_10px_currentColor]" : "bg-current")} />
                         {status.label}
                     </div>
-                    <button className="text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-black transition-all flex items-center gap-2 group/btn italic">
+                    <button className="text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-black transition-all flex items-center gap-2 group/btn">
                         Access Receipt <ChevronRight size={18} className="group-hover/btn:translate-x-2 transition-transform" />
                     </button>
                 </div>

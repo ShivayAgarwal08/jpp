@@ -148,7 +148,7 @@ export default function Vendor() {
                                 <div className="inline-flex items-center gap-2 bg-blue-600 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest mb-6">
                                     <Zap size={14} className="fill-current" /> Fast track
                                 </div>
-                                <h2 className="text-4xl font-black mb-3 tracking-tighter italic">Verify Clearances.</h2>
+                                <h2 className="text-4xl font-black mb-3 tracking-tighter">Verify Clearances.</h2>
                                 <p className="text-white/40 text-base font-bold leading-relaxed max-w-md">Input the 4-digit sequence from the personnel's terminal to release print assets.</p>
                             </div>
                             <form onSubmit={handleVerify} className="w-full lg:w-auto flex flex-col sm:flex-row items-center gap-4 relative z-10">
@@ -219,7 +219,7 @@ export default function Vendor() {
                                     <div className="w-20 h-20 bg-white/5 border border-white/10 rounded-full flex items-center justify-center mx-auto mb-6">
                                         <Printer size={32} />
                                     </div>
-                                    <p className="text-white font-black uppercase tracking-widest text-sm italic">System Standby: No Orders</p>
+                                    <p className="text-white font-black uppercase tracking-widest text-sm">System Standby: No Orders</p>
                                 </div>
                             ) : (
                                 <div className="space-y-4">
@@ -284,7 +284,7 @@ function StatsCard({ label, value, color }) {
                 <div className={clsx("w-2.5 h-2.5 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.2)]", color)} />
                 <span className="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">{label}</span>
             </div>
-            <div className="text-4xl font-black tracking-tighter text-white italic">{value}</div>
+            <div className="text-4xl font-black tracking-tighter text-white">{value}</div>
         </div>
     );
 }
@@ -317,19 +317,19 @@ function AdminOrderCard({ order, onPrint, onCollect }) {
                     order.status === 'printed' ? "bg-orange-500/10 border-orange-500/30 text-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.1)]" :
                     "bg-green-600/10 border-green-600/30 text-green-500 shadow-[0_0_20px_rgba(34,197,94,0.1)]"
                 )}>
-                    <span className="text-3xl leading-none italic">{order.otp}</span>
+                    <span className="text-3xl leading-none">{order.otp}</span>
                     <span className="text-[9px] font-sans font-black uppercase tracking-[0.3em] opacity-40 mt-2">PIN</span>
                 </div>
                 
                 <div>
                     <div className="flex items-center gap-3 mb-3">
-                        <h4 className="font-black text-2xl tracking-tighter text-white italic">#{order.id.slice(-6).toUpperCase()}</h4>
+                        <h4 className="font-black text-2xl tracking-tighter text-white">#{order.id.slice(-6).toUpperCase()}</h4>
                         <span className="bg-white/10 text-white/50 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">{order.userEmail?.split('@')[0]}</span>
                     </div>
                     <div className="flex flex-wrap items-center gap-5 text-[11px] font-black uppercase tracking-widest text-white/30">
                         <span className="flex items-center gap-2"><Printer size={16} className="text-blue-500" /> {order.files?.length} Assests</span>
                         <div className="w-1.5 h-1.5 bg-white/10 rounded-full" />
-                        <span className="flex items-center gap-2 italic">{order.settings?.color ? 'Full Color' : 'Grayscale'}</span>
+                        <span className="flex items-center gap-2">{order.settings?.color ? 'Full Color' : 'Grayscale'}</span>
                         <div className="w-1.5 h-1.5 bg-white/10 rounded-full" />
                         <span className="text-white text-base tracking-tighter normal-case">₹{order.totalAmount}</span>
                     </div>
@@ -362,7 +362,7 @@ function AdminOrderCard({ order, onPrint, onCollect }) {
                     </button>
                 )}
                 {order.status === 'collected' && (
-                    <div className="flex-1 md:flex-none px-10 py-5 bg-white/5 text-white/20 rounded-[1.5rem] font-black text-sm flex items-center gap-3 border border-white/10 uppercase tracking-widest italic">
+                    <div className="flex-1 md:flex-none px-10 py-5 bg-white/5 text-white/20 rounded-[1.5rem] font-black text-sm flex items-center gap-3 border border-white/10 uppercase tracking-widest">
                         <CheckCircle size={20} /> Deployed
                     </div>
                 )}

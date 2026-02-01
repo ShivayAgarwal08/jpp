@@ -49,7 +49,7 @@ export default function Login() {
                     <div className="mb-10 text-center">
                         <img src="/assets/logo.png" className="w-20 h-20 rounded-[2.25rem] shadow-2xl shadow-black/20 mx-auto mb-8 -rotate-6 object-cover" alt="Logo" />
                         <h1 className="text-4xl font-black tracking-tighter mb-4">Signal In.</h1>
-                        <p className="text-gray-500 font-bold text-sm max-w-[200px] mx-auto leading-relaxed italic">Synchronize with campus print nodes.</p>
+                        <p className="text-gray-500 font-bold text-sm max-w-[200px] mx-auto leading-relaxed">Synchronize with campus print nodes.</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
@@ -102,7 +102,7 @@ export default function Login() {
                             className="w-full bg-black text-white py-6 rounded-[1.5rem] font-black text-lg shadow-[0_20px_40px_-10px_rgba(0,0,0,0.2)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-3 mt-8 group"
                         >
                             {isLoading ? <Loader2 className="animate-spin" size={24} /> : (
-                                <span className="flex items-center gap-3 italic tracking-tighter">
+                                <span className="flex items-center gap-3 tracking-tighter">
                                     Initialize Session <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
                                 </span>
                             )}

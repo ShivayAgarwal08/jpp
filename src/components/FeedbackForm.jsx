@@ -65,14 +65,14 @@ export default function FeedbackForm() {
                     <Heart size={28} className="fill-orange-500/20" />
                 </div>
                 <div>
-                    <h3 className="text-2xl font-black tracking-tighter italic">Experience Log.</h3>
+                    <h3 className="text-2xl font-black tracking-tighter">Experience Log.</h3>
                     <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em] mt-1">Quality Control Sync</p>
                 </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-10 relative z-10">
                 <div className="space-y-4 text-center">
-                    <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.4em] italic mb-6">Service Rating Level</p>
+                    <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.4em] mb-6">Service Rating Level</p>
                     <div className="flex justify-center gap-4">
                         {[1, 2, 3, 4, 5].map((star) => (
                             <motion.button
@@ -113,7 +113,7 @@ export default function FeedbackForm() {
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-black text-white py-6 rounded-2xl font-black text-sm flex items-center justify-center gap-3 hover:bg-orange-600 transition-all shadow-2xl shadow-black/10 disabled:opacity-50 uppercase tracking-widest italic"
+                    className="w-full bg-black text-white py-6 rounded-2xl font-black text-sm flex items-center justify-center gap-3 hover:bg-orange-600 transition-all shadow-2xl shadow-black/10 disabled:opacity-50 uppercase tracking-widest"
                 >
                     {isSubmitting ? (
                         <div className="flex items-center gap-3">

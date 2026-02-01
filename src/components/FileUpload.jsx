@@ -62,7 +62,7 @@ export default function FileUpload() {
                     </div>
                     <div>
                         <p className="font-black text-2xl tracking-tight text-gray-950">Release Assets Here.</p>
-                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em] mt-2 italic">PDF • JPG • PNG up to 10MB</p>
+                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em] mt-2">PDF • JPG • PNG up to 10MB</p>
                     </div>
                 </div>
 
@@ -99,7 +99,7 @@ export default function FileUpload() {
                                     <div className="flex-1 min-w-0">
                                         <p className="font-black text-gray-950 truncate tracking-tight">{file.name}</p>
                                         <div className="flex items-center gap-3 mt-1">
-                                            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest italic">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                                            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                                             <div className="w-1 h-1 bg-gray-200 rounded-full" />
                                             {file.pageCount && <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest">{file.pageCount} PG{file.pageCount > 1 ? 'S' : ''}</p>}
                                         </div>

@@ -51,7 +51,7 @@ export default function Register() {
                     <div className="mb-10 text-center">
                         <img src="/assets/logo.png" className="w-20 h-20 rounded-[2.25rem] shadow-2xl shadow-black/20 mx-auto mb-8 -rotate-6 object-cover" alt="Logo" />
                         <h1 className="text-4xl font-black tracking-tighter mb-4">Enroll.</h1>
-                        <p className="text-gray-500 font-bold text-sm max-w-[200px] mx-auto leading-relaxed italic">Join the next-gen campus logistics network.</p>
+                        <p className="text-gray-500 font-bold text-sm max-w-[200px] mx-auto leading-relaxed">Join the next-gen campus logistics network.</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
@@ -118,7 +118,7 @@ export default function Register() {
                             className="w-full bg-black text-white py-6 rounded-[1.5rem] font-black text-lg shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-3 mt-6 group"
                         >
                             {isLoading ? <Loader2 className="animate-spin" size={24} /> : (
-                                <span className="flex items-center gap-3 italic tracking-tighter">
+                                <span className="flex items-center gap-3 tracking-tighter">
                                     Initiate Enrollment <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
                                 </span>
                             )}

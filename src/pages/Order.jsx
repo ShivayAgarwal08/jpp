@@ -74,13 +74,13 @@ export default function Order() {
                     <Check size={56} strokeWidth={4} />
                 </motion.div>
                 
-                <h2 className="text-5xl font-black text-gray-950 mb-3 tracking-tighter italic">Mission Success.</h2>
+                <h2 className="text-5xl font-black text-gray-950 mb-3 tracking-tighter">Mission Success.</h2>
                 <p className="text-gray-500 font-bold text-lg mb-16 max-w-sm mx-auto leading-relaxed">Your assets are being deployed to the print terminal.</p>
 
                 <div className="bg-white rounded-[3.5rem] p-12 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.06)] border border-gray-100 w-full max-w-md mb-16 relative overflow-hidden group">
                     <div className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-6">Validation Key</div>
                     <div className="text-7xl font-black text-gray-950 tracking-[0.1em] mb-6 font-mono rotate-2 group-hover:rotate-0 transition-transform duration-500">{completedOrder.otp}</div>
-                    <div className="inline-flex items-center gap-2 bg-blue-600/10 text-blue-600 px-5 py-2 rounded-full border border-blue-600/20 text-xs font-black uppercase tracking-widest italic">
+                    <div className="inline-flex items-center gap-2 bg-blue-600/10 text-blue-600 px-5 py-2 rounded-full border border-blue-600/20 text-xs font-black uppercase tracking-widest">
                         <Sparkles size={14} /> Show at Base
                     </div>
                 </div>
@@ -88,7 +88,7 @@ export default function Order() {
                 <div className="flex flex-col gap-5 w-full max-w-md relative z-10">
                     <button 
                         onClick={() => navigate('/orders')}
-                        className="w-full bg-black text-white font-black py-6 rounded-3xl text-lg hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-black/10 flex items-center justify-center gap-3 italic"
+                        className="w-full bg-black text-white font-black py-6 rounded-3xl text-lg hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-black/10 flex items-center justify-center gap-3"
                     >
                         Track Shipment <ArrowRight size={22} />
                     </button>
@@ -123,7 +123,7 @@ export default function Order() {
                             <ArrowLeft size={24} />
                         </motion.button>
                         <div>
-                            <h1 className="font-black text-2xl tracking-tighter italic">{step === 1 ? 'Configure' : 'Finalize'}</h1>
+                        <h1 className="font-black text-2xl tracking-tighter">{step === 1 ? 'Configure' : 'Finalize'}</h1>
                             <div className="flex items-center gap-2 mt-1.5">
                                 {[1, 2].map((s) => (
                                     <div 
@@ -141,7 +141,7 @@ export default function Order() {
                         <motion.div 
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="bg-black text-white px-5 py-2 rounded-2xl text-xs font-black tracking-widest shadow-2xl shadow-black/10 flex items-center gap-2 italic"
+                            className="bg-black text-white px-5 py-2 rounded-2xl text-xs font-black tracking-widest shadow-2xl shadow-black/10 flex items-center gap-2"
                         >
                             <Sparkles size={14} /> {currentOrder.files.length} ASSETS
                         </motion.div>
@@ -197,7 +197,7 @@ export default function Order() {
                                                     file.type.startsWith('image/') ? <FileImage size={32} /> : <FileText size={32} />}
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <p className="font-black truncate text-lg tracking-tight text-gray-950 italic">{file.name}</p>
+                                                <p className="font-black truncate text-lg tracking-tight text-gray-950">{file.name}</p>
                                                 <div className="flex items-center gap-4 mt-2">
                                                     <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
                                                         {file.type === 'stationery' ? `₹${file.price}` : `${(file.size / 1024 / 1024).toFixed(2)} MB`}
@@ -232,7 +232,7 @@ export default function Order() {
                                     >
                                         <div className="relative z-10">
                                             <div className="flex items-center justify-between mb-12">
-                                                <h3 className="text-2xl font-black flex items-center gap-3 tracking-tighter italic">
+                                                <h3 className="text-2xl font-black flex items-center gap-3 tracking-tighter">
                                                     <Zap size={24} className="text-blue-500 fill-current" /> Engine Configuration
                                                 </h3>
                                                 <span className="text-[9px] font-black text-white/30 uppercase tracking-[0.3em]">Hardware Sync Active</span>
@@ -256,11 +256,11 @@ export default function Order() {
                                             <div className="mt-12 pt-12 border-t border-white/5 flex items-center justify-between">
                                                 <div className="space-y-1">
                                                     <p className="text-xs font-black text-white uppercase tracking-[0.2em]">Batch Quantity</p>
-                                                    <p className="text-[10px] text-white/40 font-bold uppercase tracking-widest italic">Multi-copy multiplier</p>
+                                                    <p className="text-[10px] text-white/40 font-bold uppercase tracking-widest">Multi-copy multiplier</p>
                                                 </div>
                                                 <div className="flex items-center gap-10 bg-white/5 p-3 rounded-3xl border border-white/10 shadow-inner">
                                                     <button onClick={() => updateSettings('copies', Math.max(1, currentOrder.settings.copies - 1))} className="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors font-black text-2xl text-blue-500 active:scale-90">-</button>
-                                                    <span className="font-black text-4xl w-10 text-center italic tracking-tighter">{currentOrder.settings.copies}</span>
+                                                    <span className="font-black text-4xl w-10 text-center tracking-tighter">{currentOrder.settings.copies}</span>
                                                     <button onClick={() => updateSettings('copies', currentOrder.settings.copies + 1)} className="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors font-black text-2xl text-blue-500 active:scale-90">+</button>
                                                 </div>
                                             </div>
@@ -283,7 +283,7 @@ export default function Order() {
                             {/* Pro Review Card */}
                             <div className="bg-white rounded-[3.5rem] p-12 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col gap-10">
                                 <div className="flex items-center justify-between">
-                                    <h3 className="text-3xl font-black tracking-tighter italic">Manifest Review.</h3>
+                                    <h3 className="text-3xl font-black tracking-tighter">Manifest Review.</h3>
                                     <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-400">
                                         <ShieldCheck size={24} />
                                     </div>

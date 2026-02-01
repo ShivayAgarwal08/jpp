@@ -42,8 +42,8 @@ export default function VendorLogin() {
             >
                 <div className="text-center mb-12">
                     <img src="/assets/logo.png" className="w-24 h-24 rounded-[2.5rem] shadow-2xl shadow-blue-600/20 mx-auto mb-10 rotate-3 object-cover border-2 border-blue-600/20" alt="Logo" />
-                    <h1 className="text-5xl font-black tracking-tighter mb-4 italic">Station V.</h1>
-                    <p className="text-white/40 font-bold text-sm tracking-widest uppercase italic">Secure Operational Access</p>
+                    <h1 className="text-5xl font-black tracking-tighter mb-4">Station V.</h1>
+                    <p className="text-white/40 font-bold text-sm tracking-widest uppercase">Secure Operational Access</p>
                 </div>
 
                 <div className="bg-white/5 backdrop-blur-3xl p-10 rounded-[3rem] border border-white/5 shadow-2xl relative">
@@ -89,7 +89,7 @@ export default function VendorLogin() {
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    className="text-red-500 text-[10px] font-black text-center uppercase tracking-widest bg-red-500/10 py-4 rounded-xl border border-red-500/20 italic"
+                                    className="text-red-500 text-[10px] font-black text-center uppercase tracking-widest bg-red-500/10 py-4 rounded-xl border border-red-500/20"
                                 >
                                     {error}
                                 </motion.div>
@@ -109,7 +109,7 @@ export default function VendorLogin() {
                         <button
                             type="button"
                             onClick={() => navigate('/')}
-                            className="w-full text-white/20 text-[10px] font-black uppercase tracking-[0.3em] hover:text-white transition-all pt-4 italic flex items-center justify-center gap-2 group"
+                            className="w-full text-white/20 text-[10px] font-black uppercase tracking-[0.3em] hover:text-white transition-all pt-4 flex items-center justify-center gap-2 group"
                         >
                             <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> Abort Mission
                         </button>

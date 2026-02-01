@@ -254,7 +254,7 @@ function ProfileOrderCard({ order, active, delay = 0 }) {
                     {order.otp}
                 </div>
                 <div>
-                    <h4 className="font-black text-xl tracking-tighter italic">₹{order.totalAmount} • {order.files?.length} Unit{order.files?.length > 1 ? 's' : ''}</h4>
+                    <h4 className="font-black text-xl tracking-tighter">₹{order.totalAmount} • {order.files?.length} Unit{order.files?.length > 1 ? 's' : ''}</h4>
                     <p className={clsx("text-[10px] font-black uppercase tracking-[0.2em] mt-2 opacity-50", active ? "text-white" : "text-gray-500")}>
                         Manifest: {new Date(order.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                     </p>

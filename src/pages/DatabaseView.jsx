@@ -46,7 +46,7 @@ export default function DatabaseView() {
                         <img src="/assets/logo.png" className="w-14 h-14 rounded-2xl shadow-2xl shadow-blue-600/20 object-cover border border-blue-600/20" alt="Logo" />
                         <div>
                             <div className="flex items-center gap-3 mb-1">
-                                <h1 className="text-4xl font-black tracking-tighter italic uppercase">Master Terminal.</h1>
+                                <h1 className="text-4xl font-black tracking-tighter uppercase">Master Terminal.</h1>
                                 <span className="bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full animate-pulse shadow-[0_0_15px_rgba(37,99,235,0.5)]">LIVE DATA REDUNDANCY</span>
                             </div>
                             <p className="text-white/30 text-xs font-black uppercase tracking-[0.4em]">SQLite Engine V3.2 • Secure Read-Only Access</p>
@@ -57,12 +57,12 @@ export default function DatabaseView() {
                         <div className="px-6 py-4 bg-white/5 border border-white/10 rounded-[1.5rem] flex items-center gap-8">
                             <div className="text-center">
                                 <p className="text-[9px] text-white/30 font-black uppercase tracking-widest mb-1">Users</p>
-                                <p className="text-xl font-black italic">{users.length}</p>
+                                <p className="text-xl font-black">{users.length}</p>
                             </div>
                             <div className="w-px h-8 bg-white/10" />
                             <div className="text-center">
                                 <p className="text-[9px] text-white/30 font-black uppercase tracking-widest mb-1">Logs</p>
-                                <p className="text-xl font-black italic">{orders.length}</p>
+                                <p className="text-xl font-black">{orders.length}</p>
                             </div>
                         </div>
                         <button
@@ -87,7 +87,7 @@ export default function DatabaseView() {
                         className="bg-red-600/10 text-red-500 p-12 rounded-[3.5rem] text-center border-2 border-red-600/20 shadow-2xl"
                     >
                         <Shield className="mx-auto mb-6 opacity-40" size={64} />
-                        <h3 className="font-black text-3xl mb-4 italic tracking-tighter">Terminal Link Severed.</h3>
+                        <h3 className="font-black text-3xl mb-4 tracking-tighter">Terminal Link Severed.</h3>
                         <p className="font-mono text-sm mb-10 opacity-60 max-w-md mx-auto leading-relaxed">{error}</p>
                         <button onClick={fetchData} className="px-10 py-5 bg-red-600 text-white rounded-2xl font-black hover:bg-red-500 transition-all uppercase tracking-widest shadow-xl">
                             Re-establish Uplink

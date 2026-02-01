@@ -64,7 +64,7 @@ const Toast = ({ message, type, onClose }) => {
             
             <div className="relative z-10 flex-1 py-1">
                 <p className="text-[9px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">{type === 'success' ? 'Terminal Success' : type === 'error' ? 'Critical Alert' : 'System Info'}</p>
-                <p className="text-base font-black text-gray-950 tracking-tight leading-none italic">{message}</p>
+                <p className="text-base font-black text-gray-950 tracking-tight leading-none">{message}</p>
             </div>
 
             <button 

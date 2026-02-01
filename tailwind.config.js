@@ -42,8 +42,8 @@ export default {
                 sm: "var(--radius-sm)",
             },
             fontFamily: {
-                sans: ['Inter', 'sans-serif'],
-                display: ['Outfit', 'sans-serif'],
+                sans: ['"Times New Roman"', 'Times', 'serif'],
+                display: ['"Times New Roman"', 'Times', 'serif'],
             }
         },
     },
