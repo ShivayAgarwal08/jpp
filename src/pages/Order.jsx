@@ -12,12 +12,13 @@ import {
     PenTool,
     Printer,
     FileText,
-    Copy,
     Zap,
     ShieldCheck,
-    AlertCircle
+    AlertCircle,
+    Copy,
+    Sparkles
 } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useOrder } from '../context/OrderContext';
 import clsx from 'clsx';
@@ -47,7 +48,7 @@ export default function Order() {
             }
         } catch (e) {
             console.error(e);
-            alert("Order failed. Please try again.");
+            alert("Terminal Sync Error: Please try again.");
         } finally {
             setIsProcessing(false);
         }
@@ -59,40 +60,43 @@ export default function Order() {
 
     if (step === 3 && completedOrder) {
         return (
-            <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 text-center">
+            <div className="min-h-screen bg-[#FDFDFF] flex flex-col items-center justify-center p-6 text-center relative overflow-hidden selection:bg-blue-600/10">
+                {/* Ambient Background */}
+                <div className="absolute top-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-blue-600/5 blur-[120px] pointer-events-none" />
+                <div className="absolute bottom-[-10%] left-[-5%] w-[30vw] h-[30vw] rounded-full bg-purple-600/5 blur-[120px] pointer-events-none" />
+
                 <motion.div
-                    initial={{ scale: 0.5, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ type: "spring", damping: 12 }}
-                    className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center text-white mb-8 shadow-2xl shadow-green-200"
+                    initial={{ scale: 0, rotate: -45 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ type: "spring", damping: 15, stiffness: 200 }}
+                    className="w-32 h-32 bg-blue-600 rounded-[2.5rem] flex items-center justify-center text-white mb-10 shadow-[0_30px_60px_-15px_rgba(37,99,235,0.4)]"
                 >
-                    <Check size={48} strokeWidth={4} />
+                    <Check size={56} strokeWidth={4} />
                 </motion.div>
                 
-                <h2 className="text-4xl font-bold text-gray-900 mb-2">Payment Successful!</h2>
-                <p className="text-gray-500 font-medium mb-12">Your order is being processed by the vendor.</p>
+                <h2 className="text-5xl font-black text-gray-950 mb-3 tracking-tighter italic">Mission Success.</h2>
+                <p className="text-gray-500 font-bold text-lg mb-16 max-w-sm mx-auto leading-relaxed">Your assets are being deployed to the print terminal.</p>
 
-                <div className="bg-gray-50 rounded-[2.5rem] p-10 border border-gray-100 w-full max-w-sm mb-12 relative overflow-hidden">
-                    <div className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] mb-4">Collection OTP</div>
-                    <div className="text-6xl font-black text-black tracking-[0.1em] mb-4 font-mono">{completedOrder.otp}</div>
-                    <p className="text-[10px] text-orange-600 font-bold uppercase tracking-wider bg-orange-50 inline-block px-3 py-1 rounded-full border border-orange-100">
-                        Show this at the counter
-                    </p>
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/5 rounded-full -mr-16 -mt-16" />
+                <div className="bg-white rounded-[3.5rem] p-12 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.06)] border border-gray-100 w-full max-w-md mb-16 relative overflow-hidden group">
+                    <div className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-6">Validation Key</div>
+                    <div className="text-7xl font-black text-gray-950 tracking-[0.1em] mb-6 font-mono rotate-2 group-hover:rotate-0 transition-transform duration-500">{completedOrder.otp}</div>
+                    <div className="inline-flex items-center gap-2 bg-blue-600/10 text-blue-600 px-5 py-2 rounded-full border border-blue-600/20 text-xs font-black uppercase tracking-widest italic">
+                        <Sparkles size={14} /> Show at Base
+                    </div>
                 </div>
 
-                <div className="flex flex-col gap-4 w-full max-w-sm">
+                <div className="flex flex-col gap-5 w-full max-w-md relative z-10">
                     <button 
                         onClick={() => navigate('/orders')}
-                        className="w-full bg-black text-white font-bold py-5 rounded-2xl text-lg hover:bg-gray-800 transition-all shadow-xl shadow-black/10"
+                        className="w-full bg-black text-white font-black py-6 rounded-3xl text-lg hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-black/10 flex items-center justify-center gap-3 italic"
                     >
-                        Track Order Status
+                        Track Shipment <ArrowRight size={22} />
                     </button>
                     <button 
                         onClick={() => navigate('/home')}
-                        className="text-gray-400 font-bold hover:text-black transition-colors"
+                        className="text-gray-400 font-black text-xs uppercase tracking-widest hover:text-black transition-colors"
                     >
-                        Back to Dashboard
+                        Return to Dashboard
                     </button>
                 </div>
             </div>
@@ -100,57 +104,63 @@ export default function Order() {
     }
 
     return (
-        <div className="min-h-screen bg-[#FBFBFD] pb-32 font-sans selection:bg-primary/10 selection:text-primary">
+        <div className="min-h-screen bg-[#FDFDFF] pb-40 font-sans selection:bg-blue-600/10 transition-all duration-500 overflow-x-hidden">
             
-            {/* Dynamic Step Header */}
-            <header className="bg-white/60 backdrop-blur-xl sticky top-0 z-40 px-6 py-4 border-b border-gray-100/50 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                    <motion.button 
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => step === 1 ? navigate('/home') : setStep(1)} 
-                        className="p-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors"
-                    >
-                        <ArrowLeft size={24} />
-                    </motion.button>
-                    <div>
-                        <h1 className="font-black text-xl tracking-tight">{step === 1 ? 'Configure' : 'Review'}</h1>
-                        <div className="flex items-center gap-1.5 mt-0.5">
-                            {[1, 2].map((s) => (
-                                <div 
-                                    key={s} 
-                                    className={clsx(
-                                        "h-1 rounded-full transition-all duration-500",
-                                        step >= s ? "bg-black w-6" : "bg-gray-200 w-3"
-                                    )} 
-                                />
-                            ))}
+            {/* Ambient Background Blobs */}
+            <div className="fixed top-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-blue-600/5 blur-[120px] -z-0 pointer-events-none" />
+            <div className="fixed bottom-[-10%] left-[-5%] w-[30vw] h-[30vw] rounded-full bg-purple-600/5 blur-[120px] -z-0 pointer-events-none" />
+
+            {/* Premium Step Header */}
+            <header className="bg-white/40 backdrop-blur-3xl sticky top-0 z-40 px-6 h-24 border-b border-gray-100/50 flex items-center justify-between">
+                <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
+                    <div className="flex items-center gap-5">
+                        <motion.button 
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => step === 1 ? navigate('/home') : setStep(1)} 
+                            className="w-12 h-12 bg-white border border-gray-100 rounded-2xl flex items-center justify-center text-gray-500 hover:text-black transition-all shadow-sm"
+                        >
+                            <ArrowLeft size={24} />
+                        </motion.button>
+                        <div>
+                            <h1 className="font-black text-2xl tracking-tighter italic">{step === 1 ? 'Configure' : 'Finalize'}</h1>
+                            <div className="flex items-center gap-2 mt-1.5">
+                                {[1, 2].map((s) => (
+                                    <div 
+                                        key={s} 
+                                        className={clsx(
+                                            "h-1.5 rounded-full transition-all duration-700",
+                                            step >= s ? "bg-blue-600 w-10 shadow-[0_0_10px_rgba(37,99,235,0.4)]" : "bg-gray-200 w-4"
+                                        )} 
+                                    />
+                                ))}
+                            </div>
                         </div>
                     </div>
+                    {hasFiles && (
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="bg-black text-white px-5 py-2 rounded-2xl text-xs font-black tracking-widest shadow-2xl shadow-black/10 flex items-center gap-2 italic"
+                        >
+                            <Sparkles size={14} /> {currentOrder.files.length} ASSETS
+                        </motion.div>
+                    )}
                 </div>
-                {hasFiles && (
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="bg-black text-white px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest shadow-lg shadow-black/10"
-                    >
-                        {currentOrder.files.length} ITEMS
-                    </motion.div>
-                )}
             </header>
 
-            <div className="max-w-xl mx-auto p-6 pt-10">
+            <div className="max-w-2xl mx-auto p-6 pt-12 relative z-10">
                 <AnimatePresence mode='wait'>
                     {step === 1 ? (
                         <motion.div
                             key="step1"
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
-                            className="space-y-10"
+                            exit={{ opacity: 0, y: -30, filter: 'blur(10px)' }}
+                            className="space-y-12"
                         >
-                            {/* Dynamic Upload Zone */}
-                            <div className="relative group overflow-hidden rounded-[2.5rem]">
+                            {/* Pro Upload Zone */}
+                            <div className="relative group overflow-hidden rounded-[3rem]">
                                 <input
                                     type="file"
                                     multiple
@@ -158,46 +168,42 @@ export default function Order() {
                                     onChange={(e) => Array.from(e.target.files).forEach(addFile)}
                                     className="absolute inset-0 opacity-0 cursor-pointer z-10"
                                 />
-                                <div className="border-2 border-dashed border-gray-100 bg-white rounded-[2.5rem] p-16 text-center transition-all duration-500 group-hover:border-primary/30 group-hover:bg-primary/[0.02] relative">
-                                    <div className="w-20 h-20 bg-gray-50 rounded-3xl flex items-center justify-center mx-auto mb-6 text-gray-400 group-hover:scale-110 group-hover:text-primary group-hover:bg-primary/10 transition-all duration-500 shadow-sm">
-                                        <Upload size={36} />
+                                <div className="border-2 border-dashed border-gray-200 bg-white/50 backdrop-blur-xl rounded-[3rem] p-20 text-center transition-all duration-700 group-hover:border-blue-600/30 group-hover:bg-blue-600/[0.03] group-hover:scale-[1.01] relative">
+                                    <div className="w-24 h-24 bg-gray-50 rounded-[2.25rem] flex items-center justify-center mx-auto mb-8 text-gray-400 group-hover:scale-110 group-hover:text-blue-600 group-hover:bg-blue-600/10 group-hover:rotate-6 transition-all duration-700 shadow-xl shadow-black/[0.02]">
+                                        <Upload size={40} />
                                     </div>
-                                    <h3 className="font-black text-2xl mb-2 tracking-tight">Drop documents here</h3>
-                                    <p className="text-sm text-gray-400 font-medium">PDF or Images • Up to 20MB</p>
+                                    <h3 className="font-black text-3xl mb-3 tracking-tighter">Initialize Upload.</h3>
+                                    <p className="text-sm text-gray-500 font-bold uppercase tracking-widest">PDF or Images • End-to-End Encryption</p>
                                     
-                                    {/* Pulse effect */}
-                                    <div className="absolute inset-0 pointer-events-none border-2 border-primary/0 group-hover:border-primary/20 rounded-[2.5rem] transition-all duration-700 animate-pulse-soft" />
+                                    <div className="absolute inset-0 pointer-events-none border-2 border-blue-600/0 group-hover:border-blue-600/20 rounded-[3rem] transition-all duration-700 animate-pulse-soft" />
                                 </div>
                             </div>
 
-                            {/* Staggered File List */}
-                            <motion.div 
-                                layout
-                                className="space-y-4"
-                            >
+                            {/* Elevated Asset List */}
+                            <motion.div layout className="space-y-5">
                                 <AnimatePresence mode='popLayout'>
                                     {currentOrder.files.map((file, idx) => (
                                         <motion.div 
                                             layout
-                                            initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                                            initial={{ opacity: 0, scale: 0.9, y: 30 }}
                                             animate={{ opacity: 1, scale: 1, y: 0 }}
-                                            exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.2 } }}
+                                            exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
                                             transition={{ delay: idx * 0.05 }}
                                             key={file.id} 
-                                            className="bg-white p-4 sm:p-6 rounded-[2rem] shadow-sm border border-gray-100/50 flex items-center gap-3 sm:gap-5 group hover:border-gray-200 transition-all duration-300 hover:shadow-xl hover:shadow-black/[0.02]"
+                                            className="bg-white p-6 sm:p-8 rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.03)] border border-gray-100 flex items-center gap-5 sm:gap-8 group hover:border-blue-600/10 transition-all duration-500"
                                         >
-                                            <div className="w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-black group-hover:text-white transition-all duration-500 shrink-0">
-                                                {file.type === 'stationery' ? <PenTool size={28} /> :
-                                                    file.type.startsWith('image/') ? <FileImage size={28} /> : <FileText size={28} />}
+                                            <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-black group-hover:text-white transition-all duration-700 shrink-0 shadow-inner group-hover:rotate-6">
+                                                {file.type === 'stationery' ? <PenTool size={32} /> :
+                                                    file.type.startsWith('image/') ? <FileImage size={32} /> : <FileText size={32} />}
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <p className="font-black truncate text-base tracking-tight">{file.name}</p>
-                                                <div className="flex items-center gap-3 mt-1.5">
-                                                    <span className="text-[10px] font-black text-gray-300 uppercase tracking-widest">
+                                                <p className="font-black truncate text-lg tracking-tight text-gray-950 italic">{file.name}</p>
+                                                <div className="flex items-center gap-4 mt-2">
+                                                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
                                                         {file.type === 'stationery' ? `₹${file.price}` : `${(file.size / 1024 / 1024).toFixed(2)} MB`}
                                                     </span>
                                                     {file.pageCount > 0 && (
-                                                        <span className="bg-primary/5 text-primary text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
+                                                        <span className="bg-blue-600/5 text-blue-600 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest border border-blue-600/10">
                                                             {file.pageCount} Pages
                                                         </span>
                                                     )}
@@ -207,55 +213,61 @@ export default function Order() {
                                                 whileHover={{ scale: 1.1, rotate: 90 }}
                                                 whileTap={{ scale: 0.9 }}
                                                 onClick={() => removeFile(file.id)} 
-                                                className="w-10 h-10 rounded-full flex items-center justify-center text-gray-300 hover:bg-red-50 hover:text-red-500 transition-all"
+                                                className="w-12 h-12 rounded-2xl flex items-center justify-center text-gray-300 hover:bg-red-50 hover:text-red-500 transition-all shadow-sm"
                                             >
-                                                <X size={20} />
+                                                <X size={24} />
                                             </motion.button>
                                         </motion.div>
                                     ))}
                                 </AnimatePresence>
                             </motion.div>
 
-                            {/* Dynamic Settings Pane */}
+                            {/* Elite Configurator */}
                             <AnimatePresence>
                                 {hasFiles && !isAllStationery && (
                                     <motion.div 
-                                        initial={{ opacity: 0, y: 40 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        className="bg-gray-900 rounded-[2.5rem] p-10 text-white relative overflow-hidden shadow-2xl shadow-black/20"
+                                        initial={{ opacity: 0, scale: 0.95 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        className="bg-black rounded-[3.5rem] p-12 text-white relative overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.3)] border border-white/5"
                                     >
                                         <div className="relative z-10">
-                                            <h3 className="text-xl font-black mb-10 flex items-center gap-3">
-                                                <Zap size={20} className="text-primary fill-current" /> Preferences
-                                            </h3>
-                                            <div className="grid grid-cols-2 gap-6">
+                                            <div className="flex items-center justify-between mb-12">
+                                                <h3 className="text-2xl font-black flex items-center gap-3 tracking-tighter italic">
+                                                    <Zap size={24} className="text-blue-500 fill-current" /> Engine Configuration
+                                                </h3>
+                                                <span className="text-[9px] font-black text-white/30 uppercase tracking-[0.3em]">Hardware Sync Active</span>
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-8">
                                                 <SettingToggle 
-                                                    label="Color Mode" 
+                                                    label="Color Gamut" 
                                                     active={currentOrder.settings.color} 
                                                     onClick={() => updateSettings('color', !currentOrder.settings.color)}
-                                                    onLabel="Vibrant"
-                                                    offLabel="Classic"
+                                                    onLabel="Full RGB"
+                                                    offLabel="B&W Mono"
                                                 />
                                                 <SettingToggle 
-                                                    label="Orientation" 
+                                                    label="Print Face" 
                                                     active={currentOrder.settings.doubleSided} 
                                                     onClick={() => updateSettings('doubleSided', !currentOrder.settings.doubleSided)}
-                                                    onLabel="Double"
-                                                    offLabel="Single"
+                                                    onLabel="Duplex"
+                                                    offLabel="Simplex"
                                                 />
                                             </div>
-                                            <div className="mt-10 pt-10 border-t border-white/5 flex items-center justify-between">
-                                                <span className="text-xs font-black text-white/40 uppercase tracking-[0.2em]">Copies per file</span>
-                                                <div className="flex items-center gap-8 bg-white/5 p-2 rounded-2xl border border-white/5">
-                                                    <button onClick={() => updateSettings('copies', Math.max(1, currentOrder.settings.copies - 1))} className="w-10 h-10 rounded-xl flex items-center justify-center hover:bg-white/10 transition-colors font-bold text-lg">-</button>
-                                                    <span className="font-black text-2xl w-6 text-center">{currentOrder.settings.copies}</span>
-                                                    <button onClick={() => updateSettings('copies', currentOrder.settings.copies + 1)} className="w-10 h-10 rounded-xl flex items-center justify-center hover:bg-white/10 transition-colors font-bold text-lg">+</button>
+                                            <div className="mt-12 pt-12 border-t border-white/5 flex items-center justify-between">
+                                                <div className="space-y-1">
+                                                    <p className="text-xs font-black text-white uppercase tracking-[0.2em]">Batch Quantity</p>
+                                                    <p className="text-[10px] text-white/40 font-bold uppercase tracking-widest italic">Multi-copy multiplier</p>
+                                                </div>
+                                                <div className="flex items-center gap-10 bg-white/5 p-3 rounded-3xl border border-white/10 shadow-inner">
+                                                    <button onClick={() => updateSettings('copies', Math.max(1, currentOrder.settings.copies - 1))} className="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors font-black text-2xl text-blue-500 active:scale-90">-</button>
+                                                    <span className="font-black text-4xl w-10 text-center italic tracking-tighter">{currentOrder.settings.copies}</span>
+                                                    <button onClick={() => updateSettings('copies', currentOrder.settings.copies + 1)} className="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors font-black text-2xl text-blue-500 active:scale-90">+</button>
                                                 </div>
                                             </div>
                                         </div>
                                         {/* Decorative Background */}
-                                        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -mr-32 -mt-32 pointer-events-none" />
-                                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500/10 rounded-full blur-[60px] -ml-16 -mb-16 pointer-events-none" />
+                                        <div className="absolute top-0 right-0 w-80 h-80 bg-blue-600/10 rounded-full blur-[120px] -mr-40 -mt-40 pointer-events-none" />
+                                        <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-600/10 rounded-full blur-[80px] -ml-24 -mb-24 pointer-events-none" />
                                     </motion.div>
                                 )}
                             </AnimatePresence>
@@ -263,102 +275,115 @@ export default function Order() {
                     ) : (
                         <motion.div
                             key="step2"
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            className="space-y-10"
+                            exit={{ opacity: 0, y: -30 }}
+                            className="space-y-12"
                         >
-                            {/* Summary Card Dynamic */}
-                            <div className="bg-white rounded-[2.5rem] p-10 shadow-xl shadow-black/[0.02] border border-gray-100/50">
-                                <h3 className="text-xl font-black mb-8 tracking-tight">Recap</h3>
-                                <div className="space-y-6">
-                                    <SummaryLine label="Selected Items" value={`${currentOrder.files.length} Files`} />
+                            {/* Pro Review Card */}
+                            <div className="bg-white rounded-[3.5rem] p-12 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col gap-10">
+                                <div className="flex items-center justify-between">
+                                    <h3 className="text-3xl font-black tracking-tighter italic">Manifest Review.</h3>
+                                    <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-400">
+                                        <ShieldCheck size={24} />
+                                    </div>
+                                </div>
+                                <div className="space-y-8">
+                                    <SummaryLine label="Payload Units" value={`${currentOrder.files.length} Assets`} />
                                     {!isAllStationery && (
                                         <>
-                                            <SummaryLine label="Total Pages" value={currentOrder.files.reduce((acc, f) => acc + (f.pageCount || 1), 0)} />
-                                            <SummaryLine label="Color Quality" value={currentOrder.settings.color ? 'Full Vibrant' : 'Standard B&W'} />
-                                            <SummaryLine label="Copies" value={`${currentOrder.settings.copies}x Each`} />
+                                            <SummaryLine label="Capacity" value={`${currentOrder.files.reduce((acc, f) => acc + (f.pageCount || 1), 0)} Pages`} />
+                                            <SummaryLine label="Chroma Profile" value={currentOrder.settings.color ? 'Vibrant RGB' : 'Standard Mono'} />
+                                            <SummaryLine label="Multiplier" value={`${currentOrder.settings.copies}x Batch`} />
                                         </>
                                     )}
-                                    <div className="h-px bg-gray-50 my-6" />
+                                    <div className="h-px bg-gray-100/50" />
                                     <div className="flex justify-between items-center">
-                                        <span className="text-2xl font-black tracking-tight">Final Amount</span>
-                                        <div className="text-right">
-                                            <span className="text-4xl font-black text-primary">₹{total}</span>
-                                            <p className="text-[10px] text-gray-400 font-black uppercase mt-1">incl. taxes</p>
+                                        <div className="space-y-1">
+                                            <p className="text-3xl font-black tracking-tighter italic text-gray-950">Grand Total</p>
+                                            <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest pl-1">All protocols included</p>
                                         </div>
+                                        <span className="text-6xl font-black text-blue-600 tracking-tighter italic">₹{total}</span>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Payment Method - Deep Professional */}
+                            {/* Secure Terminal Card */}
                             <motion.div 
                                 whileHover={{ scale: 1.01 }}
-                                className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-[2.5rem] p-10 text-white relative overflow-hidden shadow-2xl shadow-blue-500/20"
+                                className="bg-black rounded-[3.5rem] p-12 text-white relative overflow-hidden shadow-2xl border border-white/5"
                             >
-                                <div className="relative z-10">
-                                    <div className="flex items-center gap-2 text-white/50 text-[10px] font-black uppercase tracking-widest mb-6">
-                                        <ShieldCheck size={16} /> Verified Security
+                                <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-10">
+                                    <div className="flex-1">
+                                        <div className="flex items-center gap-3 text-white/30 text-[10px] font-black uppercase tracking-[0.2em] mb-6">
+                                            <CreditCard size={18} /> Terminal Payment
+                                        </div>
+                                        <h3 className="text-3xl font-black mb-4 tracking-tighter italic">UPI Bridge.</h3>
+                                        <p className="text-white/40 text-sm font-bold leading-relaxed max-w-[280px]">Instant clearance via Jaypee Credit or any verified UPI terminal.</p>
                                     </div>
-                                    <h3 className="text-2xl font-black mb-3">Campus Credit / UPI</h3>
-                                    <p className="text-white/70 text-sm font-medium leading-relaxed max-w-[240px]">Instant verification using student ID or any UPI app.</p>
+                                    <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center shadow-2xl shrink-0 group hover:rotate-6 transition-transform">
+                                        <Zap size={48} className="text-blue-600 fill-current group-hover:scale-110 transition-transform" />
+                                    </div>
                                 </div>
-                                <CreditCard className="absolute bottom-[-30px] right-[-30px] text-white/10 rotate-[15deg]" size={180} />
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
                             </motion.div>
 
-                            <div className="flex items-start gap-4 p-6 bg-primary/[0.03] rounded-3xl border border-primary/10">
-                                <AlertCircle size={20} className="text-primary shrink-0 mt-0.5" />
-                                <p className="text-xs text-primary/60 font-bold leading-relaxed uppercase tracking-wide">
-                                    Orders sent to vendor cannot be cancelled once printing starts. Please double check settings.
-                                </p>
+                            <div className="flex items-start gap-5 p-8 bg-blue-600/[0.03] rounded-[2.5rem] border border-blue-600/10 shadow-sm shadow-blue-600/5">
+                                <AlertCircle size={24} className="text-blue-600 shrink-0 mt-0.5 animate-pulse" />
+                                <div className="space-y-1">
+                                    <p className="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em]">Deployment Protocol</p>
+                                    <p className="text-xs text-gray-500 font-bold leading-relaxed italic">
+                                        Orders submitted to the terminal cannot be recalled once operational. Confirm asset configuration.
+                                    </p>
+                                </div>
                             </div>
                         </motion.div>
                     )}
                 </AnimatePresence>
             </div>
 
-            {/* Premium Dynamic Bottom Bar */}
-            <div className="fixed bottom-0 left-0 w-full glass border-t border-gray-100/50 p-6 z-50">
-                <div className="max-w-xl mx-auto">
+            {/* Floating Operations Bar */}
+            <div className="fixed bottom-10 left-6 right-6 z-50">
+                <div className="max-w-2xl mx-auto">
                     {step === 1 ? (
                         <motion.button
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             onClick={handleNext}
                             disabled={!hasFiles}
-                            className="w-full bg-black text-white h-20 rounded-[2.25rem] font-black text-xl shadow-2xl shadow-black/20 disabled:opacity-20 disabled:shadow-none flex items-center justify-between px-12 hover:bg-gray-900 active:scale-[0.98] transition-all"
+                            className="w-full bg-black text-white h-24 rounded-[2.5rem] font-black text-2xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] disabled:opacity-10 disabled:grayscale flex items-center justify-between px-12 hover:bg-gray-900 active:scale-[0.98] transition-all group border border-white/5"
                         >
-                            <span>Review</span>
-                            <div className="flex items-center gap-3">
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Proceed</span>
-                                <ChevronRight size={24} />
+                            <span className="italic tracking-tighter">Review Shipment</span>
+                            <div className="flex items-center gap-4">
+                                <span className="text-[10px] font-black uppercase tracking-[0.3em] opacity-30 group-hover:opacity-100 transition-opacity">Proceed</span>
+                                <ChevronRight size={32} className="group-hover:translate-x-2 transition-transform" />
                             </div>
                         </motion.button>
                     ) : (
                         <motion.button
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             onClick={handlePay}
                             disabled={isProcessing}
-                            className="w-full bg-primary text-white h-20 rounded-[2.25rem] font-black text-xl shadow-2xl shadow-primary/30 flex items-center justify-between px-12 disabled:opacity-70 active:scale-[0.98] transition-all relative overflow-hidden group"
+                            className="w-full bg-blue-600 text-white h-24 rounded-[2.5rem] font-black text-2xl shadow-[0_30px_60px_-15px_rgba(37,99,235,0.4)] flex items-center justify-between px-12 disabled:opacity-70 active:scale-[0.98] transition-all relative overflow-hidden group border border-blue-400/20"
                         >
-                            <div className="relative z-10 flex flex-col items-start leading-none">
-                                <span className="text-[10px] opacity-50 font-black tracking-widest uppercase mb-1">Pay Now</span>
-                                <span>₹{total}</span>
+                            <div className="relative z-10 flex flex-col items-start leading-none gap-1">
+                                <span className="text-[10px] opacity-40 font-black tracking-[0.3em] uppercase">Authorize</span>
+                                <span className="italic tracking-tighter">₹{total}</span>
                             </div>
-                            <div className="relative z-10 flex items-center gap-3">
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em]">
-                                    {isProcessing ? 'Verifying...' : 'Complete'}
+                            <div className="relative z-10 flex items-center gap-5">
+                                <span className="text-[11px] font-black uppercase tracking-[0.3em] italic">
+                                    {isProcessing ? 'SYNCHING...' : 'INITIALIZE'}
                                 </span>
-                                {isProcessing ? <Loader2 className="animate-spin" size={24} /> : <ChevronRight size={24} />}
+                                {isProcessing ? <Loader2 className="animate-spin" size={32} /> : <ChevronRight size={32} className="group-hover:translate-x-2 transition-transform" />}
                             </div>
-                            {/* Loading state bar */}
+                            {/* Dynamic engine bar */}
                             {isProcessing && (
                                 <motion.div 
-                                    className="absolute bottom-0 left-0 h-1 bg-white/30"
+                                    className="absolute bottom-0 left-0 h-full bg-white/10"
                                     initial={{ width: 0 }}
                                     animate={{ width: '100%' }}
-                                    transition={{ duration: 2 }}
+                                    transition={{ duration: 3 }}
                                 />
                             )}
                         </motion.button>
@@ -371,9 +396,9 @@ export default function Order() {
 
 function SummaryLine({ label, value }) {
     return (
-        <div className="flex justify-between items-center">
-            <span className="text-gray-400 font-black text-[10px] uppercase tracking-widest">{label}</span>
-            <span className="font-black text-gray-900 text-lg tracking-tight">{value}</span>
+        <div className="flex justify-between items-center group">
+            <span className="text-gray-400 font-black text-[10px] uppercase tracking-[0.2em] group-hover:text-gray-900 transition-colors">{label}</span>
+            <span className="font-black text-gray-950 text-xl tracking-tighter italic">{value}</span>
         </div>
     );
 }
@@ -381,20 +406,20 @@ function SummaryLine({ label, value }) {
 function SettingToggle({ label, active, onClick, onLabel, offLabel }) {
     return (
         <motion.div 
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={onClick} 
-            className="cursor-pointer bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col gap-4 hover:bg-white/10 transition-all duration-300"
+            className="cursor-pointer bg-white/5 border border-white/10 rounded-[2rem] p-8 flex flex-col gap-5 hover:bg-white/10 transition-all duration-500 shadow-inner group"
         >
-            <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em]">{label}</span>
+            <span className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] group-hover:text-blue-500 transition-colors">{label}</span>
             <div className="flex items-center justify-between">
-                <span className={clsx("font-black text-sm tracking-tight transition-colors", active ? "text-primary shadow-primary/50" : "text-white")}>
+                <span className={clsx("font-black text-sm tracking-tighter uppercase italic transition-all duration-500", active ? "text-blue-500 shadow-blue-500/50" : "text-white/60")}>
                     {active ? onLabel : offLabel}
                 </span>
-                <div className={clsx("w-10 h-5 rounded-full relative transition-colors duration-500", active ? "bg-primary shadow-lg shadow-primary/40" : "bg-white/10")}>
+                <div className={clsx("w-12 h-6 rounded-full relative transition-all duration-700", active ? "bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.6)]" : "bg-white/10")}>
                     <motion.div 
-                        animate={{ x: active ? 20 : 0 }}
-                        className="absolute top-1 left-1 w-3 h-3 bg-white rounded-full transition-all shadow-sm"
+                        animate={{ x: active ? 24 : 4 }}
+                        className="absolute top-1.5 w-3 h-3 bg-white rounded-full transition-all shadow-xl"
                     />
                 </div>
             </div>

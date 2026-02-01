@@ -38,78 +38,88 @@ export default function Home() {
     };
 
     return (
-        <div className="min-h-screen bg-[#FBFBFD] text-gray-900 font-sans selection:bg-primary/10 selection:text-primary">
-            
+        <div className="min-h-screen bg-[#FBFBFD] text-gray-900 font-sans selection:bg-blue-600/10 transition-all duration-500 overflow-x-hidden">
+            {/* Ambient Background Blobs */}
+            <div className="fixed top-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-blue-400/5 blur-[100px] -z-0 pointer-events-none" />
+            <div className="fixed bottom-[-10%] left-[-5%] w-[30vw] h-[30vw] rounded-full bg-purple-400/5 blur-[100px] -z-0 pointer-events-none" />
+
             {/* Desktop Sidebar */}
-            <aside className="hidden lg:flex flex-col w-64 fixed inset-y-0 bg-white/80 backdrop-blur-xl border-r border-gray-100 z-50">
-                <div className="p-6">
+            <aside className="hidden lg:flex flex-col w-72 fixed inset-y-0 bg-white/40 backdrop-blur-3xl border-r border-gray-100/50 z-50">
+                <div className="p-8">
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="flex items-center gap-3 mb-10"
+                        className="flex items-center gap-3 mb-12"
                     >
-                        <div className="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center font-bold text-2xl shadow-xl shadow-black/10">J.</div>
-                        <span className="font-bold text-xl tracking-tighter">JPRINT</span>
+                        <div className="w-12 h-12 bg-black text-white rounded-2xl flex items-center justify-center font-black text-3xl shadow-2xl shadow-black/20 rotate-3">J.</div>
+                        <span className="font-black text-2xl tracking-tighter text-gray-950">JPRINT.</span>
                     </motion.div>
                     
-                    <nav className="space-y-1">
+                    <nav className="space-y-2">
                         <NavItem icon={<HomeIcon size={20} />} label="Home" active />
-                        <NavItem icon={<Clock size={20} />} label="Orders" onClick={() => navigate('/orders')} />
-                        <NavItem icon={<User size={20} />} label="Profile" onClick={() => navigate('/profile')} />
+                        <NavItem icon={<Clock size={20} />} label="My Orders" onClick={() => navigate('/orders')} />
+                        <NavItem icon={<User size={20} />} label="Identity" onClick={() => navigate('/profile')} />
                         {user?.role === 'vendor' && (
-                            <NavItem icon={<LayoutDashboard size={20} />} label="Vendor Panel" onClick={() => navigate('/vendor')} />
+                            <NavItem icon={<LayoutDashboard size={20} />} label="Control Panel" onClick={() => navigate('/vendor')} />
                         )}
                     </nav>
                 </div>
                 
-                <div className="mt-auto p-6">
+                <div className="mt-auto p-8">
                     <motion.div 
                         whileHover={{ scale: 1.02 }}
-                        className="bg-gray-50 rounded-2xl p-4 border border-gray-100"
+                        className="bg-black text-white rounded-[2rem] p-6 shadow-2xl shadow-black/10 border border-white/10 overflow-hidden relative group"
                     >
-                        <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Need Help?</p>
-                        <a href="https://chat.whatsapp.com/KnC17YZEiB15oNV5S3bTO6" target="_blank" className="text-sm font-bold text-black flex items-center gap-2 hover:text-primary transition-colors">
-                            Support Team <ArrowRight size={14} />
-                        </a>
+                        <div className="relative z-10">
+                            <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-3">Live Fleet</p>
+                            <h4 className="font-bold text-sm mb-4">Need print support?</h4>
+                            <a href="https://chat.whatsapp.com/KnC17YZEiB15oNV5S3bTO6" target="_blank" className="inline-flex items-center gap-2 bg-blue-600 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-blue-500 transition-colors">
+                                Messenger <ArrowRight size={14} />
+                            </a>
+                        </div>
+                        <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-blue-600/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
                     </motion.div>
                 </div>
             </aside>
 
             {/* Main Content Area */}
-            <main className="lg:pl-64 min-h-screen">
+            <main className="lg:pl-72 min-h-screen relative z-10">
                 
                 {/* Top Navbar */}
-                <header className="sticky top-0 z-40 bg-white/60 backdrop-blur-xl border-b border-gray-100/50">
-                    <div className="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
+                <header className="sticky top-0 z-40 bg-[#FBFBFD]/40 backdrop-blur-3xl border-b border-gray-100/50">
+                    <div className="max-w-5xl mx-auto px-6 h-24 flex items-center justify-between">
                         <motion.div
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                         >
-                            <h1 className="text-xl font-bold tracking-tight lg:hidden flex items-center gap-2">
-                                <div className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center font-bold text-lg">J.</div>
+                            <h1 className="text-2xl font-black tracking-tighter lg:hidden flex items-center gap-3">
+                                <div className="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center font-black text-2xl shadow-xl shadow-black/10">J.</div>
                                 JPRINT
                             </h1>
                             <div className="hidden lg:block">
-                                <h1 className="text-2xl font-black tracking-tight">
-                                    <span className="text-gray-400 font-medium">Hello,</span> {user?.name?.split(' ')[0] || 'Student'}
+                                <h1 className="text-3xl font-black tracking-tight text-gray-950">
+                                    <span className="text-gray-300 font-bold">Yo,</span> {user?.name?.split(' ')[0] || 'Student'}
                                 </h1>
-                                <p className="text-[10px] text-gray-400 font-black tracking-[0.2em] uppercase mt-0.5">Campus Hub • JIIT 128</p>
+                                <div className="flex items-center gap-2 mt-1">
+                                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
+                                    <p className="text-[10px] text-gray-400 font-black tracking-[0.2em] uppercase">Status: Fleet Active • JIIT 128</p>
+                                </div>
                             </div>
                         </motion.div>
 
-                        <div className="flex items-center gap-4">
-                            <button className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-black hover:bg-gray-100 transition-all relative group">
-                                <Bell size={20} />
-                                {activeOrders.length > 0 && <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-orange-500 rounded-full border-2 border-white animate-ping"></span>}
-                                {activeOrders.length > 0 && <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-orange-500 rounded-full border-2 border-white"></span>}
+                        <div className="flex items-center gap-5">
+                            <button className="w-12 h-12 rounded-2xl bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:text-black hover:shadow-xl transition-all relative group shadow-sm">
+                                <Bell size={22} />
+                                {activeOrders.length > 0 && <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-blue-600 rounded-full border-2 border-white animate-pulse"></span>}
                             </button>
                             <motion.div 
                                 onClick={() => navigate('/profile')}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="w-10 h-10 rounded-full bg-gradient-to-tr from-gray-900 to-gray-700 text-white border border-gray-800 flex items-center justify-center font-bold text-sm cursor-pointer shadow-lg shadow-black/10 overflow-hidden"
+                                className="w-12 h-12 rounded-2xl bg-black text-white flex items-center justify-center font-black text-lg cursor-pointer shadow-2xl shadow-black/20 overflow-hidden relative group"
                             >
-                                {user?.name ? user.name[0].toUpperCase() : <User size={20} />}
+                                <div className="absolute inset-0 bg-blue-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                <span className="relative z-10">{user?.name ? user.name[0].toUpperCase() : <User size={22} />}</span>
                             </motion.div>
                         </div>
                     </div>
@@ -129,7 +139,7 @@ export default function Home() {
                                 <div className="bg-black rounded-[2.5rem] p-8 text-white relative overflow-hidden group shadow-2xl shadow-black/20">
                                     <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
                                         <div className="space-y-2">
-                                            <div className="inline-flex items-center gap-2 bg-primary px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
+                                            <div className="inline-flex items-center gap-2 bg-blue-600 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
                                                 <Zap size={14} className="fill-current" /> Live tracking
                                             </div>
                                             <h2 className="text-3xl font-black tracking-tight">{activeOrders.length} Order{activeOrders.length > 1 ? 's' : ''} in Progress</h2>
@@ -137,7 +147,7 @@ export default function Home() {
                                         </div>
                                         <button 
                                             onClick={() => navigate('/orders')}
-                                            className="bg-white text-black px-8 py-4 rounded-2xl font-bold text-sm hover:scale-105 transition-all flex items-center justify-center gap-2 group shadow-xl"
+                                            className="bg-white text-black px-8 py-4 rounded-2xl font-black text-sm hover:scale-105 transition-all flex items-center justify-center gap-2 group shadow-xl"
                                         >
                                             Track Orders <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                                         </button>
@@ -171,12 +181,12 @@ export default function Home() {
                             title="Print Documents"
                             desc="PDFs, Notes, Study Material"
                             icon={<FileText size={28} />}
-                            color="bg-primary"
+                            color="bg-blue-600"
                             className="md:col-span-2"
                         />
                         <QuickCard 
                             to="/order"
-                            title="Design"
+                            title="Visual Design"
                             desc="Premium Posters"
                             icon={<ImageIcon size={28} />}
                             color="bg-purple-600"
@@ -193,7 +203,7 @@ export default function Home() {
                             title="Recent History"
                             desc="Access previous orders"
                             icon={<Clock size={28} />}
-                            color="bg-gray-800"
+                            color="bg-gray-900"
                             className="md:col-span-2"
                         />
                     </motion.div>
@@ -201,10 +211,10 @@ export default function Home() {
                     {/* Stationery Store Dynamic section */}
                     <section className="mb-16">
                         <div className="flex items-center justify-between mb-8">
-                            <h3 className="text-2xl font-black flex items-center gap-3">
-                                <PenTool size={24} className="text-orange-500" /> Essentials Shop
+                            <h3 className="text-3xl font-black flex items-center gap-3 tracking-tighter">
+                                <PenTool size={28} className="text-orange-500" /> Essentials Shop
                             </h3>
-                            <button className="text-xs font-black text-gray-400 hover:text-black uppercase tracking-widest transition-colors">Explore All</button>
+                            <button className="text-[10px] font-black text-gray-400 hover:text-black uppercase tracking-widest transition-colors">Explore All</button>
                         </div>
 
                         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -270,14 +280,14 @@ export default function Home() {
                     >
                         <button 
                             onClick={() => navigate('/order')}
-                            className="w-full lg:w-96 bg-primary text-white p-2 rounded-[2.25rem] font-bold shadow-2xl shadow-primary/30 group active:scale-95 transition-transform"
+                            className="w-full lg:w-96 bg-blue-600 text-white p-2 rounded-[2.25rem] font-bold shadow-2xl shadow-blue-600/30 group active:scale-95 transition-transform"
                         >
                             <div className="bg-white/10 rounded-[2rem] p-4 flex items-center justify-between px-6">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 bg-white text-primary rounded-xl flex items-center justify-center font-black">{cartCount}</div>
+                                    <div className="w-10 h-10 bg-white text-blue-600 rounded-xl flex items-center justify-center font-black">{cartCount}</div>
                                     <div className="text-left">
                                         <p className="text-xs opacity-60 uppercase tracking-widest font-black">Checkout</p>
-                                        <p className="text-sm">In your cart</p>
+                                        <p className="text-sm font-black">Ready to print</p>
                                     </div>
                                 </div>
                                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
@@ -294,7 +304,7 @@ function NavItem({ icon, label, active, onClick }) {
     return (
         <button 
             onClick={onClick}
-            className={`w-full flex items-center gap-4 px-4 py-3 rounded-2xl text-sm font-bold transition-all ${active ? 'bg-black text-white' : 'text-gray-500 hover:bg-gray-50 hover:text-black'}`}
+            className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-[13px] font-black uppercase tracking-widest transition-all ${active ? 'bg-black text-white shadow-xl shadow-black/10' : 'text-gray-400 hover:bg-gray-50 hover:text-black'}`}
         >
             {icon}
             {label}
@@ -306,7 +316,7 @@ function MobileNavItem({ icon, label, active, onClick }) {
     return (
         <button onClick={onClick} className={`flex flex-col items-center gap-1 ${active ? 'text-black' : 'text-gray-300'}`}>
             {icon}
-            <span className="text-[10px] font-bold uppercase tracking-widest">{label}</span>
+            <span className="text-[10px] font-black uppercase tracking-widest">{label}</span>
         </button>
     );
 }
@@ -316,31 +326,31 @@ function QuickCard({ title, desc, icon, color, to, className = "" }) {
     return (
         <div 
             onClick={() => navigate(to)}
-            className={`cursor-pointer rounded-[2.5rem] p-6 sm:p-8 relative overflow-hidden group border border-gray-100 bg-white hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 ${className}`}
+            className={`cursor-pointer rounded-[2.5rem] p-8 sm:p-10 relative overflow-hidden group border border-gray-100 bg-white hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 ${className}`}
         >
-            <div className={`w-12 h-12 sm:w-14 sm:h-14 ${color} text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-current/20 group-hover:scale-110 transition-transform duration-500`}>
+            <div className={`w-14 h-14 sm:w-16 sm:h-16 ${color} text-white rounded-2xl flex items-center justify-center mb-10 shadow-xl shadow-current/20 group-hover:scale-110 transition-transform duration-500`}>
                 {icon}
             </div>
-            <h3 className="text-xl sm:text-2xl font-bold mb-2 tracking-tight">{title}</h3>
-            <p className="text-gray-400 text-xs sm:text-sm font-medium leading-relaxed">{desc}</p>
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
+            <h3 className="text-2xl sm:text-3xl font-black mb-3 tracking-tighter text-gray-950">{title}</h3>
+            <p className="text-gray-400 text-sm sm:text-base font-bold leading-relaxed">{desc}</p>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700 pointer-events-none opacity-50" />
         </div>
     );
 }
 
 function StationeryItem({ name, price, desc, onAdd }) {
     return (
-        <div className="bg-white border border-gray-100 rounded-3xl p-6 flex items-center justify-between group hover:border-black/10 hover:shadow-xl transition-all">
-            <div>
-                <h4 className="font-bold text-gray-900 mb-0.5">{name}</h4>
-                <p className="text-xs text-gray-400 font-medium">{desc}</p>
-                <p className="text-sm font-black mt-2">₹{price}</p>
+        <div className="bg-white border border-gray-100 rounded-[2rem] p-8 flex items-center justify-between group hover:border-black/5 hover:shadow-xl transition-all relative overflow-hidden">
+            <div className="relative z-10">
+                <h4 className="font-black text-gray-950 mb-1 text-lg tracking-tight">{name}</h4>
+                <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">{desc}</p>
+                <p className="text-xl font-black mt-4 text-gray-900">₹{price}</p>
             </div>
             <button 
                 onClick={onAdd}
-                className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center text-gray-400 hover:bg-black hover:text-white hover:shadow-lg transition-all active:scale-90"
+                className="w-14 h-14 bg-gray-50 border border-gray-100 rounded-2xl flex items-center justify-center text-gray-400 hover:bg-black hover:text-white hover:shadow-2xl transition-all active:scale-90 relative z-10"
             >
-                <span className="text-2xl leading-none mb-1">+</span>
+                <span className="text-3xl leading-none mb-1">+</span>
             </button>
         </div>
     );

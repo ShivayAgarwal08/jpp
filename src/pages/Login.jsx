@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ArrowLeft, Loader2, Sparkles, Shield, User, Mail, Lock, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Loader2, Mail, Lock, ArrowRight, Zap, ShieldCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Login() {
@@ -21,91 +21,113 @@ export default function Login() {
             await login(email, password, 'user');
             navigate('/home');
         } catch (err) {
-            setError(typeof err === 'string' ? err : 'Invalid credentials. Please try again.');
+            setError(typeof err === 'string' ? err : 'Invalid credentials. Please verify your details.');
         } finally {
             setIsLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen bg-white flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans text-gray-900 selection:bg-black selection:text-white">
+        <div className="min-h-screen bg-[#FDFDFF] flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans text-gray-950 selection:bg-blue-600 selection:text-white">
             
-            {/* Ambient Background */}
-            <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-orange-500/5 rounded-full blur-[120px] pointer-events-none" />
+            {/* Ambient Background Blobs */}
+            <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none animate-pulse-soft" />
+            <div className="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none animate-float" />
 
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="w-full max-w-md z-10"
             >
-                <Link to="/" className="inline-flex items-center gap-2 text-gray-400 hover:text-black transition-colors mb-12 font-bold text-sm group">
-                    <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" /> Back to Home
-                </Link>
-
-                <div className="mb-10">
-                    <div className="w-16 h-16 bg-black text-white rounded-2xl flex items-center justify-center font-bold text-3xl mb-6 shadow-2xl shadow-black/20">J.</div>
-                    <h1 className="text-4xl font-extrabold tracking-tight mb-2">Sign in to JPRINT.</h1>
-                    <p className="text-gray-400 font-medium">Manage your prints and stationery orders across campus.</p>
+                <div className="flex justify-center mb-12">
+                    <Link to="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-black transition-all font-black text-xs uppercase tracking-[0.2em] group bg-white/50 backdrop-blur-xl px-6 py-3 rounded-full border border-gray-100 shadow-sm">
+                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Base
+                    </Link>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Work Email</label>
-                        <div className="relative group">
-                            <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-black transition-colors" size={20} />
-                            <input
-                                type="email"
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="name@jiit.ac.in"
-                                className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-14 py-5 text-sm font-bold placeholder:text-gray-300 focus:bg-white focus:border-black/10 focus:ring-4 focus:ring-black/5 outline-none transition-all"
-                            />
-                        </div>
+                <div className="bg-white/70 backdrop-blur-3xl p-10 md:p-12 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.08)] border border-white/50 relative">
+                    <div className="mb-12 text-center">
+                        <div className="w-20 h-20 bg-black text-white rounded-[2rem] flex items-center justify-center font-black text-4xl mb-8 shadow-2xl shadow-black/20 mx-auto rotate-6 group-hover:rotate-0 transition-transform">J.</div>
+                        <h1 className="text-4xl font-black tracking-tight mb-4 text-gray-950">Authenticate.</h1>
+                        <p className="text-gray-500 font-bold text-sm leading-relaxed max-w-[240px] mx-auto">Access your campus printing terminal and secure orders.</p>
                     </div>
 
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Password</label>
-                        <div className="relative group">
-                            <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-black transition-colors" size={20} />
-                            <input
-                                type="password"
-                                required
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="••••••••"
-                                className="w-full bg-gray-50 border border-gray-100 rounded-2xl px-14 py-5 text-sm font-bold placeholder:text-gray-300 focus:bg-white focus:border-black/10 focus:ring-4 focus:ring-black/5 outline-none transition-all"
-                            />
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="space-y-3">
+                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">JIIT Intelligence Email</label>
+                            <div className="relative group">
+                                <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-600 transition-colors" size={20} />
+                                <input
+                                    type="email"
+                                    required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="name@jiit.ac.in"
+                                    className="w-full bg-gray-50 border border-gray-100 rounded-[1.5rem] px-16 py-6 text-base font-black placeholder:text-gray-300 focus:bg-white focus:border-blue-600/20 focus:ring-8 focus:ring-blue-600/5 outline-none transition-all shadow-sm"
+                                />
+                            </div>
                         </div>
+
+                        <div className="space-y-3">
+                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Access Key</label>
+                            <div className="relative group">
+                                <Lock className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-600 transition-colors" size={20} />
+                                <input
+                                    type="password"
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="••••••••"
+                                    className="w-full bg-gray-50 border border-gray-100 rounded-[1.5rem] px-16 py-6 text-base font-black placeholder:text-gray-300 focus:bg-white focus:border-blue-600/20 focus:ring-8 focus:ring-blue-600/5 outline-none transition-all shadow-sm"
+                                />
+                            </div>
+                        </div>
+
+                        <AnimatePresence>
+                            {error && (
+                                <motion.div 
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="bg-red-50 text-red-600 p-5 rounded-[1.25rem] text-xs font-black tracking-tight leading-relaxed border border-red-100 flex items-center gap-3"
+                                >
+                                    <div className="w-2 h-2 bg-red-600 rounded-full shrink-0" />
+                                    {error}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        <button
+                            type="submit"
+                            disabled={isLoading}
+                            className="w-full bg-black text-white py-6 rounded-[1.5rem] font-black text-lg shadow-[0_20px_40px_-10px_rgba(0,0,0,0.2)] hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-3 mt-8 group"
+                        >
+                            {isLoading ? <Loader2 className="animate-spin" size={24} /> : (
+                                <span className="flex items-center gap-3 italic tracking-tighter">
+                                    Initialize Session <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+                                </span>
+                            )}
+                        </button>
+                    </form>
+
+                    <div className="mt-12 text-center">
+                        <p className="text-gray-500 text-[11px] font-black uppercase tracking-widest">
+                            New Personnel?{' '}
+                            <Link to="/register" className="text-blue-600 hover:underline">Enroll for Free</Link>
+                        </p>
                     </div>
+                </div>
 
-                    <AnimatePresence>
-                        {error && (
-                            <motion.div 
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: 'auto' }}
-                                className="bg-red-50 text-red-600 p-4 rounded-2xl text-xs font-bold leading-relaxed border border-red-100"
-                            >
-                                {error}
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-
-                    <button
-                        type="submit"
-                        disabled={isLoading}
-                        className="w-full bg-black text-white py-5 rounded-2xl font-bold text-sm shadow-2xl shadow-black/10 hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-50 flex items-center justify-center gap-2 mt-4"
-                    >
-                        {isLoading ? <Loader2 className="animate-spin" size={20} /> : <span className="flex items-center gap-2">Continue <ArrowRight size={18} /></span>}
-                    </button>
-                </form>
-
-                <div className="mt-10 text-center">
-                    <p className="text-gray-400 text-sm font-medium">
-                        Don't have an account?{' '}
-                        <Link to="/register" className="text-black font-black hover:underline">Create one for free</Link>
-                    </p>
+                {/* Footer security badge */}
+                <div className="mt-12 flex items-center justify-center gap-4 opacity-50">
+                    <div className="flex items-center gap-1.5 grayscale">
+                        <ShieldCheck size={16} />
+                        <span className="text-[10px] font-black uppercase tracking-widest">End-to-End Encryption</span>
+                    </div>
+                    <div className="w-1 h-1 bg-gray-300 rounded-full" />
+                    <div className="flex items-center gap-1.5 grayscale">
+                        <Zap size={16} />
+                        <span className="text-[10px] font-black uppercase tracking-widest">JIIT Fleet Certified</span>
+                    </div>
                 </div>
             </motion.div>
         </div>

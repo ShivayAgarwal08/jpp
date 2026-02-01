@@ -6,9 +6,11 @@
 @tailwind utilities;
 
 :root {
-  /* Premium Apple-inspired Palette */
-  --primary: 212 100% 48%; /* Deep Royal Blue */
-  --primary-glow: 212 100% 48% / 0.15;
+  /* Premium & Vibrant Palette */
+  --primary: 221 100% 50%; /* Vibrant Royal Blue */
+  --primary-glow: 221 100% 50% / 0.15;
+  --secondary: 262 80% 50%; /* Deep Purple */
+  --accent: 31 100% 50%; /* Bright Orange */
   --bg-app: 210 20% 98%;
   --bg-card: 0 0% 100%;
   --text-main: 210 20% 12%;
@@ -18,11 +20,18 @@
   --error: 0 84% 60%;
   --warning: 38 92% 50%;
   
+  /* Gradation Tokens */
+  --grad-royal: linear-gradient(135deg, #0066FF 0%, #7000FF 100%);
+  --grad-sunset: linear-gradient(135deg, #FF3D00 0%, #FFB300 100%);
+  --grad-ocean: linear-gradient(135deg, #00C6FF 0%, #0072FF 100%);
+  --grad-premium: linear-gradient(135deg, #111111 0%, #333333 100%);
+  
   /* Radii */
   --radius-sm: 0.75rem;
   --radius-md: 1rem;
   --radius-lg: 1.5rem;
-  --radius-xl: 2.25rem;
+  --radius-xl: 2.5rem;
+  --radius-2xl: 3.5rem;
 }
 
 /* Base Styles */
