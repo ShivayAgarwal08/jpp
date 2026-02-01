@@ -87,8 +87,11 @@ app.post('/api/register', async (req, res) => {
             { expiresIn: '7d' }
         );
 
+        // Remove password before sending
+        const { password: _, ...userWithoutPassword } = newUser;
+        
         console.log('User registered:', normalizedEmail);
-        res.json({ user: newUser, token });
+        res.json({ user: userWithoutPassword, token });
     } catch (err) {
         console.error('Register Error:', err.message);
         return res.status(400).json({ error: 'Email already exists' });
@@ -97,50 +100,46 @@ app.post('/api/register', async (req, res) => {
 
 // 2. LOGIN USER
 app.post('/api/login', async (req, res) => {
-    console.log('[POST] /api/login', req.body);
     const { email, password, role } = req.body;
-
     if (!email || !password) {
         return res.status(400).json({ error: 'Email and password are required' });
     }
-
-    // Vendor Hardcoded Check (Case Insensitive)
-    if (role === 'vendor') {
-        const normalizedEmail = email.toLowerCase().trim();
-        const vendorEmail = 'kartikguleria12@gmail.com';
-
-        if (normalizedEmail === vendorEmail && password === 'kk@123') {
-            console.log('Vendor login success:', vendorEmail);
-            return res.json({
-                id: 'vendor_admin',
-                name: 'Kartik Guleria',
-                email: vendorEmail,
-                role: 'vendor'
-            });
-        } else {
-            console.warn('Vendor login failed for:', normalizedEmail);
-            return res.status(401).json({ error: 'Invalid Vendor Credentials' });
-        }
-    }
-
-    // Normal DB Login
+    // Normal DB Login and Vendor Check
     try {
-        const user = await db.user.findFirst({
-            where: {
-                email: email.toLowerCase().trim()
-            }
+        const normalizedEmail = email.toLowerCase().trim();
+        const user = await db.user.findUnique({
+            where: { email: normalizedEmail }
         });
 
+        // 1. Check for hardcoded vendor first (if that's the intention)
+        if (role === 'vendor') {
+            const vendorEmail = 'kartikguleria12@gmail.com';
+            if (normalizedEmail === vendorEmail && password === 'kk@123') {
+                const vendorUser = {
+                    id: 'vendor_admin',
+                    name: 'Kartik Guleria',
+                    email: vendorEmail,
+                    role: 'vendor'
+                };
+                const token = jwt.sign(vendorUser, JWT_SECRET, { expiresIn: '7d' });
+                console.log('✅ Vendor login success:', vendorEmail);
+                return res.json({ user: vendorUser, token });
+            }
+        }
+
         if (!user) {
-            console.warn('Login failed: User not found', email);
+            console.warn('❌ Login failed: User not found:', normalizedEmail);
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            console.warn('Login failed: Wrong password for', email);
+            console.warn('❌ Login failed: Password mismatch for:', normalizedEmail);
             return res.status(401).json({ error: 'Invalid credentials' });
         }
+
+        // Remove password from user object before sending
+        const { password: _, ...userWithoutPassword } = user;
 
         const token = jwt.sign(
             { id: user.id, email: user.email, role: user.role },
@@ -148,11 +147,11 @@ app.post('/api/login', async (req, res) => {
             { expiresIn: '7d' }
         );
 
-        console.log('User login success:', user.email);
-        res.json({ user, token });
+        console.log('✅ Login successful:', normalizedEmail);
+        res.json({ user: userWithoutPassword, token });
     } catch (err) {
-        console.error('Login DB Error:', err.message);
-        return res.status(500).json({ error: err.message });
+        console.error('🔥 Login DB Error:', err.message);
+        return res.status(500).json({ error: 'Server error during login' });
     }
 });
 
