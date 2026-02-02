@@ -123,7 +123,7 @@ function OrderCard({ order, active, delay = 0 }) {
                             {status.icon}
                         </div>
                         <div>
-                            <h3 className="font-black text-gray-950 text-xl tracking-tighter">REC #{order.id.slice(-4).toUpperCase()}</h3>
+                            <h3 className="font-black text-gray-950 text-xl tracking-tighter">ORDER PIN: {order.otp}</h3>
                             <div className="flex items-center gap-3 mt-1.5 grayscale group-hover:grayscale-0 transition-all">
                                 <Clock size={14} className="text-gray-400" />
                                 <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest">
@@ -163,7 +163,7 @@ function OrderCard({ order, active, delay = 0 }) {
                         {status.label}
                     </div>
                     <button className="text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-black transition-all flex items-center gap-2 group/btn">
-                        Access Receipt <ChevronRight size={18} className="group-hover/btn:translate-x-2 transition-transform" />
+                        Order Assets <ChevronRight size={18} className="group-hover/btn:translate-x-2 transition-transform" />
                     </button>
                 </div>
             </div>

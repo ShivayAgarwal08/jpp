@@ -323,7 +323,7 @@ function AdminOrderCard({ order, onPrint, onCollect }) {
                 
                 <div>
                     <div className="flex items-center gap-3 mb-3">
-                        <h4 className="font-black text-2xl tracking-tighter text-white">#{order.id.slice(-6).toUpperCase()}</h4>
+                        <h4 className="font-black text-2xl tracking-tighter text-white">#PIN-{order.otp}</h4>
                         <span className="bg-white/10 text-white/50 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">{order.userEmail?.split('@')[0]}</span>
                     </div>
                     <div className="flex flex-wrap items-center gap-5 text-[11px] font-black uppercase tracking-widest text-white/30">
