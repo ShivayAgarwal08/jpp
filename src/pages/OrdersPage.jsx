@@ -1,18 +1,18 @@
 import { useOrder } from '../context/OrderContext';
 import { useAuth } from '../context/AuthContext';
-import { ArrowLeft, Clock, CheckCircle, Printer, FileText, Zap, ChevronRight, Sparkles } from 'lucide-react';
+import { ArrowLeft, Clock, CheckCircle, Printer, FileText, Zap, ChevronRight, Sparkles, Loader2 } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import clsx from 'clsx';
 
 export default function OrdersPage() {
-    const { orders } = useOrder();
+    const { orders, loading, error } = useOrder();
     const { user } = useAuth();
     const navigate = useNavigate();
 
-    const myOrders = orders.filter(o => o.userId === user?.id || o.userId === user?.uid);
-    const activeOrders = myOrders.filter(o => o.status !== 'collected');
-    const pastOrders = myOrders.filter(o => o.status === 'collected');
+    const myOrders = (orders || []).filter(o => o.userId === user?.id || o.userId === user?.uid);
+    const activeOrders = myOrders.filter(o => o?.status !== 'collected');
+    const pastOrders = myOrders.filter(o => o?.status === 'collected');
 
     return (
         <div className="min-h-screen bg-[#FDFDFF] pb-32 font-sans text-gray-950 selection:bg-blue-600/10 transition-all duration-500 overflow-x-hidden">
@@ -40,6 +40,29 @@ export default function OrdersPage() {
             </header>
 
             <div className="max-w-xl mx-auto p-6 space-y-16 relative z-10 pt-12">
+
+                {error && (
+                    <motion.div 
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="bg-red-50 p-8 rounded-[2.5rem] border border-red-100 flex flex-col items-center gap-4 text-center"
+                    >
+                        <div className="w-12 h-12 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center">
+                            <Clock className="rotate-180" size={24} />
+                        </div>
+                        <div>
+                            <p className="text-red-950 font-black tracking-tight text-lg mb-1">Terminal Link Severed</p>
+                            <p className="text-red-600 text-[10px] font-black uppercase tracking-widest">{error}</p>
+                        </div>
+                    </motion.div>
+                )}
+
+                {loading && orders.length === 0 && !error && (
+                    <div className="py-20 flex flex-col items-center justify-center gap-6">
+                        <Loader2 className="animate-spin text-blue-600" size={40} />
+                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em]">Synching with Terminal...</p>
+                    </div>
+                )}
 
                 {/* Active Orders Section */}
                 <section>
@@ -96,7 +119,7 @@ function OrderCard({ order, active, delay = 0 }) {
     const statusConfig = {
         paid: { color: 'text-blue-600', bg: 'bg-blue-600/5', icon: <Zap size={22} className="fill-current" />, label: 'IN OPERATION' },
         printed: { color: 'text-orange-600', bg: 'bg-orange-50', icon: <Printer size={22} />, label: 'ASSET READY' },
-        collected: { color: 'text-gray-400', bg: 'bg-gray-50', icon: <CheckCircle size={22} />, label: 'DEPLOYYED' }
+        collected: { color: 'text-gray-400', bg: 'bg-gray-50', icon: <CheckCircle size={22} />, label: 'DEPLOYED' }
     };
 
     const status = statusConfig[order.status] || statusConfig.paid;
@@ -127,14 +150,14 @@ function OrderCard({ order, active, delay = 0 }) {
                             <div className="flex items-center gap-3 mt-1.5 grayscale group-hover:grayscale-0 transition-all">
                                 <Clock size={14} className="text-gray-400" />
                                 <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest">
-                                    {new Date(order.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                {order.created_at ? new Date(order.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'Date Unavailable'}
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div className="text-right">
                         <p className="text-3xl font-black text-gray-950 tracking-tighter">₹{order.totalAmount}</p>
-                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1.5 bg-gray-50 px-3 py-1 rounded-full">{order.files.length} UNIT{order.files.length > 1 ? 'S' : ''}</p>
+                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1.5 bg-gray-50 px-3 py-1 rounded-full">{(order.files || []).length} UNIT{(order.files || []).length !== 1 ? 'S' : ''}</p>
                     </div>
                 </div>
 

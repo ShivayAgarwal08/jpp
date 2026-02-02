@@ -10,6 +10,8 @@ export const useOrder = () => useContext(OrderContext);
 export const OrderProvider = ({ children }) => {
     const { user, token } = useAuth();
     const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const [currentOrder, setCurrentOrder] = useState(() => {
         try {
@@ -49,19 +51,30 @@ export const OrderProvider = ({ children }) => {
             const res = await fetch(url, {
                 headers: token ? { 'Authorization': `Bearer ${token}` } : {}
             });
-            if (!res.ok) throw new Error(res.statusText);
+            
+            if (!res.ok) {
+                const errorData = await res.json().catch(() => ({}));
+                throw new Error(errorData.error || `Server Error: ${res.status}`);
+            }
 
             // Check content type to avoid JSON parse errors on 404 HTML responses
             const contentType = res.headers.get("content-type");
             if (!contentType || !contentType.includes("application/json")) {
-                console.warn("Backend not returning JSON. Is the server running?");
-                return;
+                throw new Error("Backend not returning JSON. Is the server running?");
             }
 
             const data = await res.json();
-            setOrders(data);
+            if (Array.isArray(data)) {
+                setOrders(data);
+                setError(null);
+            } else {
+                console.warn("Expected array of orders, but got:", data);
+            }
         } catch (error) {
             console.error("Failed to fetch orders:", error);
+            setError(error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -279,6 +292,8 @@ export const OrderProvider = ({ children }) => {
     return (
         <OrderContext.Provider value={{
             orders,
+            loading,
+            error,
             currentOrder,
             addFile,
             addStationeryItem,
