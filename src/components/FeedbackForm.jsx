@@ -56,23 +56,23 @@ export default function FeedbackForm() {
         <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-[3rem] p-10 shadow-2xl shadow-black/[0.03] border border-gray-100 relative overflow-hidden group"
+            className="bg-card rounded-[3rem] p-10 shadow-2xl shadow-black/[0.03] border border-border relative overflow-hidden group"
         >
-            <div className="absolute top-0 right-0 w-40 h-40 bg-orange-500/5 rounded-full blur-3xl pointer-events-none group-hover:bg-orange-500/10 transition-colors" />
+            <div className="absolute top-0 right-0 w-40 h-40 bg-primary/5 rounded-full blur-3xl pointer-events-none group-hover:bg-primary/10 transition-colors" />
 
             <div className="flex items-center gap-4 mb-10 relative z-10">
-                <div className="w-14 h-14 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center shadow-inner">
-                    <Heart size={28} className="fill-orange-500/20" />
+                <div className="w-14 h-14 bg-primary/10 text-primary rounded-2xl flex items-center justify-center shadow-inner">
+                    <Heart size={28} className="fill-primary/20" />
                 </div>
                 <div>
-                    <h3 className="text-2xl font-black tracking-tighter">Experience Log.</h3>
-                    <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em] mt-1">Quality Control Sync</p>
+                    <h3 className="text-2xl font-black tracking-tighter text-foreground">Experience Log.</h3>
+                    <p className="text-[10px] text-muted font-black uppercase tracking-[0.3em] mt-1">Quality Control Sync</p>
                 </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-10 relative z-10">
                 <div className="space-y-4 text-center">
-                    <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.4em] mb-6">Service Rating Level</p>
+                    <p className="text-[10px] text-muted font-black uppercase tracking-[0.4em] mb-6">Service Rating Level</p>
                     <div className="flex justify-center gap-4">
                         {[1, 2, 3, 4, 5].map((star) => (
                             <motion.button
@@ -88,8 +88,8 @@ export default function FeedbackForm() {
                                     className={clsx(
                                         "transition-all duration-500 drop-shadow-xl",
                                         star <= rating
-                                            ? 'text-orange-500 fill-orange-500 scale-110'
-                                            : 'text-gray-100 fill-gray-50'
+                                            ? 'text-primary fill-primary scale-110'
+                                            : 'text-muted/10 fill-muted/5'
                                     )}
                                 />
                             </motion.button>
@@ -98,7 +98,7 @@ export default function FeedbackForm() {
                 </div>
 
                 <div className="relative group">
-                    <div className="absolute left-6 top-6 text-gray-300 group-focus-within:text-orange-500 transition-colors">
+                    <div className="absolute left-6 top-6 text-muted group-focus-within:text-primary transition-colors">
                         <MessageSquare size={20} />
                     </div>
                     <textarea
@@ -106,18 +106,18 @@ export default function FeedbackForm() {
                         onChange={(e) => setFeedback(e.target.value)}
                         placeholder="Transmission details (Optional)..."
                         rows="4"
-                        className="w-full p-6 pl-16 bg-gray-50 border border-transparent rounded-[2rem] focus:bg-white focus:border-orange-500/20 outline-none transition-all resize-none text-base font-bold text-gray-950 placeholder:text-gray-300 placeholder:italic"
+                        className="w-full p-6 pl-16 bg-app border border-border rounded-[2rem] focus:bg-card focus:border-primary/20 outline-none transition-all resize-none text-base font-bold text-foreground placeholder:text-muted/40 placeholder:italic"
                     />
                 </div>
 
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-black text-white py-6 rounded-2xl font-black text-sm flex items-center justify-center gap-3 hover:bg-orange-600 transition-all shadow-2xl shadow-black/10 disabled:opacity-50 uppercase tracking-widest"
+                    className="w-full bg-foreground text-background py-6 rounded-2xl font-black text-sm flex items-center justify-center gap-3 hover:bg-primary hover:text-white transition-all shadow-2xl shadow-black/10 disabled:opacity-50 uppercase tracking-widest"
                 >
                     {isSubmitting ? (
                         <div className="flex items-center gap-3">
-                            <span className="w-2 h-2 bg-white rounded-full animate-ping" />
+                            <span className="w-2 h-2 bg-current rounded-full animate-ping" />
                             TRANSMITTING...
                         </div>
                     ) : (

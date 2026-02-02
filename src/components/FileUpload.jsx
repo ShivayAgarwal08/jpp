@@ -42,8 +42,8 @@ export default function FileUpload() {
                 className={clsx(
                     "relative border-[3px] border-dashed rounded-[2.5rem] p-12 transition-all duration-500 ease-out text-center cursor-pointer overflow-hidden group",
                     isDragging 
-                        ? "border-blue-600 bg-blue-600/5 scale-[1.02] shadow-2xl shadow-blue-600/10" 
-                        : "border-gray-100 bg-gray-50/50 hover:border-gray-200 hover:bg-white hover:shadow-xl hover:shadow-black/5"
+                        ? "border-primary bg-primary/5 scale-[1.02] shadow-2xl shadow-primary/10" 
+                        : "border-border bg-app/50 hover:border-muted hover:bg-card hover:shadow-xl hover:shadow-black/5"
                 )}
             >
                 <input
@@ -56,18 +56,18 @@ export default function FileUpload() {
                 <div className="flex flex-col items-center gap-6 relative z-10">
                     <div className={clsx(
                         "w-20 h-20 rounded-[2rem] flex items-center justify-center transition-all duration-500 shadow-2xl",
-                        isDragging ? "bg-blue-600 text-white rotate-12" : "bg-white text-blue-600 group-hover:bg-blue-600 group-hover:text-white"
+                        isDragging ? "bg-primary text-white rotate-12" : "bg-card text-primary group-hover:bg-primary group-hover:text-white"
                     )}>
                         <Upload size={32} />
                     </div>
                     <div>
-                        <p className="font-black text-2xl tracking-tight text-gray-950">Release Assets Here.</p>
-                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em] mt-2">PDF • JPG • PNG up to 10MB</p>
+                        <p className="font-black text-2xl tracking-tight text-foreground">Release Assets Here.</p>
+                        <p className="text-[10px] text-muted font-black uppercase tracking-[0.3em] mt-2">PDF • JPG • PNG up to 10MB</p>
                     </div>
                 </div>
 
                 {/* Decorative Elements */}
-                <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-600/5 rounded-full blur-3xl pointer-events-none group-hover:scale-150 transition-transform duration-1000" />
+                <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl pointer-events-none group-hover:scale-150 transition-transform duration-1000" />
             </div>
 
             <AnimatePresence mode="popLayout">
@@ -78,8 +78,8 @@ export default function FileUpload() {
                         className="space-y-4"
                     >
                         <div className="flex items-center justify-between mb-4 ml-2">
-                            <h3 className="text-xs font-black text-gray-400 uppercase tracking-[0.3em]">Pending Processing</h3>
-                            <span className="text-[10px] font-black text-blue-600 bg-blue-600/10 px-3 py-1 rounded-full uppercase tracking-widest">{currentOrder.files.length} Unit{currentOrder.files.length > 1 ? 's' : ''}</span>
+                            <h3 className="text-xs font-black text-muted uppercase tracking-[0.3em]">Pending Processing</h3>
+                            <span className="text-[10px] font-black text-primary bg-primary/10 px-3 py-1 rounded-full uppercase tracking-widest">{currentOrder.files.length} Unit{currentOrder.files.length > 1 ? 's' : ''}</span>
                         </div>
                         
                         <div className="grid gap-4">
@@ -90,24 +90,24 @@ export default function FileUpload() {
                                     initial={{ opacity: 0, x: -20, scale: 0.95 }}
                                     animate={{ opacity: 1, x: 0, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-                                    className="flex items-center gap-6 p-5 rounded-[2rem] bg-white border border-gray-100 group shadow-sm hover:shadow-xl hover:border-blue-600/10 transition-all duration-500"
+                                    className="flex items-center gap-6 p-5 rounded-[2rem] bg-card border border-border group shadow-sm hover:shadow-xl hover:border-primary/10 transition-all duration-500"
                                 >
-                                    <div className="w-14 h-14 rounded-2xl bg-gray-50 text-gray-400 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all shadow-inner">
+                                    <div className="w-14 h-14 rounded-2xl bg-app text-muted flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all shadow-inner">
                                         {file.type.startsWith('image/') ? <FileImage size={24} /> : <File size={24} />}
                                     </div>
 
                                     <div className="flex-1 min-w-0">
-                                        <p className="font-black text-gray-950 truncate tracking-tight">{file.name}</p>
+                                        <p className="font-black text-foreground truncate tracking-tight">{file.name}</p>
                                         <div className="flex items-center gap-3 mt-1">
-                                            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
-                                            <div className="w-1 h-1 bg-gray-200 rounded-full" />
-                                            {file.pageCount && <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest">{file.pageCount} PG{file.pageCount > 1 ? 'S' : ''}</p>}
+                                            <p className="text-[10px] font-black text-muted uppercase tracking-widest">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                                            <div className="w-1 h-1 bg-border rounded-full" />
+                                            {file.pageCount && <p className="text-[10px] font-black text-primary uppercase tracking-widest">{file.pageCount} PG{file.pageCount > 1 ? 'S' : ''}</p>}
                                         </div>
                                     </div>
 
                                     <button
                                         onClick={() => removeFile(file.id)}
-                                        className="w-10 h-10 rounded-xl bg-gray-50 text-gray-300 flex items-center justify-center hover:bg-red-500 hover:text-white hover:rotate-90 transition-all duration-500"
+                                        className="w-10 h-10 rounded-xl bg-app text-muted/40 flex items-center justify-center hover:bg-red-500 hover:text-white hover:rotate-90 transition-all duration-500"
                                     >
                                         <X size={18} />
                                     </button>

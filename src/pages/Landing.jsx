@@ -15,6 +15,7 @@ import {
     CreditCard
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import ThemeToggle from '../components/ThemeToggle';
 
 export default function Landing() {
     const { user } = useAuth();
@@ -37,33 +38,34 @@ export default function Landing() {
     };
 
     return (
-        <div className="min-h-screen bg-[#FDFDFF] text-gray-950 font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden">
+        <div className="min-h-screen bg-app text-foreground font-sans selection:bg-primary selection:text-white transition-colors duration-300 overflow-x-hidden">
             
             {/* Ambient Background Blobs */}
-            <div className="fixed top-[-10%] left-[-5%] w-[60vw] h-[60vw] rounded-full bg-blue-400/10 blur-[130px] -z-10 animate-pulse-soft" />
-            <div className="fixed bottom-[-10%] right-[-5%] w-[50vw] h-[50vw] rounded-full bg-purple-400/10 blur-[130px] -z-10 animate-float" />
+            <div className="fixed top-[-10%] left-[-5%] w-[60vw] h-[60vw] rounded-full bg-primary/10 blur-[130px] -z-10 animate-pulse-soft" />
+            <div className="fixed bottom-[-10%] right-[-5%] w-[50vw] h-[50vw] rounded-full bg-secondary/10 blur-[130px] -z-10 animate-float" />
             <div className="fixed top-[20%] right-[10%] w-[30vw] h-[30vw] rounded-full bg-orange-400/5 blur-[100px] -z-10" />
 
             {/* Premium Header */}
             <nav className={`fixed top-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'py-4' : 'py-8'}`}>
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className={`glass rounded-[2rem] px-8 h-16 flex items-center justify-between transition-all duration-500 ${scrolled ? 'shadow-2xl shadow-black/5 bg-white/70' : 'bg-white/40 border-transparent shadow-none'}`}>
+                    <div className={`glass rounded-[2rem] px-8 h-16 flex items-center justify-between transition-all duration-500 ${scrolled ? 'shadow-2xl shadow-black/5 bg-card/70' : 'bg-card/40 border-transparent shadow-none'}`}>
                         <div className="flex items-center gap-3">
                             <img src="/assets/hero-logo.jpg" className="w-10 h-10 rounded-2xl shadow-xl shadow-black/20 hover:rotate-6 transition-transform cursor-pointer object-cover" alt="Logo" />
                             <span className="font-extrabold text-2xl tracking-tighter hidden sm:block">JPRINT<span className="text-blue-600">.</span></span>
                         </div>
                         
-                        <div className="hidden lg:flex items-center gap-10 text-[13px] font-bold text-gray-500 uppercase tracking-widest">
-                            <a href="#features" className="hover:text-black transition-colors">Experience</a>
-                            <a href="#workflow" className="hover:text-black transition-colors">Workflow</a>
-                            <a href="#campuses" className="hover:text-black transition-colors">Availability</a>
+                        <div className="hidden lg:flex items-center gap-10 text-[13px] font-bold text-muted uppercase tracking-widest">
+                            <a href="#features" className="hover:text-foreground transition-colors">Experience</a>
+                            <a href="#workflow" className="hover:text-foreground transition-colors">Workflow</a>
+                            <a href="#campuses" className="hover:text-foreground transition-colors">Availability</a>
                         </div>
 
                         <div className="flex items-center gap-4">
-                            <button onClick={() => navigate('/login')} className="text-sm font-bold text-gray-500 hover:text-black transition-colors px-4 py-2">Sign In</button>
+                            <ThemeToggle />
+                            <button onClick={() => navigate('/login')} className="text-sm font-bold text-muted hover:text-foreground transition-colors px-4 py-2 hidden sm:block">Sign In</button>
                             <button 
                                 onClick={() => setShowSelection(true)}
-                                className="bg-black text-white px-6 py-2.5 rounded-full text-sm font-bold hover:shadow-2xl hover:shadow-black/20 hover:scale-105 active:scale-95 transition-all"
+                                className="bg-foreground text-background px-6 py-2.5 rounded-full text-sm font-bold hover:shadow-2xl hover:shadow-black/20 hover:scale-105 active:scale-95 transition-all"
                             >
                                 Get Started
                             </button>

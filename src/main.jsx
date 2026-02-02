@@ -9,17 +9,20 @@ import { ToastProvider } from './components/Toast';
 // import { NeonAuthUIProvider } from '@neondatabase/neon-js/auth/react';
 // import { auth } from './lib/auth';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     {/* <NeonAuthUIProvider auth={auth}> */}
-    <AuthProvider>
-      <OrderProvider>
-        <ToastProvider>
-          <App />
-        </ToastProvider>
-      </OrderProvider>
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <OrderProvider>
+          <ToastProvider>
+            <App />
+          </ToastProvider>
+        </OrderProvider>
+      </AuthProvider>
+    </ThemeProvider>
     {/* </NeonAuthUIProvider> */}
   </StrictMode>,
-)
+);

@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useOrder } from '../context/OrderContext';
 import clsx from 'clsx';
+import ThemeToggle from '../components/ThemeToggle';
 
 export default function Order() {
     const { currentOrder, addFile, removeFile, updateSettings, calculateTotal, placeOrder } = useOrder();
@@ -88,13 +89,13 @@ export default function Order() {
                 <div className="flex flex-col gap-5 w-full max-w-md relative z-10">
                     <button 
                         onClick={() => navigate('/orders')}
-                        className="w-full bg-black text-white font-black py-6 rounded-3xl text-lg hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-black/10 flex items-center justify-center gap-3"
+                        className="w-full bg-foreground text-background font-black py-6 rounded-3xl text-lg hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl shadow-black/10 flex items-center justify-center gap-3"
                     >
-                        Track Shipment <ArrowRight size={22} />
+                        Track Shipment <ChevronRight size={22} />
                     </button>
                     <button 
                         onClick={() => navigate('/home')}
-                        className="text-gray-400 font-black text-xs uppercase tracking-widest hover:text-black transition-colors"
+                        className="text-muted font-black text-xs uppercase tracking-widest hover:text-foreground transition-colors"
                     >
                         Return to Dashboard
                     </button>
@@ -104,48 +105,51 @@ export default function Order() {
     }
 
     return (
-        <div className="min-h-screen bg-[#FDFDFF] pb-40 font-sans selection:bg-blue-600/10 transition-all duration-500 overflow-x-hidden">
+        <div className="min-h-screen bg-app pb-40 font-sans selection:bg-primary/10 transition-colors duration-300 overflow-x-hidden">
             
             {/* Ambient Background Blobs */}
-            <div className="fixed top-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-blue-600/5 blur-[120px] -z-0 pointer-events-none" />
-            <div className="fixed bottom-[-10%] left-[-5%] w-[30vw] h-[30vw] rounded-full bg-purple-600/5 blur-[120px] -z-0 pointer-events-none" />
+            <div className="fixed top-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-primary/5 blur-[120px] -z-0 pointer-events-none" />
+            <div className="fixed bottom-[-10%] left-[-5%] w-[30vw] h-[30vw] rounded-full bg-secondary/5 blur-[120px] -z-0 pointer-events-none" />
 
             {/* Premium Step Header */}
-            <header className="bg-white/40 backdrop-blur-3xl sticky top-0 z-40 px-6 h-24 border-b border-gray-100/50 flex items-center justify-between">
+            <header className="bg-card/40 backdrop-blur-3xl sticky top-0 z-40 px-6 h-24 border-b border-border/50 flex items-center justify-between transition-colors duration-300">
                 <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
                     <div className="flex items-center gap-5">
                         <motion.button 
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
                             onClick={() => step === 1 ? navigate('/home') : setStep(1)} 
-                            className="w-12 h-12 bg-white border border-gray-100 rounded-2xl flex items-center justify-center text-gray-500 hover:text-black transition-all shadow-sm"
+                            className="w-12 h-12 bg-card border border-border rounded-2xl flex items-center justify-center text-muted hover:text-foreground transition-all shadow-sm"
                         >
                             <ArrowLeft size={24} />
                         </motion.button>
                         <div>
-                        <h1 className="font-black text-2xl tracking-tighter">{step === 1 ? 'Configure' : 'Finalize'}</h1>
+                        <h1 className="font-black text-2xl tracking-tighter text-foreground">{step === 1 ? 'Configure' : 'Finalize'}</h1>
                             <div className="flex items-center gap-2 mt-1.5">
                                 {[1, 2].map((s) => (
                                     <div 
                                         key={s} 
                                         className={clsx(
                                             "h-1.5 rounded-full transition-all duration-700",
-                                            step >= s ? "bg-blue-600 w-10 shadow-[0_0_10px_rgba(37,99,235,0.4)]" : "bg-gray-200 w-4"
+                                            step >= s ? "bg-primary w-10 shadow-[0_0_10px_hsla(var(--primary)/0.4)]" : "bg-border w-4"
                                         )} 
                                     />
                                 ))}
                             </div>
                         </div>
                     </div>
-                    {hasFiles && (
-                        <motion.div 
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            className="bg-black text-white px-5 py-2 rounded-2xl text-xs font-black tracking-widest shadow-2xl shadow-black/10 flex items-center gap-2"
-                        >
-                            <Sparkles size={14} /> {currentOrder.files.length} ASSETS
-                        </motion.div>
-                    )}
+                    <div className="flex items-center gap-4">
+                        <ThemeToggle />
+                        {hasFiles && (
+                            <motion.div 
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="bg-foreground text-background px-5 py-2 rounded-2xl text-xs font-black tracking-widest shadow-2xl shadow-black/10 flex items-center gap-2"
+                            >
+                                <Sparkles size={14} /> {currentOrder.files.length} ASSETS
+                            </motion.div>
+                        )}
+                    </div>
                 </div>
             </header>
 
@@ -168,14 +172,14 @@ export default function Order() {
                                     onChange={(e) => Array.from(e.target.files).forEach(addFile)}
                                     className="absolute inset-0 opacity-0 cursor-pointer z-10"
                                 />
-                                <div className="border-2 border-dashed border-gray-200 bg-white/50 backdrop-blur-xl rounded-[3rem] p-10 sm:p-20 text-center transition-all duration-700 group-hover:border-blue-600/30 group-hover:bg-blue-600/[0.03] group-hover:scale-[1.01] relative">
-                                     <div className="w-24 h-24 bg-gray-50 rounded-[2.25rem] flex items-center justify-center mx-auto mb-8 text-gray-400 group-hover:scale-110 group-hover:text-blue-600 group-hover:bg-blue-600/10 group-hover:rotate-6 transition-all duration-700 shadow-xl shadow-black/[0.02]">
+                                <div className="border-2 border-dashed border-border bg-card/50 backdrop-blur-xl rounded-[3rem] p-10 sm:p-20 text-center transition-all duration-700 group-hover:border-primary/30 group-hover:bg-primary/[0.03] group-hover:scale-[1.01] relative">
+                                     <div className="w-24 h-24 bg-app rounded-[2.25rem] flex items-center justify-center mx-auto mb-8 text-muted group-hover:scale-110 group-hover:text-primary group-hover:bg-primary/10 group-hover:rotate-6 transition-all duration-700 shadow-xl shadow-black/[0.02]">
                                          <Upload size={40} />
                                      </div>
-                                     <h3 className="font-black text-2xl sm:text-3xl mb-3 tracking-tighter text-gray-950">Initialize Upload.</h3>
-                                     <p className="text-[10px] sm:text-sm text-gray-500 font-bold uppercase tracking-widest px-4">PDF or Images • End-to-End Encryption</p>
+                                     <h3 className="font-black text-2xl sm:text-3xl mb-3 tracking-tighter text-foreground">Initialize Upload.</h3>
+                                     <p className="text-[10px] sm:text-sm text-muted font-bold uppercase tracking-widest px-4">PDF or Images • End-to-End Encryption</p>
                                      
-                                     <div className="absolute inset-0 pointer-events-none border-2 border-blue-600/0 group-hover:border-blue-600/20 rounded-[3rem] transition-all duration-700 animate-pulse-soft" />
+                                     <div className="absolute inset-0 pointer-events-none border-2 border-primary/0 group-hover:border-primary/20 rounded-[3rem] transition-all duration-700 animate-pulse-soft" />
                                  </div>
                             </div>
 
@@ -190,20 +194,20 @@ export default function Order() {
                                             exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
                                             transition={{ delay: idx * 0.05 }}
                                             key={file.id} 
-                                            className="bg-white p-6 sm:p-8 rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.03)] border border-gray-100 flex items-center gap-5 sm:gap-8 group hover:border-blue-600/10 transition-all duration-500"
+                                            className="bg-card p-6 sm:p-8 rounded-[2.5rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.03)] border border-border flex items-center gap-5 sm:gap-8 group hover:border-primary/10 transition-all duration-500"
                                         >
-                                            <div className="w-16 h-16 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-black group-hover:text-white transition-all duration-700 shrink-0 shadow-inner group-hover:rotate-6">
+                                            <div className="w-16 h-16 rounded-2xl bg-app flex items-center justify-center text-muted group-hover:bg-foreground group-hover:text-background transition-all duration-700 shrink-0 shadow-inner group-hover:rotate-6">
                                                 {file.type === 'stationery' ? <PenTool size={32} /> :
                                                     file.type.startsWith('image/') ? <FileImage size={32} /> : <FileText size={32} />}
                                             </div>
                                             <div className="flex-1 min-w-0">
-                                                <p className="font-black truncate text-lg tracking-tight text-gray-950">{file.name}</p>
+                                                <p className="font-black truncate text-lg tracking-tight text-foreground">{file.name}</p>
                                                 <div className="flex items-center gap-4 mt-2">
-                                                    <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
+                                                    <span className="text-[10px] font-black text-muted uppercase tracking-widest bg-app px-3 py-1 rounded-full border border-border">
                                                         {file.type === 'stationery' ? `₹${file.price}` : `${(file.size / 1024 / 1024).toFixed(2)} MB`}
                                                     </span>
                                                     {file.pageCount > 0 && (
-                                                        <span className="bg-blue-600/5 text-blue-600 text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest border border-blue-600/10">
+                                                        <span className="bg-primary/5 text-primary text-[10px] font-black px-4 py-1.5 rounded-full uppercase tracking-widest border border-primary/10">
                                                             {file.pageCount} Pages
                                                         </span>
                                                     )}
@@ -213,7 +217,7 @@ export default function Order() {
                                                 whileHover={{ scale: 1.1, rotate: 90 }}
                                                 whileTap={{ scale: 0.9 }}
                                                 onClick={() => removeFile(file.id)} 
-                                                className="w-12 h-12 rounded-2xl flex items-center justify-center text-gray-300 hover:bg-red-50 hover:text-red-500 transition-all shadow-sm"
+                                                className="w-12 h-12 rounded-2xl flex items-center justify-center text-muted hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-500 transition-all shadow-sm"
                                             >
                                                 <X size={24} />
                                             </motion.button>
@@ -233,7 +237,7 @@ export default function Order() {
                                         <div className="relative z-10">
                                             <div className="flex items-center justify-between mb-12">
                                                 <h3 className="text-2xl font-black flex items-center gap-3 tracking-tighter">
-                                                    <Zap size={24} className="text-blue-500 fill-current" /> Engine Configuration
+                                                    <Zap size={24} className="text-primary fill-current" /> Engine Configuration
                                                 </h3>
                                                 <span className="text-[9px] font-black text-white/30 uppercase tracking-[0.3em]">Hardware Sync Active</span>
                                             </div>
@@ -259,15 +263,15 @@ export default function Order() {
                                                     <p className="text-[10px] text-white/40 font-bold uppercase tracking-widest">Multi-copy multiplier</p>
                                                 </div>
                                                 <div className="flex items-center gap-8 sm:gap-10 bg-white/5 p-3 rounded-3xl border border-white/10 shadow-inner">
-                                                    <button onClick={() => updateSettings('copies', Math.max(1, currentOrder.settings.copies - 1))} className="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors font-black text-2xl text-blue-500 active:scale-90">-</button>
+                                                    <button onClick={() => updateSettings('copies', Math.max(1, currentOrder.settings.copies - 1))} className="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors font-black text-2xl text-primary active:scale-90">-</button>
                                                     <span className="font-black text-3xl sm:text-4xl w-10 text-center tracking-tighter">{currentOrder.settings.copies}</span>
-                                                    <button onClick={() => updateSettings('copies', currentOrder.settings.copies + 1)} className="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors font-black text-2xl text-blue-500 active:scale-90">+</button>
+                                                    <button onClick={() => updateSettings('copies', currentOrder.settings.copies + 1)} className="w-12 h-12 rounded-2xl flex items-center justify-center hover:bg-white/10 transition-colors font-black text-2xl text-primary active:scale-90">+</button>
                                                 </div>
                                             </div>
                                         </div>
                                         {/* Decorative Background */}
-                                        <div className="absolute top-0 right-0 w-80 h-80 bg-blue-600/10 rounded-full blur-[120px] -mr-40 -mt-40 pointer-events-none" />
-                                        <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-600/10 rounded-full blur-[80px] -ml-24 -mb-24 pointer-events-none" />
+                                        <div className="absolute top-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-[120px] -mr-40 -mt-40 pointer-events-none" />
+                                        <div className="absolute bottom-0 left-0 w-48 h-48 bg-secondary/10 rounded-full blur-[80px] -ml-24 -mb-24 pointer-events-none" />
                                     </motion.div>
                                 )}
                             </AnimatePresence>
@@ -281,10 +285,10 @@ export default function Order() {
                             className="space-y-12"
                         >
                             {/* Pro Review Card */}
-                            <div className="bg-white rounded-[3rem] sm:rounded-[3.5rem] p-8 sm:p-12 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col gap-8 sm:gap-10">
+                            <div className="bg-card rounded-[3rem] sm:rounded-[3.5rem] p-8 sm:p-12 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.04)] border border-border flex flex-col gap-8 sm:gap-10">
                                 <div className="flex items-center justify-between">
-                                    <h3 className="text-2xl sm:text-3xl font-black tracking-tighter text-gray-950">Manifest Review.</h3>
-                                    <div className="w-12 h-12 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-400">
+                                    <h3 className="text-2xl sm:text-3xl font-black tracking-tighter text-foreground">Manifest Review.</h3>
+                                    <div className="w-12 h-12 rounded-2xl bg-app flex items-center justify-center text-muted">
                                         <ShieldCheck size={24} />
                                     </div>
                                 </div>
@@ -300,10 +304,10 @@ export default function Order() {
                                     <div className="h-px bg-gray-100/50" />
                                     <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
                                         <div className="space-y-1">
-                                            <p className="text-2xl sm:text-3xl font-black tracking-tighter italic text-gray-950">Grand Total</p>
-                                            <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest pl-1">All protocols included</p>
+                                            <p className="text-2xl sm:text-3xl font-black tracking-tighter italic text-foreground">Grand Total</p>
+                                            <p className="text-[10px] text-muted font-black uppercase tracking-widest pl-1">All protocols included</p>
                                         </div>
-                                        <span className="text-5xl sm:text-6xl font-black text-blue-600 tracking-tighter italic">₹{total}</span>
+                                        <span className="text-5xl sm:text-6xl font-black text-primary tracking-tighter italic">₹{total}</span>
                                     </div>
                                 </div>
                             </div>
@@ -321,18 +325,18 @@ export default function Order() {
                                         <h3 className="text-3xl font-black mb-4 tracking-tighter italic">UPI Bridge.</h3>
                                         <p className="text-white/40 text-sm font-bold leading-relaxed max-w-[280px]">Instant clearance via Jaypee Credit or any verified UPI terminal.</p>
                                     </div>
-                                    <div className="w-24 h-24 bg-white rounded-3xl flex items-center justify-center shadow-2xl shrink-0 group hover:rotate-6 transition-transform">
-                                        <Zap size={48} className="text-blue-600 fill-current group-hover:scale-110 transition-transform" />
+                                    <div className="w-24 h-24 bg-background rounded-3xl flex items-center justify-center shadow-2xl shrink-0 group hover:rotate-6 transition-transform">
+                                        <Zap size= {48 } className="text-primary fill-current group-hover:scale-110 transition-transform" />
                                     </div>
                                 </div>
-                                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] pointer-events-none" />
                             </motion.div>
 
-                            <div className="flex items-start gap-5 p-8 bg-blue-600/[0.03] rounded-[2.5rem] border border-blue-600/10 shadow-sm shadow-blue-600/5">
-                                <AlertCircle size={24} className="text-blue-600 shrink-0 mt-0.5 animate-pulse" />
+                            <div className="flex items-start gap-5 p-8 bg-primary/[0.03] rounded-[2.5rem] border border-primary/10 shadow-sm shadow-primary/5">
+                                <AlertCircle size={24} className="text-primary shrink-0 mt-0.5 animate-pulse" />
                                 <div className="space-y-1">
-                                    <p className="text-[10px] text-blue-600 font-black uppercase tracking-[0.2em]">Deployment Protocol</p>
-                                    <p className="text-xs text-gray-500 font-bold leading-relaxed italic">
+                                    <p className="text-[10px] text-primary font-black uppercase tracking-[0.2em]">Deployment Protocol</p>
+                                    <p className="text-xs text-muted font-bold leading-relaxed italic">
                                         Orders submitted to the terminal cannot be recalled once operational. Confirm asset configuration.
                                     </p>
                                 </div>
@@ -351,7 +355,7 @@ export default function Order() {
                             animate={{ opacity: 1, y: 0 }}
                             onClick={handleNext}
                             disabled={!hasFiles}
-                            className="w-full bg-black text-white h-20 sm:h-24 rounded-[2rem] sm:rounded-[2.5rem] font-black text-lg sm:text-2xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] disabled:opacity-10 disabled:grayscale flex items-center justify-between px-8 sm:px-12 hover:bg-gray-900 active:scale-[0.98] transition-all group border border-white/5"
+                            className="w-full bg-foreground text-background h-20 sm:h-24 rounded-[2rem] sm:rounded-[2.5rem] font-black text-lg sm:text-2xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.3)] disabled:opacity-10 disabled:grayscale flex items-center justify-between px-8 sm:px-12 hover:bg-foreground/90 active:scale-[0.98] transition-all group border border-white/5"
                         >
                             <span className="italic tracking-tighter">Review Shipment</span>
                             <div className="flex items-center gap-4">
@@ -365,7 +369,7 @@ export default function Order() {
                             animate={{ opacity: 1, y: 0 }}
                             onClick={handlePay}
                             disabled={isProcessing}
-                            className="w-full bg-blue-600 text-white h-20 sm:h-24 rounded-[2rem] sm:rounded-[2.5rem] font-black text-lg sm:text-2xl shadow-[0_30px_60px_-15px_rgba(37,99,235,0.4)] flex items-center justify-between px-8 sm:px-12 disabled:opacity-70 active:scale-[0.98] transition-all relative overflow-hidden group border border-blue-400/20"
+                            className="w-full bg-primary text-white h-20 sm:h-24 rounded-[2rem] sm:rounded-[2.5rem] font-black text-lg sm:text-2xl shadow-[0_30px_60px_-15px_hsla(var(--primary)/0.4)] flex items-center justify-between px-8 sm:px-12 disabled:opacity-70 active:scale-[0.98] transition-all relative overflow-hidden group border border-white/10"
                         >
                             <div className="relative z-10 flex flex-col items-start leading-none gap-1">
                                 <span className="text-[10px] opacity-40 font-black tracking-[0.3em] uppercase">Authorize</span>
@@ -397,8 +401,8 @@ export default function Order() {
 function SummaryLine({ label, value }) {
     return (
         <div className="flex justify-between items-center group">
-            <span className="text-gray-400 font-black text-[10px] uppercase tracking-[0.2em] group-hover:text-gray-900 transition-colors">{label}</span>
-            <span className="font-black text-gray-950 text-xl tracking-tighter italic">{value}</span>
+            <span className="text-muted font-black text-[10px] uppercase tracking-[0.2em] group-hover:text-foreground transition-colors">{label}</span>
+            <span className="font-black text-foreground text-xl tracking-tighter italic">{value}</span>
         </div>
     );
 }
@@ -413,10 +417,10 @@ function SettingToggle({ label, active, onClick, onLabel, offLabel }) {
         >
             <span className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] group-hover:text-blue-500 transition-colors">{label}</span>
             <div className="flex items-center justify-between">
-                <span className={clsx("font-black text-sm tracking-tighter uppercase italic transition-all duration-500", active ? "text-blue-500 shadow-blue-500/50" : "text-white/60")}>
+                <span className={clsx("font-black text-sm tracking-tighter uppercase italic transition-all duration-500", active ? "text-primary shadow-primary/50" : "text-white/60")}>
                     {active ? onLabel : offLabel}
                 </span>
-                <div className={clsx("w-12 h-6 rounded-full relative transition-all duration-700", active ? "bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.6)]" : "bg-white/10")}>
+                <div className={clsx("w-12 h-6 rounded-full relative transition-all duration-700", active ? "bg-primary shadow-[0_0_15px_hsla(var(--primary)/0.6)]" : "bg-white/10")}>
                     <motion.div 
                         animate={{ x: active ? 24 : 4 }}
                         className="absolute top-1.5 w-3 h-3 bg-white rounded-full transition-all shadow-xl"

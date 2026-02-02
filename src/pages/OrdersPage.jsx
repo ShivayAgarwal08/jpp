@@ -4,6 +4,7 @@ import { ArrowLeft, Clock, CheckCircle, Printer, FileText, Zap, ChevronRight, Sp
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import clsx from 'clsx';
+import ThemeToggle from '../components/ThemeToggle';
 
 export default function OrdersPage() {
     const { orders } = useOrder();
@@ -15,27 +16,30 @@ export default function OrdersPage() {
     const pastOrders = myOrders.filter(o => o.status === 'collected');
 
     return (
-        <div className="min-h-screen bg-[#FDFDFF] pb-32 font-sans text-gray-950 selection:bg-blue-600/10 transition-all duration-500 overflow-x-hidden">
+        <div className="min-h-screen bg-app pb-32 font-sans text-foreground selection:bg-primary/10 transition-colors duration-300 overflow-x-hidden">
             
             {/* Ambient Background */}
-            <div className="fixed top-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-blue-600/5 blur-[120px] -z-0 pointer-events-none" />
-            <div className="fixed bottom-[-10%] left-[-5%] w-[30vw] h-[30vw] rounded-full bg-purple-600/5 blur-[120px] -z-0 pointer-events-none" />
+            <div className="fixed top-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-primary/5 blur-[120px] -z-0 pointer-events-none" />
+            <div className="fixed bottom-[-10%] left-[-5%] w-[30vw] h-[30vw] rounded-full bg-secondary/5 blur-[120px] -z-0 pointer-events-none" />
 
             {/* Premium Header */}
-            <header className="bg-white/40 backdrop-blur-3xl border-b border-gray-100/50 sticky top-0 z-40 px-6 h-24 flex items-center justify-between">
-                <div className="max-w-xl mx-auto w-full flex items-center gap-6">
-                    <motion.button 
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => navigate('/home')}
-                        className="w-12 h-12 rounded-2xl bg-white border border-gray-100 flex items-center justify-center text-gray-500 hover:text-black transition-all shadow-sm group"
-                    >
-                        <ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
-                    </motion.button>
-                    <div>
-                        <h1 className="text-3xl font-black tracking-tighter">Logistics Archive.</h1>
-                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mt-1">Real-time Terminal Sync</p>
+            <header className="bg-card/40 backdrop-blur-3xl border-b border-border/50 sticky top-0 z-40 px-6 h-24 flex items-center justify-between transition-colors duration-300">
+                <div className="max-w-xl mx-auto w-full flex items-center justify-between">
+                    <div className="flex items-center gap-6">
+                        <motion.button 
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => navigate('/home')}
+                            className="w-12 h-12 rounded-2xl bg-card border border-border flex items-center justify-center text-muted hover:text-foreground transition-all shadow-sm group"
+                        >
+                            <ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
+                        </motion.button>
+                        <div>
+                            <h1 className="text-3xl font-black tracking-tighter text-foreground">Logistics Archive.</h1>
+                            <p className="text-[10px] text-muted font-bold uppercase tracking-[0.3em] mt-1">Real-time Terminal Sync</p>
+                        </div>
                     </div>
+                    <ThemeToggle />
                 </div>
             </header>
 
@@ -44,10 +48,10 @@ export default function OrdersPage() {
                 {/* Active Orders Section */}
                 <section>
                     <div className="flex items-center justify-between mb-10 ml-1">
-                        <h2 className="text-xs font-black text-gray-500 uppercase tracking-[0.3em] flex items-center gap-3">
-                            <div className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-ping" /> Active Operations
+                        <h2 className="text-xs font-black text-muted uppercase tracking-[0.3em] flex items-center gap-3">
+                            <div className="w-1.5 h-1.5 bg-primary rounded-full animate-ping shadow-[0_0_10px_hsla(var(--primary)/0.5)]" /> Active Operations
                         </h2>
-                        <span className="text-[9px] font-black text-gray-300 uppercase tracking-widest">{activeOrders.length} Objects</span>
+                        <span className="text-[9px] font-black text-muted/30 uppercase tracking-widest">{activeOrders.length} Objects</span>
                     </div>
 
                     <AnimatePresence mode="popLayout">
@@ -55,13 +59,18 @@ export default function OrdersPage() {
                             <motion.div 
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                className="bg-white rounded-[3rem] p-16 text-center border-2 border-dashed border-gray-100 shadow-sm"
+                                className="bg-card rounded-[3rem] p-16 text-center border-2 border-dashed border-border shadow-sm"
                             >
-                                <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-8 text-gray-200">
-                                    <Clock size={40} />
+                                <div className="w-20 h-20 bg-app rounded-full flex items-center justify-center mx-auto mb-8 text-muted">
+                                    <ShoppingBag size={40} />
                                 </div>
-                                <p className="text-gray-400 font-black text-lg mb-8 tracking-tight uppercase tracking-widest">Terminal Queue Empty</p>
-                                <Link to="/order" className="bg-black text-white px-10 py-4 rounded-[1.25rem] font-black text-sm shadow-2xl shadow-black/10 hover:scale-105 active:scale-95 transition-all inline-block uppercase tracking-widest">Initial Shipment</Link>
+                                <h3 className="font-black text-xl mb-4 text-foreground tracking-tighter uppercase tracking-widest">Terminal Queue Empty</h3>
+                                <p className="text-muted text-xs font-bold leading-relaxed mb-8 max-w-[200px] mx-auto uppercase tracking-widest italic">
+                                    Initialize terminal to start printing operations.
+                                </p>
+                                <Link to="/order" className="bg-foreground text-background px-10 py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-widest shadow-2xl shadow-black/10 hover:scale-105 active:scale-95 transition-all inline-block italic">
+                                    Start Shipment
+                                </Link>
                             </motion.div>
                         ) : (
                             <div className="grid gap-8">
@@ -75,9 +84,14 @@ export default function OrdersPage() {
 
                 {/* Past Orders Section */}
                 <section>
-                    <h2 className="text-xs font-black text-gray-500 uppercase tracking-[0.3em] mb-10 ml-1">Historical Logs</h2>
+                    <div className="flex items-center justify-between mb-10 ml-1">
+                        <h2 className="text-xs font-black text-muted uppercase tracking-[0.3em] flex items-center gap-3">
+                            <div className="w-1.5 h-1.5 bg-secondary rounded-full" /> Historical Logs
+                        </h2>
+                        <span className="text-[9px] font-black text-muted/30 uppercase tracking-widest">{pastOrders.length} Records</span>
+                    </div>
                     {pastOrders.length === 0 ? (
-                        <div className="text-center py-20 text-gray-300 font-black text-xs uppercase tracking-widest opacity-40">No historical data available</div>
+                        <div className="text-center py-20 text-muted font-black text-xs uppercase tracking-widest opacity-40">No historical data available</div>
                     ) : (
                         <div className="grid gap-8">
                             {pastOrders.map((order, idx) => (
@@ -94,9 +108,9 @@ export default function OrdersPage() {
 
 function OrderCard({ order, active, delay = 0 }) {
     const statusConfig = {
-        paid: { color: 'text-blue-600', bg: 'bg-blue-600/5', icon: <Zap size={22} className="fill-current" />, label: 'IN OPERATION' },
-        printed: { color: 'text-orange-600', bg: 'bg-orange-50', icon: <Printer size={22} />, label: 'ASSET READY' },
-        collected: { color: 'text-gray-400', bg: 'bg-gray-50', icon: <CheckCircle size={22} />, label: 'DEPLOYYED' }
+        paid: { color: 'text-secondary font-black', bg: 'bg-secondary/10', icon: <Zap size={22} className="fill-current" />, label: 'IN OPERATION' },
+        printed: { color: 'text-primary font-black', bg: 'bg-primary/10', icon: <Printer size={22} />, label: 'ASSET READY' },
+        collected: { color: 'text-muted font-black', bg: 'bg-app', icon: <CheckCircle size={22} />, label: 'DEPLOYYED' }
     };
 
     const status = statusConfig[order.status] || statusConfig.paid;
@@ -108,8 +122,8 @@ function OrderCard({ order, active, delay = 0 }) {
             transition={{ delay, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             whileHover={{ y: -5, transition: { duration: 0.3 } }}
             className={clsx(
-                "bg-white p-8 rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.03)] border transition-all duration-500 relative overflow-hidden group",
-                active ? (order.status === 'printed' ? "border-orange-200 ring-4 ring-orange-500/5" : "border-blue-600/20 ring-4 ring-blue-600/5") : "border-gray-100"
+                "bg-card p-8 rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.03)] border transition-all duration-500 relative overflow-hidden group",
+                active ? (order.status === 'printed' ? "border-primary/20 ring-4 ring-primary/5" : "border-secondary/20 ring-4 ring-secondary/5") : "border-border"
             )}
         >
             <div className="relative z-10 space-y-6 sm:space-y-8">
@@ -123,18 +137,18 @@ function OrderCard({ order, active, delay = 0 }) {
                             {status.icon}
                         </div>
                         <div>
-                            <h3 className="font-black text-gray-950 text-lg sm:text-xl tracking-tighter">REC #{order.id.slice(-4).toUpperCase()}</h3>
+                            <h3 className="font-black text-foreground text-lg sm:text-xl tracking-tighter">REC #{order.id.slice(-4).toUpperCase()}</h3>
                             <div className="flex items-center gap-3 mt-1.5 grayscale group-hover:grayscale-0 transition-all">
-                                <Clock size={14} className="text-gray-400" />
-                                <p className="text-[10px] text-gray-500 font-black uppercase tracking-widest">
+                                <Clock size={14} className="text-muted" />
+                                <p className="text-[10px] text-muted font-black uppercase tracking-widest">
                                     {new Date(order.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div className="text-left sm:text-right w-full sm:w-auto flex sm:flex-col justify-between items-center sm:items-end">
-                        <p className="text-2xl sm:text-3xl font-black text-gray-950 tracking-tighter">₹{order.totalAmount}</p>
-                        <p className="text-[9px] sm:text-[10px] text-gray-400 font-black uppercase tracking-widest mt-1.5 bg-gray-50 px-3 py-1 rounded-full">{order.files.length} UNIT{order.files.length > 1 ? 'S' : ''}</p>
+                        <p className="text-2xl sm:text-3xl font-black text-foreground tracking-tighter">₹{order.totalAmount}</p>
+                        <p className="text-[9px] sm:text-[10px] text-muted font-black uppercase tracking-widest mt-1.5 bg-app px-3 py-1 rounded-full">{order.files.length} UNIT{order.files.length > 1 ? 'S' : ''}</p>
                     </div>
                 </div>
 
@@ -142,13 +156,13 @@ function OrderCard({ order, active, delay = 0 }) {
                     <motion.div 
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="bg-gray-50 rounded-[2rem] p-6 sm:p-8 flex justify-between items-center border border-gray-100 group-hover:bg-white group-hover:border-blue-600/10 transition-all duration-700"
+                        className="bg-app rounded-[2rem] p-6 sm:p-8 flex justify-between items-center border border-border group-hover:bg-card group-hover:border-primary/10 transition-all duration-700"
                     >
                         <div className="space-y-1">
-                            <p className="text-[9px] sm:text-[10px] text-gray-400 font-black uppercase tracking-[0.3em]">Hardware Auth PIN</p>
-                            <p className="hidden sm:block text-xs text-gray-400 font-bold">Present at Terminal</p>
+                            <p className="text-[9px] sm:text-[10px] text-muted font-black uppercase tracking-[0.3em]">Hardware Auth PIN</p>
+                            <p className="hidden sm:block text-xs text-muted font-bold">Present at Terminal</p>
                         </div>
-                        <div className="text-4xl sm:text-5xl font-mono font-black text-gray-950 tracking-[0.1em] bg-white px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-xl shadow-black/[0.04] border border-gray-100 group-hover:scale-110 group-hover:text-blue-600 transition-all duration-700 leading-none">
+                        <div className="text-4xl sm:text-5xl font-mono font-black text-foreground tracking-[0.1em] bg-card px-4 sm:px-6 py-3 sm:py-4 rounded-2xl shadow-xl shadow-black/[0.04] border border-border group-hover:scale-110 group-hover:text-primary transition-all duration-700 leading-none">
                             {order.otp}
                         </div>
                     </motion.div>
@@ -162,7 +176,7 @@ function OrderCard({ order, active, delay = 0 }) {
                         <div className={clsx("w-2 h-2 rounded-full", active ? "bg-current animate-pulse shadow-[0_0_10px_currentColor]" : "bg-current")} />
                         {status.label}
                     </div>
-                    <button className="text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-black transition-all flex items-center justify-center sm:justify-end gap-2 group/btn py-2">
+                    <button className="text-[10px] font-black text-muted uppercase tracking-widest hover:text-foreground transition-all flex items-center justify-center sm:justify-end gap-2 group/btn py-2">
                         Access Receipt <ChevronRight size={18} className="group-hover/btn:translate-x-2 transition-transform" />
                     </button>
                 </div>

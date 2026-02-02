@@ -23,6 +23,7 @@ import { useAuth } from '../context/AuthContext';
 import { useOrder } from '../context/OrderContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import FeedbackForm from '../components/FeedbackForm';
+import ThemeToggle from '../components/ThemeToggle';
 
 export default function Home() {
     const { user, logout } = useAuth();
@@ -38,13 +39,13 @@ export default function Home() {
     };
 
     return (
-        <div className="min-h-screen bg-[#FBFBFD] text-gray-900 font-sans selection:bg-blue-600/10 transition-all duration-500 overflow-x-hidden">
+        <div className="min-h-screen bg-app text-foreground font-sans selection:bg-primary/10 transition-colors duration-300 overflow-x-hidden">
             {/* Ambient Background Blobs */}
-            <div className="fixed top-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-blue-400/5 blur-[100px] -z-0 pointer-events-none" />
-            <div className="fixed bottom-[-10%] left-[-5%] w-[30vw] h-[30vw] rounded-full bg-purple-400/5 blur-[100px] -z-0 pointer-events-none" />
+            <div className="fixed top-[-10%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-primary/5 blur-[100px] -z-0 pointer-events-none" />
+            <div className="fixed bottom-[-10%] left-[-5%] w-[30vw] h-[30vw] rounded-full bg-secondary/5 blur-[100px] -z-0 pointer-events-none" />
 
             {/* Desktop Sidebar */}
-            <aside className="hidden lg:flex flex-col w-72 fixed inset-y-0 bg-white/40 backdrop-blur-3xl border-r border-gray-100/50 z-50">
+            <aside className="hidden lg:flex flex-col w-72 fixed inset-y-0 bg-card/40 backdrop-blur-3xl border-r border-border/50 z-50 transition-colors duration-300">
                 <div className="p-8">
                     <motion.div 
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -52,7 +53,7 @@ export default function Home() {
                         className="flex items-center gap-3 mb-12"
                     >
                         <img src="/assets/hero-logo.jpg" className="w-12 h-12 rounded-2xl shadow-2xl shadow-black/20 rotate-3 object-cover" alt="Logo" />
-                        <span className="font-black text-2xl tracking-tighter text-gray-950">JPRINT.</span>
+                        <span className="font-black text-2xl tracking-tighter text-foreground">JPRINT.</span>
                     </motion.div>
                     
                     <nav className="space-y-2">
@@ -86,7 +87,7 @@ export default function Home() {
             <main className="lg:pl-72 min-h-screen relative z-10">
                 
                 {/* Top Navbar */}
-                <header className="sticky top-0 z-40 bg-[#FBFBFD]/40 backdrop-blur-3xl border-b border-gray-100/50">
+                <header className="sticky top-0 z-40 bg-card/40 backdrop-blur-3xl border-b border-border/50 transition-colors duration-300">
                     <div className="max-w-5xl mx-auto px-6 h-24 flex items-center justify-between">
                         <motion.div
                             initial={{ opacity: 0, x: -10 }}
@@ -97,20 +98,21 @@ export default function Home() {
                                 JPRINT
                             </h1>
                             <div className="hidden lg:block">
-                                <h1 className="text-3xl font-black tracking-tight text-gray-950">
-                                    <span className="text-gray-300 font-bold">Yo,</span> {user?.name?.split(' ')[0] || 'Student'}
+                                <h1 className="text-3xl font-black tracking-tight text-foreground">
+                                    <span className="text-muted font-bold">Yo,</span> {user?.name?.split(' ')[0] || 'Student'}
                                 </h1>
                                 <div className="flex items-center gap-2 mt-1">
                                     <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                                    <p className="text-[10px] text-gray-400 font-black tracking-[0.2em] uppercase">Status: Fleet Active • JIIT 128</p>
+                                    <p className="text-[10px] text-muted font-black tracking-[0.2em] uppercase">Status: Fleet Active • JIIT 128</p>
                                 </div>
                             </div>
                         </motion.div>
 
                         <div className="flex items-center gap-5">
-                            <button className="w-12 h-12 rounded-2xl bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:text-black hover:shadow-xl transition-all relative group shadow-sm">
+                            <ThemeToggle />
+                            <button className="w-12 h-12 rounded-2xl bg-card border border-border flex items-center justify-center text-muted hover:text-foreground hover:shadow-xl transition-all relative group shadow-sm">
                                 <Bell size={22} />
-                                {activeOrders.length > 0 && <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-blue-600 rounded-full border-2 border-white animate-pulse"></span>}
+                                {activeOrders.length > 0 && <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-primary rounded-full border-2 border-background animate-pulse"></span>}
                             </button>
                             <motion.div 
                                 onClick={() => navigate('/profile')}
@@ -304,7 +306,7 @@ function NavItem({ icon, label, active, onClick }) {
     return (
         <button 
             onClick={onClick}
-            className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-[13px] font-black uppercase tracking-widest transition-all ${active ? 'bg-black text-white shadow-xl shadow-black/10' : 'text-gray-400 hover:bg-gray-50 hover:text-black'}`}
+            className={`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-[13px] font-black uppercase tracking-widest transition-all ${active ? 'bg-foreground text-background shadow-xl shadow-black/10' : 'text-muted hover:bg-muted hover:text-foreground'}`}
         >
             {icon}
             {label}
