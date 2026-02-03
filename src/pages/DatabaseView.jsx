@@ -39,17 +39,17 @@ export default function DatabaseView() {
     return (
         <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-blue-600 selection:text-white">
             <div className="max-w-7xl mx-auto p-6 md:p-12">
-                
+
                 {/* Master Header */}
                 <header className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-16">
                     <div className="flex items-center gap-6">
                         <img src="/assets/hero-logo.jpg" className="w-14 h-14 rounded-2xl shadow-2xl shadow-blue-600/20 object-cover border border-blue-600/20" alt="Logo" />
                         <div>
                             <div className="flex items-center gap-3 mb-1">
-                                <h1 className="text-4xl font-black tracking-tighter uppercase">Master Terminal.</h1>
-                                <span className="bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full animate-pulse shadow-[0_0_15px_rgba(37,99,235,0.5)]">LIVE DATA REDUNDANCY</span>
+                                <h1 className="text-4xl font-black tracking-tighter uppercase">Admin Dashboard.</h1>
+                                <span className="bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full animate-pulse shadow-[0_0_15px_rgba(37,99,235,0.5)]">CONNECTED</span>
                             </div>
-                            <p className="text-white/30 text-xs font-black uppercase tracking-[0.4em]">SQLite Engine V3.2 • Secure Read-Only Access</p>
+                            <p className="text-white/30 text-xs font-black uppercase tracking-[0.4em]">Database Management • Secure Access</p>
                         </div>
                     </div>
 
@@ -61,7 +61,7 @@ export default function DatabaseView() {
                             </div>
                             <div className="w-px h-8 bg-white/10" />
                             <div className="text-center">
-                                <p className="text-[9px] text-white/30 font-black uppercase tracking-widest mb-1">Logs</p>
+                                <p className="text-[9px] text-white/30 font-black uppercase tracking-widest mb-1">Total Orders</p>
                                 <p className="text-xl font-black">{orders.length}</p>
                             </div>
                         </div>
@@ -71,7 +71,7 @@ export default function DatabaseView() {
                         >
                             <RefreshCw size={24} className={clsx(loading && "animate-spin")} />
                         </button>
-                        <button 
+                        <button
                             onClick={() => navigate('/vendor')}
                             className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-all shadow-xl"
                         >
@@ -81,38 +81,38 @@ export default function DatabaseView() {
                 </header>
 
                 {error ? (
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className="bg-red-600/10 text-red-500 p-12 rounded-[3.5rem] text-center border-2 border-red-600/20 shadow-2xl"
                     >
                         <Shield className="mx-auto mb-6 opacity-40" size={64} />
-                        <h3 className="font-black text-3xl mb-4 tracking-tighter">Terminal Link Severed.</h3>
+                        <h3 className="font-black text-3xl mb-4 tracking-tighter">Connection Error.</h3>
                         <p className="font-mono text-sm mb-10 opacity-60 max-w-md mx-auto leading-relaxed">{error}</p>
                         <button onClick={fetchData} className="px-10 py-5 bg-red-600 text-white rounded-2xl font-black hover:bg-red-500 transition-all uppercase tracking-widest shadow-xl">
-                            Re-establish Uplink
+                            Retry Connection
                         </button>
                     </motion.div>
                 ) : (
                     <div className="space-y-12">
                         {/* Selector Tabs */}
                         <div className="flex gap-10 border-b border-white/5">
-                            <DbTab 
-                                label="USER MANIFEST" 
-                                active={activeTab === 'users'} 
-                                onClick={() => setActiveTab('users')} 
+                            <DbTab
+                                label="USER LIST"
+                                active={activeTab === 'users'}
+                                onClick={() => setActiveTab('users')}
                                 icon={<Lock size={16} />}
                             />
-                            <DbTab 
-                                label="ORDER LEDGER" 
-                                active={activeTab === 'orders'} 
-                                onClick={() => setActiveTab('orders')} 
+                            <DbTab
+                                label="ORDER HISTORY"
+                                active={activeTab === 'orders'}
+                                onClick={() => setActiveTab('orders')}
                                 icon={<Zap size={16} />}
                             />
                         </div>
 
                         {/* Data Grid */}
-                        <motion.div 
+                        <motion.div
                             key={activeTab}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -126,26 +126,26 @@ export default function DatabaseView() {
                                         <tr>
                                             {activeTab === 'users' ? (
                                                 <>
-                                                    <th className="px-8 py-6 tracking-widest">Auth ID</th>
-                                                    <th className="px-8 py-6 tracking-widest">Personnel</th>
-                                                    <th className="px-8 py-6 tracking-widest">Network Email</th>
-                                                    <th className="px-8 py-6 tracking-widest">Clearance</th>
-                                                    <th className="px-8 py-6 tracking-widest">Enrollment Time</th>
+                                                    <th className="px-8 py-6 tracking-widest">User ID</th>
+                                                    <th className="px-8 py-6 tracking-widest">Name</th>
+                                                    <th className="px-8 py-6 tracking-widest">Email</th>
+                                                    <th className="px-8 py-6 tracking-widest">Role</th>
+                                                    <th className="px-8 py-6 tracking-widest">Joined On</th>
                                                 </>
                                             ) : (
                                                 <>
-                                                    <th className="px-8 py-6 tracking-widest">Order Hash</th>
-                                                    <th className="px-8 py-6 tracking-widest">Origin Personnel</th>
-                                                    <th className="px-8 py-6 tracking-widest">Auth PIN</th>
-                                                    <th className="px-8 py-6 tracking-widest">Ledger Val</th>
-                                                    <th className="px-8 py-6 tracking-widest">Operation Status</th>
+                                                    <th className="px-8 py-6 tracking-widest">Order ID</th>
+                                                    <th className="px-8 py-6 tracking-widest">Customer</th>
+                                                    <th className="px-8 py-6 tracking-widest">OTP</th>
+                                                    <th className="px-8 py-6 tracking-widest">Amount</th>
+                                                    <th className="px-8 py-6 tracking-widest">Status</th>
                                                     <th className="px-8 py-6 tracking-widest">Timestamp</th>
                                                 </>
                                             )}
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-white/5">
-                                        {activeTab === 'users' ? 
+                                        {activeTab === 'users' ?
                                             users.map((user) => (
                                                 <tr key={user.id} className="hover:bg-white/[0.02] transition-colors group">
                                                     <td className="px-8 py-6 font-mono text-[10px] text-white/20 group-hover:text-white/40">{user.id}</td>
@@ -161,7 +161,7 @@ export default function DatabaseView() {
                                                     </td>
                                                     <td className="px-8 py-6 text-[10px] font-black text-white/20 uppercase tracking-widest">{new Date(user.created_at).toLocaleString()}</td>
                                                 </tr>
-                                            )) : 
+                                            )) :
                                             orders.map((order) => (
                                                 <tr key={order.id} className="hover:bg-white/[0.02] transition-colors group">
                                                     <td className="px-8 py-6 font-mono text-[10px] text-white/20 group-hover:text-white/40">{order.id}</td>
@@ -177,8 +177,8 @@ export default function DatabaseView() {
                                                         <span className={clsx(
                                                             "px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border",
                                                             order.status === 'paid' ? "bg-blue-600/10 border-blue-600/30 text-blue-500" :
-                                                            order.status === 'collected' ? "bg-green-600/10 border-green-600/30 text-green-500" :
-                                                            "bg-gray-500/10 border-gray-500/30 text-gray-400"
+                                                                order.status === 'collected' ? "bg-green-600/10 border-green-600/30 text-green-500" :
+                                                                    "bg-gray-500/10 border-gray-500/30 text-gray-400"
                                                         )}>
                                                             {order.status}
                                                         </span>
@@ -210,7 +210,7 @@ function DbTab({ label, active, onClick, icon }) {
             {icon}
             {label}
             {active && (
-                <motion.div 
+                <motion.div
                     layoutId="dbactive"
                     className="absolute bottom-0 left-0 w-full h-1 bg-blue-600 shadow-[0_0_15px_rgba(37,99,235,1)]"
                 />

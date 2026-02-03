@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { 
-    ArrowRight, 
-    Lock, 
-    School, 
-    ShieldCheck, 
+import {
+    ArrowRight,
+    Lock,
+    School,
+    ShieldCheck,
     Clock,
     FileText,
     Zap,
@@ -38,7 +38,7 @@ export default function Landing() {
 
     return (
         <div className="min-h-screen bg-[#FDFDFF] text-gray-950 font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden">
-            
+
             {/* Ambient Background Blobs */}
             <div className="fixed top-[-10%] left-[-5%] w-[60vw] h-[60vw] rounded-full bg-blue-400/10 blur-[130px] -z-10 animate-pulse-soft" />
             <div className="fixed bottom-[-10%] right-[-5%] w-[50vw] h-[50vw] rounded-full bg-purple-400/10 blur-[130px] -z-10 animate-float" />
@@ -52,7 +52,7 @@ export default function Landing() {
                             <img src="/assets/hero-logo.jpg" className="w-10 h-10 rounded-2xl shadow-xl shadow-black/20 hover:rotate-6 transition-transform cursor-pointer object-cover" alt="Logo" />
                             <span className="font-extrabold text-2xl tracking-tighter hidden sm:block">JPRINT<span className="text-blue-600">.</span></span>
                         </div>
-                        
+
                         <div className="hidden lg:flex items-center gap-10 text-[13px] font-bold text-gray-500 uppercase tracking-widest">
                             <a href="#features" className="hover:text-black transition-colors">Experience</a>
                             <a href="#workflow" className="hover:text-black transition-colors">Workflow</a>
@@ -61,7 +61,7 @@ export default function Landing() {
 
                         <div className="flex items-center gap-4">
                             <button onClick={() => navigate('/login')} className="text-sm font-bold text-gray-500 hover:text-black transition-colors px-4 py-2">Sign In</button>
-                            <button 
+                            <button
                                 onClick={() => setShowSelection(true)}
                                 className="bg-black text-white px-6 py-2.5 rounded-full text-sm font-bold hover:shadow-2xl hover:shadow-black/20 hover:scale-105 active:scale-95 transition-all"
                             >
@@ -83,24 +83,24 @@ export default function Landing() {
                         >
                             <div className="inline-flex items-center gap-2 bg-blue-600/10 text-blue-600 px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest mb-8 border border-blue-600/20">
                                 <Zap size={14} className="fill-current" />
-                                <span>Future of Campus Logistics</span>
+                                <span>Future of Campus</span>
                             </div>
                             <h1 className="text-6xl md:text-8xl font-black tracking-tighter mb-8 leading-[0.9] text-gray-950">
                                 Print like it's <br />
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-orange-500">instant magic.</span>
                             </h1>
                             <p className="text-xl text-gray-500 font-medium mb-12 max-w-2xl mx-auto leading-relaxed">
-                                Experience the seamless intersection of technology and utility. JPRINT brings effortless document logistics to your fingertips.
+                                Experience the seamless intersection of technology and utility. JPRINT brings effortless document printing to your fingertips.
                             </p>
-                            
+
                             <div className="flex flex-col sm:flex-row gap-5 justify-center">
-                                <button 
+                                <button
                                     onClick={() => setShowSelection(true)}
                                     className="h-16 px-10 bg-black text-white rounded-[1.25rem] font-black text-lg flex items-center justify-center gap-3 hover:shadow-2xl hover:shadow-black/30 hover:scale-[1.03] active:scale-95 transition-all group"
                                 >
                                     Start Printing <ArrowRight size={22} className="group-hover:translate-x-1.5 transition-transform" />
                                 </button>
-                                <button 
+                                <button
                                     onClick={() => navigate('/vendor-login')}
                                     className="h-16 px-10 bg-white text-black border-2 border-gray-100 rounded-[1.25rem] font-black text-lg hover:border-black/10 hover:bg-gray-50 transition-all flex items-center justify-center"
                                 >
@@ -126,7 +126,7 @@ export default function Landing() {
                         </div>
 
                         {/* Floating Micro-Cards */}
-                        <motion.div 
+                        <motion.div
                             animate={{ y: [0, -15, 0] }}
                             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                             className="absolute -top-10 -left-10 bg-white/90 backdrop-blur-xl p-6 rounded-[2rem] shadow-2xl border border-white flex items-center gap-4 z-20 group hover:scale-105 transition-transform"
@@ -140,7 +140,7 @@ export default function Landing() {
                             </div>
                         </motion.div>
 
-                        <motion.div 
+                        <motion.div
                             animate={{ y: [0, 15, 0] }}
                             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                             className="absolute top-1/2 -right-12 bg-black p-6 rounded-[2rem] shadow-2xl flex items-center gap-4 z-20 group hover:scale-105 transition-transform"
@@ -155,7 +155,7 @@ export default function Landing() {
                         </motion.div>
                     </motion.div>
                 </div>
-                
+
                 <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-20 hidden lg:block">
                     <ChevronDown size={32} />
                 </div>
@@ -171,23 +171,23 @@ export default function Landing() {
                         <h2 className="text-5xl font-black tracking-tight mb-4">Engineered for Students.</h2>
                         <p className="text-gray-500 font-bold uppercase tracking-[0.2em] text-xs">A premium tool for serious productivity</p>
                     </div>
-                    
+
                     <div className="grid md:grid-cols-3 gap-8">
-                        <FeatureCard 
+                        <FeatureCard
                             icon={<Smartphone />}
                             title="Mobile First"
-                            desc="Order while walking to class. Your phone is your printing command center."
+                            desc="Order while walking to class. Your phone is your printing hub."
                             color="bg-blue-600"
                         />
-                        <FeatureCard 
+                        <FeatureCard
                             icon={<CreditCard />}
                             title="Seamless Checkout"
                             desc="One-tap payments. Zero friction between your doc and the printer."
                             color="bg-purple-600"
                         />
-                        <FeatureCard 
+                        <FeatureCard
                             icon={<Lock />}
-                            title="Handshake Security"
+                            title="Secure Collection"
                             desc="Your documents only print when you arrive. Secure OTP verification."
                             color="bg-orange-500"
                         />
@@ -201,11 +201,11 @@ export default function Landing() {
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                     <div className="max-w-4xl">
                         <h2 className="text-5xl md:text-7xl font-black mb-20 leading-tight">Fast enough to <br /><span className="text-gray-400">beat the bell.</span></h2>
-                        
+
                         <div className="grid gap-16">
-                            <WorkflowStep num="01" title="Upload & Tune" desc="Select your files. Fine-tune pages, color, and copies with precision." />
+                            <WorkflowStep num="01" title="Upload & Customize" desc="Select your files. Fine-tune pages, color, and copies with precision." />
                             <WorkflowStep num="02" title="Lightning Payment" desc="Securely settle with any modern payment provider instantly." />
-                            <WorkflowStep num="03" title="Flash & Collect" desc="Walk up to the vendor, show your OTP, and grab your fresh prints." />
+                            <WorkflowStep num="03" title="Verify & Collect" desc="Walk up to the shop, show your OTP, and grab your fresh prints." />
                         </div>
                     </div>
                 </div>
@@ -215,16 +215,16 @@ export default function Landing() {
             <section id="campuses" className="py-32 px-6 bg-gray-50">
                 <div className="max-w-7xl mx-auto text-center">
                     <h2 className="text-5xl font-black tracking-tighter mb-16">Deploying at your campus.</h2>
-                    
+
                     <div className="flex flex-wrap justify-center gap-8">
-                        <CampusCard 
-                            active 
-                            name="Sector 128" 
+                        <CampusCard
+                            active
+                            name="Sector 128"
                             full="JIIT Wish Town"
                             onClick={() => setShowSelection(true)}
                         />
-                        <CampusCard 
-                            name="Sector 62" 
+                        <CampusCard
+                            name="Sector 62"
                             full="JIIT Noida"
                             onClick={handle62Click}
                             locked
@@ -241,14 +241,14 @@ export default function Landing() {
                             <img src="/assets/hero-logo.jpg" className="w-10 h-10 rounded-2xl shadow-xl shadow-black/20 object-cover" alt="Logo" />
                             <span className="font-black text-2xl tracking-tighter">JPRINT.</span>
                         </div>
-                        <p className="text-gray-400 font-bold text-sm max-w-xs uppercase tracking-widest">Premium Campus Logistics for Jaypee Institutes.</p>
+                        <p className="text-gray-400 font-bold text-sm max-w-xs uppercase tracking-widest">Premium Printing Servicesfor Jaypee Institutes.</p>
                     </div>
-                    
+
                     <div className="flex flex-col md:flex-row items-center gap-10 text-[11px] font-black text-gray-400 uppercase tracking-widest">
                         <span className="text-gray-200 hidden md:block">|</span>
                         <a href="https://chat.whatsapp.com/KnC17YZEiB15oNV5S3bTO6" target="_blank" className="hover:text-black transition-colors">WhatsApp Support</a>
                         <span className="text-gray-200 hidden md:block">|</span>
-                        <p>© 2026 JPRINT V3.0 • Premium Edition</p>
+                        <p>© 2026 JPRINT V3.0</p>
                     </div>
                 </div>
             </footer>
@@ -256,15 +256,15 @@ export default function Landing() {
             {/* Refined Selection Overaly */}
             <AnimatePresence>
                 {showSelection && (
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className="fixed inset-0 z-[200] flex items-center justify-center p-6"
                     >
                         <div className="absolute inset-0 bg-black/80 backdrop-blur-md" onClick={() => setShowSelection(false)} />
-                        
-                        <motion.div 
+
+                        <motion.div
                             initial={{ scale: 0.9, opacity: 0, y: 30 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.9, opacity: 0, y: 30 }}
@@ -312,7 +312,7 @@ export default function Landing() {
                                 </button>
                             </div>
 
-                            <button 
+                            <button
                                 onClick={() => setShowSelection(false)}
                                 className="w-full mt-10 text-center text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] hover:text-black transition-colors"
                             >
@@ -333,7 +333,7 @@ export default function Landing() {
                         className="fixed bottom-10 left-1/2 bg-black text-white px-8 py-5 rounded-[2rem] shadow-[0_30px_60px_-12px_rgba(0,0,0,0.5)] flex items-center gap-4 whitespace-nowrap z-[300] border border-white/10"
                     >
                         <div className="w-3 h-3 bg-orange-500 rounded-full animate-ping" />
-                        <span className="font-black text-xs uppercase tracking-widest">Intelligence: Sector 62 is deploying soon.</span>
+                        <span className="font-black text-xs uppercase tracking-widest">Sector 62 is Coming soon.</span>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -375,9 +375,9 @@ function ShowcaseSection() {
                 <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-indigo-600/20 blur-[120px] animate-pulse" />
                 <div className="absolute bottom-[-10%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-purple-600/20 blur-[120px] animate-pulse" style={{ animationDelay: '-5s' }} />
                 <div className="absolute top-[40%] left-[60%] w-[30vw] h-[30vw] rounded-full bg-cyan-600/10 blur-[100px] animate-pulse" style={{ animationDelay: '-10s' }} />
-                
+
                 {/* Subtle Grid */}
-                <div 
+                <div
                     className="absolute inset-0 opacity-[0.03]"
                     style={{
                         backgroundImage: `linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)`,
@@ -390,7 +390,7 @@ function ShowcaseSection() {
             <div className="max-w-[1400px] mx-auto px-6 relative z-10">
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 border-l border-white/10">
                     {items.map((item, idx) => (
-                        <div 
+                        <div
                             key={item.id}
                             className={`group relative p-12 min-h-[450px] border-r border-white/10 flex flex-col gap-6 cursor-pointer hover:bg-white/5 transition-colors duration-300 ${idx % 2 !== 0 ? 'lg:pt-48' : ''}`}
                             onMouseEnter={() => {
@@ -415,14 +415,14 @@ function ShowcaseSection() {
                 {isVisible && (
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-                        animate={{ 
-                            opacity: 1, 
-                            scale: 1, 
+                        animate={{
+                            opacity: 1,
+                            scale: 1,
                             rotate: 0,
                         }}
                         exit={{ opacity: 0, scale: 0.8, rotate: 5 }}
-                        style={{ 
-                            x, 
+                        style={{
+                            x,
                             y,
                             position: 'fixed',
                             top: 0,
@@ -434,12 +434,12 @@ function ShowcaseSection() {
                         }}
                         className="w-[320px] h-[220px] rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/20"
                     >
-                        <video 
-                            src={activeMedia} 
-                            autoPlay 
-                            loop 
-                            muted 
-                            playsInline 
+                        <video
+                            src={activeMedia}
+                            autoPlay
+                            loop
+                            muted
+                            playsInline
                             className="w-full h-full object-cover"
                         />
                     </motion.div>
@@ -475,7 +475,7 @@ function WorkflowStep({ num, title, desc }) {
 
 function CampusCard({ name, full, onClick, locked, active }) {
     return (
-        <div 
+        <div
             onClick={onClick}
             className={`w-full max-w-sm p-10 rounded-[3rem] text-left cursor-pointer transition-all duration-500 relative overflow-hidden flex flex-col justify-between aspect-square group ${active ? 'bg-black text-white shadow-3xl shadow-black/20 scale-105' : 'bg-white border-2 border-gray-100 grayscale hover:grayscale-0'}`}
         >
@@ -486,10 +486,10 @@ function CampusCard({ name, full, onClick, locked, active }) {
                 <h3 className="text-4xl font-black tracking-tighter mb-2">{name}</h3>
                 <p className={`font-bold uppercase tracking-widest text-[10px] ${active ? 'text-white/40' : 'text-gray-400'}`}>{full}</p>
             </div>
-            
+
             <div className="flex items-center justify-between">
                 <span className={`text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full ${active ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-400'}`}>
-                    {locked ? 'Queue Full' : 'Portal Open'}
+                    {locked ? 'Coming Soon' : 'Portal Open'}
                 </span>
                 <ArrowRight size={24} className={`transition-transform group-hover:translate-x-1 ${active ? 'text-white' : 'text-gray-300'}`} />
             </div>

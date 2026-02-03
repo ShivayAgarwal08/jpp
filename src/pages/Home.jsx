@@ -58,7 +58,7 @@ export default function Home() {
                     <nav className="space-y-2">
                         <NavItem icon={<HomeIcon size={20} />} label="Home" active />
                         <NavItem icon={<Clock size={20} />} label="My Orders" onClick={() => navigate('/orders')} />
-                        <NavItem icon={<User size={20} />} label="Identity" onClick={() => navigate('/profile')} />
+                        <NavItem icon={<User size={20} />} label="Profile" onClick={() => navigate('/profile')} />
                         {user?.role === 'vendor' && (
                             <NavItem icon={<LayoutDashboard size={20} />} label="Control Panel" onClick={() => navigate('/vendor')} />
                         )}
@@ -71,7 +71,7 @@ export default function Home() {
                         className="bg-black text-white rounded-[2rem] p-6 shadow-2xl shadow-black/10 border border-white/10 overflow-hidden relative group"
                     >
                         <div className="relative z-10">
-                            <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-3">Live Fleet</p>
+                            <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-3">Live </p>
                             <h4 className="font-bold text-sm mb-4">Need print support?</h4>
                             <a href="https://chat.whatsapp.com/KnC17YZEiB15oNV5S3bTO6" target="_blank" className="inline-flex items-center gap-2 bg-blue-600 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-blue-500 transition-colors">
                                 Messenger <ArrowRight size={14} />
@@ -102,7 +102,7 @@ export default function Home() {
                                 </h1>
                                 <div className="flex items-center gap-2 mt-1">
                                     <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                                    <p className="text-[10px] text-gray-400 font-black tracking-[0.2em] uppercase">Status: Fleet Active • JIIT 128</p>
+                                    <p className="text-[10px] text-gray-400 font-black tracking-[0.2em] uppercase">JIIT 128</p>
                                 </div>
                             </div>
                         </motion.div>

@@ -33,8 +33,8 @@ export default function OrdersPage() {
                         <ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
                     </motion.button>
                     <div>
-                        <h1 className="text-3xl font-black tracking-tighter">Logistics Archive.</h1>
-                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mt-1">Real-time Terminal Sync</p>
+                        <h1 className="text-3xl font-black tracking-tighter">Past Orders.</h1>
+                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.3em] mt-1">JIIT 128</p>
                     </div>
                 </div>
             </header>
@@ -60,7 +60,7 @@ export default function OrdersPage() {
                 {loading && orders.length === 0 && !error && (
                     <div className="py-20 flex flex-col items-center justify-center gap-6">
                         <Loader2 className="animate-spin text-blue-600" size={40} />
-                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em]">Synching with Terminal...</p>
+                        <p className="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em]">Wait...</p>
                     </div>
                 )}
 
@@ -68,7 +68,7 @@ export default function OrdersPage() {
                 <section>
                     <div className="flex items-center justify-between mb-10 ml-1">
                         <h2 className="text-xs font-black text-gray-500 uppercase tracking-[0.3em] flex items-center gap-3">
-                            <div className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-ping" /> Active Operations
+                            <div className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-ping" /> Active Orders
                         </h2>
                         <span className="text-[9px] font-black text-gray-300 uppercase tracking-widest">{activeOrders.length} Objects</span>
                     </div>
@@ -83,8 +83,8 @@ export default function OrdersPage() {
                                 <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-8 text-gray-200">
                                     <Clock size={40} />
                                 </div>
-                                <p className="text-gray-400 font-black text-lg mb-8 tracking-tight uppercase tracking-widest">Terminal Queue Empty</p>
-                                <Link to="/order" className="bg-black text-white px-10 py-4 rounded-[1.25rem] font-black text-sm shadow-2xl shadow-black/10 hover:scale-105 active:scale-95 transition-all inline-block uppercase tracking-widest">Initial Shipment</Link>
+                                <p className="text-gray-400 font-black text-lg mb-8 tracking-tight uppercase tracking-widest">No Active Orders</p>
+                                <Link to="/order" className="bg-black text-white px-10 py-4 rounded-[1.25rem] font-black text-sm shadow-2xl shadow-black/10 hover:scale-105 active:scale-95 transition-all inline-block uppercase tracking-widest">Order Now</Link>
                             </motion.div>
                         ) : (
                             <div className="grid gap-8">
@@ -98,9 +98,9 @@ export default function OrdersPage() {
 
                 {/* Past Orders Section */}
                 <section>
-                    <h2 className="text-xs font-black text-gray-500 uppercase tracking-[0.3em] mb-10 ml-1">Historical Logs</h2>
+                    <h2 className="text-xs font-black text-gray-500 uppercase tracking-[0.3em] mb-10 ml-1">Past Orders</h2>
                     {pastOrders.length === 0 ? (
-                        <div className="text-center py-20 text-gray-300 font-black text-xs uppercase tracking-widest opacity-40">No historical data available</div>
+                        <div className="text-center py-20 text-gray-300 font-black text-xs uppercase tracking-widest opacity-40">No history available</div>
                     ) : (
                         <div className="grid gap-8">
                             {pastOrders.map((order, idx) => (

@@ -56,7 +56,7 @@ export default function Register() {
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Full Identity</label>
+                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Name</label>
                             <div className="relative group">
                                 <User className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-600 transition-colors" size={20} />
                                 <input

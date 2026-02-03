@@ -41,20 +41,20 @@ export default function Login() {
             >
                 <div className="flex justify-center mb-12">
                     <Link to="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-black transition-all font-black text-xs uppercase tracking-[0.2em] group bg-white/50 backdrop-blur-xl px-6 py-3 rounded-full border border-gray-100 shadow-sm">
-                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Base
+                        <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Home
                     </Link>
                 </div>
 
                 <div className="bg-white/70 backdrop-blur-3xl p-10 md:p-12 rounded-[3rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.08)] border border-white/50 relative">
                     <div className="mb-10 text-center">
                         <img src="/assets/hero-logo.jpg" className="w-20 h-20 rounded-[2.25rem] shadow-2xl shadow-black/20 mx-auto mb-8 -rotate-6 object-cover" alt="Logo" />
-                        <h1 className="text-4xl font-black tracking-tighter mb-4">Signal In.</h1>
-                        <p className="text-gray-500 font-bold text-sm max-w-[200px] mx-auto leading-relaxed">Synchronize with campus print nodes.</p>
+                        <h1 className="text-4xl font-black tracking-tighter mb-4">Sign In.</h1>
+                        <p className="text-gray-500 font-bold text-sm max-w-[200px] mx-auto leading-relaxed">Connect Your Device to Campus Printers.</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-3">
-                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">JIIT Intelligence Email</label>
+                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Email Id</label>
                             <div className="relative group">
                                 <Mail className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-600 transition-colors" size={20} />
                                 <input
@@ -69,7 +69,7 @@ export default function Login() {
                         </div>
 
                         <div className="space-y-3">
-                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Access Key</label>
+                            <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Password</label>
                             <div className="relative group">
                                 <Lock className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-600 transition-colors" size={20} />
                                 <input
@@ -103,7 +103,7 @@ export default function Login() {
                         >
                             {isLoading ? <Loader2 className="animate-spin" size={24} /> : (
                                 <span className="flex items-center gap-3 tracking-tighter">
-                                    Initialize Session <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+                                    Login <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
                                 </span>
                             )}
                         </button>
@@ -111,8 +111,8 @@ export default function Login() {
 
                     <div className="mt-12 text-center">
                         <p className="text-gray-500 text-[11px] font-black uppercase tracking-widest">
-                            New Personnel?{' '}
-                            <Link to="/register" className="text-blue-600 hover:underline">Enroll for Free</Link>
+                            New User?{' '}
+                            <Link to="/register" className="text-blue-600 hover:underline">Sign Up for Free</Link>
                         </p>
                     </div>
                 </div>
@@ -126,7 +126,7 @@ export default function Login() {
                     <div className="w-1 h-1 bg-gray-300 rounded-full" />
                     <div className="flex items-center gap-1.5 grayscale">
                         <Zap size={16} />
-                        <span className="text-[10px] font-black uppercase tracking-widest">JIIT Fleet Certified</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest">JIIT Certified</span>
                     </div>
                 </div>
             </motion.div>

@@ -56,7 +56,7 @@ export default function Profile() {
                         >
                             <ArrowLeft size={20} />
                         </motion.button>
-                        <h1 className="font-black text-2xl tracking-tighter">Identity Terminal</h1>
+                        <h1 className="font-black text-2xl tracking-tighter">Profile</h1>
                     </div>
                     <div className="flex items-center gap-4">
                         <button className="w-10 h-10 rounded-xl bg-white border border-gray-100 flex items-center justify-center text-gray-400 hover:text-black transition-all">
@@ -101,11 +101,11 @@ export default function Profile() {
                                 
                                 <div className="flex flex-col gap-3 mb-12">
                                     <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex items-center justify-between">
-                                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Base Campus</span>
+                                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Campus</span>
                                         <span className="text-xs font-black text-gray-900 border-b-2 border-blue-600/30">JIIT 128</span>
                                     </div>
                                     <div className="bg-gray-50 p-4 rounded-2xl border border-gray-100 flex items-center justify-between">
-                                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Clearance</span>
+                                        <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Status</span>
                                         <span className="text-xs font-black text-blue-600">V3.0 ELITE</span>
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@ export default function Profile() {
                                     onClick={handleLogout}
                                     className="w-full bg-black text-white py-6 rounded-3xl font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 shadow-2xl shadow-black/10"
                                 >
-                                    <LogOut size={16} /> Terminate Session
+                                    <LogOut size={16} /> Logout
                                 </motion.button>
                             </div>
                             {/* Decorative blur */}
@@ -127,7 +127,7 @@ export default function Profile() {
                         <div className="grid grid-cols-2 gap-6">
                             <StatCard 
                                 value={myOrders.length} 
-                                label="Logistics" 
+                                label="Past Orders" 
                                 icon={<History size={18} />}
                                 delay={0.1}
                             />
@@ -174,10 +174,10 @@ export default function Profile() {
                                     <div className="w-10 h-10 rounded-2xl bg-gray-950 text-white flex items-center justify-center">
                                         <Clock size={22} />
                                     </div>
-                                    Historical Logs
+                                    Past Orders
                                 </h3>
                                 <button className="text-[11px] font-black text-gray-500 hover:text-black uppercase tracking-widest transition-colors flex items-center gap-2">
-                                    Archive Access <ChevronRight size={14} />
+                                    View All <ChevronRight size={14} />
                                 </button>
                             </div>
                             
@@ -187,8 +187,8 @@ export default function Profile() {
                                         <div className="w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-8 text-gray-200">
                                             <ShoppingBag size={48} />
                                         </div>
-                                        <p className="text-gray-500 font-black text-lg mb-8 tracking-tight">Terminal Database Empty</p>
-                                        <Link to="/order" className="bg-black text-white px-10 py-4 rounded-[1.25rem] font-black text-sm shadow-2xl shadow-black/10 hover:scale-105 active:scale-95 transition-all inline-block uppercase tracking-widest">Initialize Print</Link>
+                                        <p className="text-gray-500 font-black text-lg mb-8 tracking-tight">No Past Orders</p>
+                                        <Link to="/order" className="bg-black text-white px-10 py-4 rounded-[1.25rem] font-black text-sm shadow-2xl shadow-black/10 hover:scale-105 active:scale-95 transition-all inline-block uppercase tracking-widest">Start Printing</Link>
                                     </div>
                                 ) : (
                                     myOrders.filter(o => o.status === 'collected').slice(0, 5).map((order, idx) => (
@@ -200,7 +200,7 @@ export default function Profile() {
 
                         {/* Core Controls Grid */}
                         <section>
-                            <h3 className="text-2xl font-black mb-8 tracking-tighter">Terminal Controls</h3>
+                            <h3 className="text-2xl font-black mb-8 tracking-tighter">Setting</h3>
                             <div className="grid sm:grid-cols-2 gap-6">
                                 <ProfileMenuButton onClick={() => window.open('https://chat.whatsapp.com/KnC17YZEiB15oNV5S3bTO6', '_blank')} icon={<MessageCircle size={22} />} label="Priority Support" desc="WhatsApp Fleet Comms" />
                                 <ProfileMenuButton icon={<Wallet size={22} />} label="Billing Ledger" desc="Transaction manifest" />
