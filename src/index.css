@@ -1,61 +1,138 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Blinkit-inspired Palette */
-  /* Primary Yellow/Green vibe or keep it "Print" focused? User said "Blinkit Print" */
-  /* Let's go with a fresh Yellow/Black/Green combo like Blinkit */
-
   --primary: 151 70% 50%;
-  /* Fresh Green #2ecc71 */
-  --primary-content: 0 0% 100%;
+  --primary-glow: 151 70% 50% / 0.15;
+  --accent: 35 100% 52%;
+  --bg-app: 0 0% 100%;
+  --bg-subtle: 0 0% 97%;
+  --text-main: 240 10% 4%;
+  --text-muted: 240 5% 45%;
+  --border: 240 6% 90%;
+  --glass: 0 0% 100% / 0.7;
 
-  --secondary: 0 0% 10%;
-  /* Dark Black/Gray */
-  --secondary-content: 0 0% 100%;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
 
-  --bg-app: 0 0% 98%;
-  /* Light Gray Background */
-  --bg-card: 0 0% 100%;
+  --shadow-premium: 0 20px 50px -12px rgba(0, 0, 0, 0.08);
+}
 
-  --text-main: 0 0% 10%;
-  --text-muted: 0 0% 60%;
-  --border: 0 0% 92%;
-
-  --success: 142 76% 36%;
-  --error: 0 84% 60%;
-  --warning: 48 96% 53%;
-
-  --radius-sm: 0.5rem;
-  --radius-md: 0.75rem;
-  --radius-lg: 1rem;
+.dark {
+  --bg-app: 240 10% 4%;
+  --bg-subtle: 240 10% 8%;
+  --text-main: 0 0% 98%;
+  --text-muted: 240 5% 65%;
+  --border: 240 6% 15%;
+  --glass: 240 10% 4% / 0.7;
+  --shadow-premium: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   background-color: hsl(var(--bg-app));
   color: hsl(var(--text-main));
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 h1,
 h2,
 h3,
-h4 {
-  font-family: 'Outfit', sans-serif;
-  letter-spacing: -0.02em;
+h4,
+h5,
+h6 {
+  font-family: "Outfit", sans-serif;
+  letter-spacing: -0.04em;
 }
 
-.btn {
-  @apply inline-flex items-center justify-center transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+/* Premium Animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
 }
 
-.card {
-  background: hsl(var(--bg-card));
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.glass-morphism {
+  background: hsla(var(--glass));
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid hsla(var(--border) / 0.5);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, #ffffff88 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsla(var(--text-muted) / 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsla(var(--text-muted) / 0.4);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: hsla(var(--text-muted) / 0.1);
+  border-radius: 99px;
+}
+
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background: hsla(var(--text-muted) / 0.3);
+}
+
+.stunning-card {
+  @apply relative overflow-hidden transition-all duration-500 hover:scale-[1.02] active:scale-[0.98];
+  background: hsl(var(--bg-subtle));
   border: 1px solid hsl(var(--border));
-  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-premium);
 }
+
+.btn-primary {
+  @apply px-8 py-4 bg-black text-white rounded-full font-bold transition-all duration-300 hover:bg-neutral-800 hover:shadow-2xl hover:shadow-black/20 active:scale-95 flex items-center gap-2;
+}
+
+.dark .btn-primary {
+  @apply bg-white text-black hover:bg-neutral-200;
+}
+
+/* High-end Masking */
+.mask-edge {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.mask-top {
+  mask-image: linear-gradient(to bottom, transparent, black 15%);
+}
+

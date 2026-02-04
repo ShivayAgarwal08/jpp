@@ -1,8 +1,23 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, User, Zap, FileText, Image, PenTool, BookOpen, TrendingUp, Sparkles, ArrowRight } from 'lucide-react';
+import { 
+  Search, 
+  User, 
+  Zap, 
+  FileText, 
+  Image as ImageIcon, 
+  PenTool, 
+  BookOpen, 
+  TrendingUp, 
+  Sparkles, 
+  ArrowRight,
+  ShoppingCart,
+  LayoutGrid,
+  Bell,
+  Heart,
+  Settings
+} from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { motion } from 'framer-motion';
-//hello
+import { motion, AnimatePresence } from 'framer-motion';
 import { useOrder } from '../context/OrderContext';
 import FeedbackForm from '../components/FeedbackForm';
 
@@ -13,8 +28,6 @@ export default function Home() {
 
   const handleAddToCart = (name, price) => {
     addStationeryItem({ name, price });
-    // Navigate to order page to see cart or stay here? 
-    // User said "just add to cart". Let's show a floating "Go to Cart" button.
   };
 
   const scrollToSection = (id) => {
@@ -25,168 +38,208 @@ export default function Home() {
   const cartCount = currentOrder.files.length;
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-28 font-sans text-gray-900 selection:bg-black selection:text-white">
-
-      {/* Premium Header */}
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-gray-100/50 shadow-sm">
-        <div className="container max-w-md mx-auto p-4">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center font-bold text-xl tracking-tighter shadow-lg shadow-black/20">
-                J.
-              </div>
-              <div>
-                <h1 className="text-xl font-bold leading-none tracking-tight">JPRINT<span className="text-orange-500">.</span></h1>
-                <p className="text-[10px] text-gray-500 font-medium tracking-wide">JIIT <span className="text-green-600 font-bold ml-1">(Test Phase 1)</span></p>
-              </div>
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white transition-colors duration-500 pb-20">
+      
+      {/* Navigation Bar */}
+      <nav className="fixed top-0 left-0 w-full z-50 glass-morphism border-b border-black/5 dark:border-white/5 py-4">
+        <div className="container max-w-5xl mx-auto px-6 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-black dark:bg-white rounded-xl flex items-center justify-center font-black text-white dark:text-black shadow-xl rotate-3">J</div>
+            <div className="hidden sm:block">
+              <h1 className="font-bold text-lg tracking-tighter leading-none">JPRINT<span className="text-orange-500">.</span></h1>
+              <p className="text-[10px] font-black uppercase tracking-widest opacity-50">Sector 128</p>
             </div>
-
-            <Link to={user?.role === 'vendor' ? "/vendor" : (user ? "/profile" : "/login")}>
-              <motion.div whileTap={{ scale: 0.9 }} className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center relative overflow-hidden">
-                {user ? (
-                  user.role === 'vendor' ? (
-                    <div className="w-full h-full bg-black text-white flex items-center justify-center font-bold text-xs">ADM</div>
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-tr from-green-400 to-green-600 text-white flex items-center justify-center font-bold text-sm">
-                      {user.name?.[0].toUpperCase()}
-                    </div>
-                  )
-                ) : (
-                  <User size={20} className="text-gray-600" />
-                )}
-              </motion.div>
-            </Link>
           </div>
 
-          {/* Premium Membership Banner REMOVED */}
-
-
-          {/* Search Bar - Apple Style */}
-          <div className="relative group">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-black transition-colors" size={18} />
-            <input
-              type="text"
-              placeholder="Search 'Lab Manual', 'Binding'..."
-              className="w-full pl-11 pr-4 py-3.5 bg-gray-100 border border-transparent rounded-2xl focus:bg-white focus:border-black/10 focus:ring-4 focus:ring-black/5 outline-none transition-all font-medium text-sm placeholder:text-gray-500"
-            />
+          <div className="flex items-center gap-4">
+             <button className="p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors relative">
+                <Bell size={20} />
+                <span className="absolute top-2 right-2 w-2 h-2 bg-orange-500 rounded-full" />
+             </button>
+             <Link to={user?.role === 'vendor' ? "/vendor" : (user ? "/profile" : "/login")}>
+                <motion.div whileTap={{ scale: 0.9 }} className="flex items-center gap-3 p-1.5 pr-4 rounded-2xl bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-all border border-black/5 dark:border-white/5">
+                  <div className="w-8 h-8 rounded-lg overflow-hidden bg-gradient-to-tr from-orange-400 to-amber-500 flex items-center justify-center text-white font-bold text-sm shadow-inner">
+                    {user?.name?.[0].toUpperCase() || <User size={16} />}
+                  </div>
+                  <span className="text-xs font-bold tracking-tight hidden sm:block">{user?.name || "Guest Account"}</span>
+                </motion.div>
+             </Link>
           </div>
         </div>
-      </header>
+      </nav>
 
-      <div className="container max-w-md mx-auto p-4 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <main className="container max-w-5xl mx-auto px-6 pt-24 space-y-12 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+        
+        {/* Welcome Section */}
+        <section className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div>
+            <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-none mb-4">
+              WHATS ON <br />THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-amber-400">AGENDA?</span>
+            </h2>
+            <p className="text-neutral-500 font-medium max-w-md">Your production-grade campus printing service is ready for your next project.</p>
+          </div>
+          
+          <div className="relative w-full md:w-80 group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-black dark:group-focus-within:text-white transition-colors" size={20} />
+            <input 
+              type="text" 
+              placeholder="Search documents..." 
+              className="w-full pl-12 pr-4 py-4 bg-neutral-100 dark:bg-neutral-900 border-none rounded-2xl focus:ring-4 focus:ring-orange-500/10 transition-all font-bold text-sm"
+            />
+          </div>
+        </section>
 
-        {/* Hero Area - Bento Grid Style */}
-        <section className="grid grid-cols-2 gap-3 h-48">
-          <Link to="/order" className="bg-black rounded-3xl p-5 text-white flex flex-col justify-between relative overflow-hidden group shadow-xl shadow-black/10">
-            <div className="relative z-10">
-              <span className="bg-white/20 backdrop-blur-md px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider mb-2 inline-block">Flash Print</span>
-              <h2 className="text-xl font-bold leading-tight">Instant <br />B&W</h2>
-            </div>
-            <div className="relative z-10 flex items-center gap-2 text-xs font-bold text-gray-300 group-hover:text-white transition-colors">
-              Start Order <ArrowRight size={14} />
-            </div>
-            <Zap className="absolute right-[-20px] bottom-[-20px] text-white/10 group-hover:text-white/20 transition-colors rotate-12" size={140} />
+        {/* Action Grid (Bento) */}
+        <section className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <Link to="/order" className="md:col-span-2 group relative overflow-hidden bg-black rounded-[40px] p-10 flex flex-col justify-between h-[300px] shadow-2xl shadow-black/20">
+             <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/20 blur-[80px] rounded-full -mr-20 -mt-20 group-hover:bg-orange-500/30 transition-all duration-700" />
+             <div className="relative z-10">
+                <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
+                  <Zap size={24} fill="currentColor" />
+                </div>
+                <h3 className="text-4xl font-black text-white tracking-tighter leading-none mb-2">FLASH <br />PRINTING.</h3>
+                <p className="text-white/40 font-bold text-xs uppercase tracking-widest">Starts at ₹2.00 / page</p>
+             </div>
+             <div className="relative z-10 flex items-center gap-2 text-white font-bold text-sm">
+                Get Started <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
+             </div>
           </Link>
 
-          <div className="grid grid-rows-2 gap-3">
-            <Link to="/order" className="bg-green-100 rounded-3xl p-4 flex flex-col justify-center relative overflow-hidden group hover:bg-green-200 transition-colors">
-              <h3 className="font-bold text-green-900 z-10">Color Print</h3>
-              <p className="text-[10px] text-green-700 z-10 font-medium">For Projects</p>
-              <Image className="absolute right-[-10px] bottom-[-10px] text-green-600/20 rotate-12" size={80} />
-            </Link>
-            <Link to="/order" className="bg-purple-100 rounded-3xl p-4 flex flex-col justify-center relative overflow-hidden group hover:bg-purple-200 transition-colors">
-              <h3 className="font-bold text-purple-900 z-10">Spiral Bind</h3>
-              <p className="text-[10px] text-purple-700 z-10 font-medium">₹30 Only</p>
-              <PenTool className="absolute right-[-10px] bottom-[-10px] text-purple-600/20 rotate-12" size={80} />
-            </Link>
+          <div className="md:col-span-1 space-y-6">
+             <Link to="/order" className="block group stunning-card bg-blue-50 dark:bg-blue-500/5 rounded-[32px] p-8 h-[138px] flex flex-col justify-between border-blue-500/10">
+                <div className="flex justify-between items-start">
+                  <div className="w-10 h-10 rounded-xl bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/30">
+                    <ImageIcon size={20} />
+                  </div>
+                  <ArrowRight size={16} className="text-blue-500 opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1" />
+                </div>
+                <div className="font-black text-sm tracking-tight">COLOR PRINTS</div>
+             </Link>
+             <Link to="/profile" className="block group stunning-card bg-purple-50 dark:bg-purple-500/5 rounded-[32px] p-8 h-[138px] flex flex-col justify-between border-purple-500/10">
+                <div className="flex justify-between items-start">
+                  <div className="w-10 h-10 rounded-xl bg-purple-500 text-white flex items-center justify-center shadow-lg shadow-purple-500/30">
+                    <TrendingUp size={20} />
+                  </div>
+                  <ArrowRight size={16} className="text-purple-500 opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1" />
+                </div>
+                <div className="font-black text-sm tracking-tight text-neutral-800 dark:text-neutral-200">ACTIVITY HUB</div>
+             </Link>
           </div>
+
+          <Link to="/order" className="md:col-span-1 group relative overflow-hidden bg-neutral-100 dark:bg-neutral-900 rounded-[40px] p-10 flex flex-col justify-between shadow-xl">
+             <div className="absolute bottom-0 right-0 w-40 h-40 bg-green-500/10 blur-3xl -mb-10 -mr-10 transition-all duration-700" />
+             <div className="relative z-10">
+                <div className="text-[10px] font-black uppercase tracking-widest text-green-600 mb-4">Express Feature</div>
+                <h3 className="text-2xl font-black tracking-tighter leading-tight mb-4">BATCH <br />UPLOAD.</h3>
+             </div>
+             <div className="w-12 h-12 rounded-full border border-black/5 dark:border-white/5 flex items-center justify-center group-hover:bg-black dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-black transition-all relative z-10">
+                <FileText size={20} />
+             </div>
+          </Link>
         </section>
 
-        {/* Categories Scroller */}
-        <section>
-          <div className="flex items-center justify-between mb-4 px-1">
-            <h3 className="font-bold text-lg tracking-tight flex items-center gap-2">
-              <Sparkles size={16} className="text-yellow-500 fill-yellow-500" /> Explore
+
+        {/* Categories Bar */}
+        <section className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide py-2 px-1">
+          <Link to="/order"><CategoryPill icon={<Zap size={18} />} label="All Services" active /></Link>
+          <button onClick={() => scrollToSection('stationery-store')}><CategoryPill icon={<PenTool size={18} />} label="Stationery" /></button>
+          <Link to="/order"><CategoryPill icon={<FileText size={18} />} label="Lab Reports" /></Link>
+          <Link to="/order"><CategoryPill icon={<ImageIcon size={18} />} label="Posters" /></Link>
+          <Link to="/order"><CategoryPill icon={<Settings size={18} />} label="Custom" /></Link>
+        </section>
+
+        {/* Stationery Items */}
+        <section id="stationery-store" className="py-8">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-3xl font-black tracking-tighter flex items-center gap-3">
+              <Store className="text-orange-500" /> STATIONERY HUB
             </h3>
+            <button className="text-xs font-black uppercase tracking-widest opacity-50 hover:opacity-100 transition-opacity">View All</button>
           </div>
-          <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide">
-            <Link to="/order"><CategoryPill icon={<Zap size={18} />} label="Instant" active /></Link>
-            <button onClick={() => scrollToSection('stationery-store')}><CategoryPill icon={<PenTool size={18} />} label="Stationery" /></button>
-            <Link to="/order"><CategoryPill icon={<FileText size={18} />} label="Docs" /></Link>
-            <Link to="/order"><CategoryPill icon={<Image size={18} />} label="Posters" /></Link>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+             <ProductCard 
+                title="Pentonic Ball Pen"
+                desc="Smooth Flow • Blue/Black ink available."
+                price="₹10"
+                icon={<PenTool size={22} className="text-blue-500" />}
+                color="bg-blue-500/10"
+                onClick={() => handleAddToCart("Pentonic Ball Pen", 10)}
+             />
+             <ProductCard 
+                title="Saddle Stick File"
+                desc="A4 Size • Perfect for Lab Manuals."
+                price="₹20"
+                icon={<FileText size={22} className="text-green-500" />}
+                color="bg-green-500/10"
+                onClick={() => handleAddToCart("Saddle Stick File", 20)}
+             />
+             <ProductCard 
+                title="Doms 2B Pencil Set"
+                desc="Precision drawing • Extra dark leads."
+                price="₹50"
+                icon={<PenTool size={22} className="text-amber-500" />}
+                color="bg-amber-500/10"
+                onClick={() => handleAddToCart("Doms 2B Pencil Set", 50)}
+             />
+             <ProductCard 
+                title="Glazed Sheets (1 pkt)"
+                desc="High gloss finish • 50 sheets pack."
+                price="₹120"
+                icon={<ImageIcon size={22} className="text-pink-500" />}
+                color="bg-pink-500/10"
+                onClick={() => handleAddToCart("Glazed Sheets Pack", 120)}
+             />
           </div>
         </section>
 
-        {/* Stationery Items (Replaced Manuals) */}
-        <section id="stationery-store" className="space-y-4">
-          <div className="flex items-center gap-2 text-gray-900 font-bold text-lg px-1">
-            <PenTool size={20} /> Stationery Store
-          </div>
-
-          <div className="bg-white rounded-3xl p-1 shadow-sm border border-gray-100">
-            <ProductRow
-              title="Pentonic Ball Pen"
-              desc="Smooth Flow • Blue/Black"
-              price="₹10"
-              icon={<PenTool size={20} className="text-blue-500" />}
-              bg="bg-blue-50"
-              onClick={() => handleAddToCart("Pentonic Ball Pen", 10)}
-            />
-            <div className="h-px bg-gray-50 mx-4" />
-            <ProductRow
-              title="Saddle Stick File"
-              desc="A4 Size • Clear Transparent"
-              price="₹20"
-              icon={<FileText size={20} className="text-green-600" />}
-              bg="bg-green-100"
-              onClick={() => handleAddToCart("Saddle Stick File", 20)}
-            />
-            <div className="h-px bg-gray-50 mx-4" />
-            <ProductRow
-              title="Apsara Platinum Pencil"
-              desc="Extra Dark • High Quality"
-              price="₹5"
-              icon={<PenTool size={20} className="text-gray-500" />}
-              bg="bg-gray-100"
-              onClick={() => handleAddToCart("Apsara Platinum Pencil", 5)}
-            />
+        {/* Social / Support Card */}
+        <section className="bg-neutral-950 rounded-[40px] p-12 text-center text-white relative overflow-hidden my-10">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-orange-500/20 blur-[120px] rounded-full -mr-40 -mt-40" />
+          <div className="relative z-10">
+             <h4 className="text-4xl font-black tracking-tighter mb-4 leading-none">NEED DIRECT HELP?</h4>
+             <p className="text-white/40 font-medium mb-10 max-w-sm mx-auto">Connect with the Sector 128 shop owner directly on WhatsApp for custom orders.</p>
+             <a href="https://chat.whatsapp.com/KnC17YZEiB15oNV5S3bTO6" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-black text-sm hover:scale-105 transition-all active:scale-95 shadow-2xl shadow-white/10">
+               Connect on WhatsApp <ArrowRight size={18} />
+             </a>
           </div>
         </section>
-
-        {/* Floating Cart Button (Only if items in cart) */}
-        {cartCount > 0 && (
-          <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-bottom-5 fade-in duration-300">
-            <button onClick={() => navigate('/order')} className="bg-black text-white px-6 py-3 rounded-full font-bold shadow-2xl flex items-center gap-3 hover:scale-105 transition-transform">
-              <span>{cartCount} Items</span>
-              <span className="w-px h-4 bg-white/20"></span>
-              <span>Go to Cart <ArrowRight size={16} className="inline ml-1" /></span>
-            </button>
-          </div>
-        )}
 
         <FeedbackForm />
 
-        {/* Support Banner */}
-        <div className="bg-gray-900 rounded-2xl p-6 text-white text-center relative overflow-hidden">
-          <div className="relative z-10">
-            <h4 className="font-bold text-lg mb-1">Need Help?</h4>
-            <p className="text-gray-400 text-sm mb-4">Contact the shop directly.</p>
-            <a href="https://chat.whatsapp.com/KnC17YZEiB15oNV5S3bTO6" target="_blank" rel="noopener noreferrer" className="inline-block bg-white text-black px-6 py-2 rounded-full text-xs font-bold hover:scale-105 transition-transform">
-              Chat with Verified Vendor
-            </a>
-          </div>
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-gray-800 to-transparent opacity-50"></div>
-        </div>
+      </main>
 
-      </div>
+      {/* Floating Cart (Enhanced) */}
+      <AnimatePresence>
+        {cartCount > 0 && (
+          <motion.div 
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 w-full max-w-md px-6"
+          >
+            <button onClick={() => navigate('/order')} className="w-full bg-black text-white p-6 rounded-[32px] font-black shadow-3xl shadow-black/40 flex items-center justify-between group overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-500 opacity-0 group-hover:opacity-10 transition-opacity" />
+              <div className="flex items-center gap-4 relative z-10">
+                <div className="w-10 h-10 bg-white/10 rounded-2xl flex items-center justify-center font-black">
+                  {cartCount}
+                </div>
+                <div className="text-left leading-none uppercase tracking-tighter">
+                  <div className="text-xs opacity-50">ITEMS IN CART</div>
+                  <div className="text-lg">PROCEED TO ORDER</div>
+                </div>
+              </div>
+              <ArrowRight className="group-hover:translate-x-2 transition-transform relative z-10" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Footer */}
-      <div className="py-6 text-center">
-        <p className="text-[10px] uppercase font-bold text-gray-400 tracking-widest mb-1">Built for JIIT Student</p>
-        <p className="text-xs font-medium text-gray-500 flex items-center justify-center gap-1">
-          Made by <span className="text-gray-900 font-bold">Kartik Guleria</span>
-        </p>
-      </div>
+      {/* Mini Footer */}
+      <footer className="py-12 text-center opacity-40">
+        <p className="text-[10px] uppercase font-black tracking-widest mb-1">JPRINT Platform v5.1</p>
+        <p className="text-xs font-bold">JIIT SECTOR 128 EXCLUSIVE</p>
+      </footer>
 
     </div>
   );
@@ -194,28 +247,31 @@ export default function Home() {
 
 function CategoryPill({ icon, label, active }) {
   return (
-    <button className={`flex items-center gap-2 px-5 py-3 rounded-2xl text-sm font-bold whitespace-nowrap transition-all shadow-sm ${active ? 'bg-black text-white shadow-lg shadow-black/20' : 'bg-white text-gray-600 border border-gray-100 hover:bg-gray-50'}`}>
+    <button className={`flex items-center gap-3 px-6 py-4 rounded-2xl text-xs font-black uppercase tracking-widest whitespace-nowrap transition-all ${active ? 'bg-orange-500 text-white shadow-xl shadow-orange-500/20' : 'bg-neutral-100 dark:bg-neutral-900 text-neutral-500 hover:bg-neutral-200 dark:hover:bg-neutral-800'}`}>
       {icon} {label}
     </button>
   )
 }
 
-function ProductRow({ title, desc, price, icon, bg, onClick }) {
+function ProductCard({ title, desc, price, icon, color, onClick }) {
   return (
-    <div onClick={onClick} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors rounded-2xl cursor-pointer group">
-      <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${bg} group-hover:scale-110 transition-transform`}>
+    <div onClick={onClick} className="group stunning-card bg-neutral-100 dark:bg-neutral-900 p-6 rounded-[32px] flex items-center gap-6 cursor-pointer">
+      <div className={`w-16 h-16 rounded-2xl ${color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
         {icon}
       </div>
       <div className="flex-1">
-        <h4 className="font-bold text-gray-900 text-sm">{title}</h4>
-        <p className="text-xs text-gray-500 font-medium">{desc}</p>
+        <h4 className="font-black text-lg tracking-tight leading-none mb-1">{title}</h4>
+        <p className="text-xs font-medium text-neutral-500 dark:text-neutral-400 line-clamp-1">{desc}</p>
+        <div className="mt-2 text-sm font-black text-orange-500">{price}</div>
       </div>
-      <div className="flex flex-col items-end gap-1">
-        <span className="font-bold text-sm">{price}</span>
-        <button className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-black hover:bg-black hover:text-white transition-colors">
-          <span className="text-lg leading-none mb-0.5">+</span>
-        </button>
-      </div>
+      <button className="w-10 h-10 rounded-full border border-black/5 dark:border-white/5 flex items-center justify-center group-hover:bg-black dark:group-hover:bg-white group-hover:text-white dark:group-hover:text-black transition-all">
+        <span className="text-xl font-bold">+</span>
+      </button>
     </div>
   )
 }
+
+function Store({ size, className }) {
+   return <LayoutGrid size={size} className={className} />
+}
+

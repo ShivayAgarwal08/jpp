@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { motion } from 'framer-motion';
-import { Loader2, Mail, Lock, User, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Loader2, Mail, Lock, User, ArrowRight, Shield } from 'lucide-react';
 
 export default function Register() {
     const [name, setName] = useState('');
@@ -11,10 +11,7 @@ export default function Register() {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    // We strictly register as 'user' (student) only. 
-    // Vendor registration is removed as per request.
     const role = 'user';
-
     const { register } = useAuth();
     const navigate = useNavigate();
 
@@ -33,83 +30,121 @@ export default function Register() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col justify-center p-6 font-sans relative overflow-hidden">
-            {/* Background Blobs */}
-            <div className="absolute top-[-100px] left-[-100px] w-64 h-64 bg-orange-200/50 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-[-100px] right-[-100px] w-64 h-64 bg-purple-200/50 rounded-full blur-3xl pointer-events-none" />
+        <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white flex flex-col items-center justify-center p-6 relative overflow-hidden transition-colors duration-500">
+            
+            {/* Background Aesthetics */}
+            <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
+              <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-orange-500/10 rounded-full blur-[120px]" />
+              <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[120px]" />
+            </div>
 
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/50 relative z-10 w-full max-w-sm mx-auto"
+                transition={{ type: "spring", damping: 20 }}
+                className="w-full max-w-sm relative z-10"
             >
-                <div className="mb-6">
-                    <h1 className="text-2xl font-bold text-gray-900">Create Account</h1>
-                    <p className="text-gray-500 text-sm">Join JPRINT to order instantly.</p>
+                {/* Brand Identity */}
+                <div className="text-center mb-10">
+                    <motion.div 
+                      whileHover={{ scale: 1.05, rotate: -5 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="w-20 h-20 bg-black dark:bg-white rounded-[24px] flex items-center justify-center font-black text-4xl text-white dark:text-black shadow-2xl mx-auto mb-8 cursor-pointer"
+                    >
+                        J
+                    </motion.div>
+                    <h1 className="text-4xl font-black tracking-tighter mb-2 uppercase">CREATE ACCOUNT.</h1>
+                    <p className="text-neutral-500 dark:text-neutral-400 font-bold text-sm tracking-tight uppercase tracking-widest opacity-60">Initialize your student profile</p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="space-y-3">
-                        <div className="relative group">
-                            <User className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-black transition-colors" size={18} />
-                            <input
-                                type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                placeholder="Full Name"
-                                className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 text-gray-900 font-medium focus:bg-white focus:border-black/10 focus:ring-4 focus:ring-black/5 outline-none transition-all"
-                                required
-                            />
+                {/* Registration Interface */}
+                <div className="glass-morphism p-10 rounded-[48px] border border-black/5 dark:border-white/5 shadow-3xl">
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black text-neutral-400 ml-1 uppercase tracking-[0.2em]">Full Identity</label>
+                            <div className="relative group">
+                                <User className="absolute left-5 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-orange-500 transition-colors" size={18} />
+                                <input
+                                    type="text"
+                                    required
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    placeholder="Name Surname..."
+                                    className="w-full bg-black/5 dark:bg-white/5 border border-transparent rounded-[24px] pl-14 pr-6 py-5 text-sm font-black focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/30 transition-all placeholder:text-neutral-500"
+                                />
+                            </div>
                         </div>
-                        <div className="relative group">
-                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-black transition-colors" size={18} />
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="Student Email"
-                                className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 text-gray-900 font-medium focus:bg-white focus:border-black/10 focus:ring-4 focus:ring-black/5 outline-none transition-all"
-                                required
-                            />
-                        </div>
-                        <div className="relative group">
-                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-black transition-colors" size={18} />
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Create Password"
-                                className="w-full bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 text-gray-900 font-medium focus:bg-white focus:border-black/10 focus:ring-4 focus:ring-black/5 outline-none transition-all"
-                                required
-                            />
-                        </div>
-                    </div>
 
-                    {error && (
-                        <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            className="text-red-500 text-xs font-bold text-center bg-red-50 py-2 rounded-xl"
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black text-neutral-400 ml-1 uppercase tracking-[0.2em]">Asset Index / Email</label>
+                            <div className="relative group">
+                                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-orange-500 transition-colors" size={18} />
+                                <input
+                                    type="email"
+                                    required
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="student@jiit.ac.in"
+                                    className="w-full bg-black/5 dark:bg-white/5 border border-transparent rounded-[24px] pl-14 pr-6 py-5 text-sm font-black focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/30 transition-all placeholder:text-neutral-500"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-black text-neutral-400 ml-1 uppercase tracking-[0.2em]">Security Key</label>
+                            <div className="relative group">
+                                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-orange-500 transition-colors" size={18} />
+                                <input
+                                    type="password"
+                                    required
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="••••••••"
+                                    className="w-full bg-black/5 dark:bg-white/5 border border-transparent rounded-[24px] pl-14 pr-6 py-5 text-sm font-black focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/30 transition-all placeholder:text-neutral-500"
+                                />
+                            </div>
+                        </div>
+
+                        <AnimatePresence>
+                          {error && (
+                              <motion.div
+                                  initial={{ opacity: 0, scale: 0.95 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  exit={{ opacity: 0, scale: 0.95 }}
+                                  className="bg-red-500/10 text-red-500 text-[10px] font-black uppercase tracking-widest p-4 rounded-2xl border border-red-500/20 flex items-center gap-3"
+                              >
+                                  <Shield size={14} />
+                                  <span>{error}</span>
+                              </motion.div>
+                          )}
+                        </AnimatePresence>
+
+                        <button
+                            type="submit"
+                            disabled={isLoading}
+                            className="w-full bg-black dark:bg-white text-white dark:text-black py-5 rounded-[24px] font-black text-sm shadow-xl shadow-black/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-3 group relative overflow-hidden"
                         >
-                            {error}
-                        </motion.div>
-                    )}
+                            {isLoading ? <Loader2 className="animate-spin" size={20} /> : (
+                              <div className="flex items-center gap-3 relative z-10">
+                                <span>INITIALIZE PROFILE</span>
+                                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                              </div>
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-500 opacity-0 group-hover:opacity-10 transition-opacity" />
+                        </button>
+                    </form>
+                </div>
 
-                    <button
-                        type="submit"
-                        disabled={isLoading}
-                        className="w-full bg-black text-white font-bold py-4 rounded-2xl text-lg hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 shadow-lg shadow-black/20 flex items-center justify-center gap-2"
-                    >
-                        {isLoading ? <Loader2 className="animate-spin" /> : 'Get Started'}
-                        {!isLoading && <ArrowRight size={20} />}
-                    </button>
-
-                    <div className="text-center pt-2">
-                        <span className="text-gray-500 text-sm font-medium">Already have an account? </span>
-                        <Link to="/login" className="text-black font-bold text-sm hover:underline">Sign In</Link>
-                    </div>
-                </form>
+                <div className="text-center mt-12">
+                    <p className="text-neutral-500 dark:text-neutral-400 text-xs font-bold uppercase tracking-widest">
+                        Already existing?{' '}
+                        <Link to="/login" className="text-orange-500 font-black hover:underline underline-offset-4">
+                            SIGN IN
+                        </Link>
+                    </p>
+                </div>
             </motion.div>
         </div>
     );
 }
+
