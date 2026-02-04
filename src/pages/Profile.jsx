@@ -1,7 +1,7 @@
 import { useAuth } from '../context/AuthContext';
 import { useOrder } from '../context/OrderContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, User, Wallet, History, ChevronRight, LogOut, FileText, CheckCircle, Clock, Printer, Shield, CreditCard, Bell, Sparkles, Zap, ChevronLeft } from 'lucide-react';
+import { User, Wallet, History, ChevronRight, LogOut, FileText, CheckCircle, Clock, Shield, CreditCard, Zap, ChevronLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx } from 'clsx';
 
@@ -15,150 +15,137 @@ export default function Profile() {
         navigate('/');
     };
 
-    const myOrders = (orders || []).filter(o => o.userId === user?.id);
+    const myOrders = (orders || []).filter(o => o.userId === user?.id || o.userId === user?.uid);
 
     return (
-        <div className="min-h-screen bg-white text-black transition-colors duration-500 pb-24 overflow-x-hidden font-sans">
+        <div className="min-h-screen bg-neutral-50 text-neutral-900 pb-24 font-sans">
 
             {/* Header */}
-            <div className="sticky top-0 z-50 glass-morphism border-b border-black/5 py-4">
-                <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-                    <button onClick={() => navigate(-1)} className="w-12 h-12 rounded-2xl border border-black/5 flex items-center justify-center hover:bg-neutral-50 transition-all group">
-                         <ChevronLeft size={24} className="group-hover:-translate-x-1 transition-transform text-black" />
+            <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200 py-4">
+                <div className="max-w-4xl mx-auto px-6 flex items-center justify-between">
+                    <button onClick={() => navigate(-1)} className="p-2 rounded-lg hover:bg-neutral-100 transition-colors group">
+                         <ChevronLeft size={24} className="text-neutral-500 group-hover:text-black" />
                     </button>
-                    <div className="text-center">
-                        <h1 className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-400">Identity Portal</h1>
-                    </div>
-                    <div className="w-12" />
+                    <h1 className="font-bold text-neutral-800">My Account</h1>
+                    <div className="w-10" />
                 </div>
-            </div>
+            </header>
 
-            <main className="max-w-2xl mx-auto px-6 mt-16 space-y-16 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <main className="max-w-xl mx-auto px-6 mt-12 space-y-10">
                 
-                {/* Identity Module */}
+                {/* Profile Header */}
                 <div className="flex flex-col items-center text-center">
                     <motion.div 
-                        whileHover={{ scale: 1.05, rotate: 5 }}
-                        className="w-32 h-32 rounded-[48px] bg-gradient-to-tr from-orange-500 to-amber-500 p-1.5 shadow-[0_40px_80px_-20px_rgba(249,115,22,0.3)] mb-8 relative group"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="w-24 h-24 rounded-3xl bg-amber-500 p-1 mb-6 relative group"
                     >
-                        <div className="w-full h-full bg-white rounded-[44px] flex items-center justify-center overflow-hidden border border-black/5">
+                        <div className="w-full h-full bg-white rounded-[22px] flex items-center justify-center border border-amber-200 overflow-hidden shadow-inner">
                              {user?.name?.[0]?.toUpperCase() ? (
-                                <span className="text-5xl font-black text-black">{user.name[0]}</span>
-                             ) : <User size={48} className="text-black" />}
-                        </div>
-                        <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-black border-4 border-white rounded-full flex items-center justify-center shadow-lg">
-                            <Shield size={16} className="text-orange-500" />
+                                <span className="text-4xl font-bold text-amber-600">{user.name[0]}</span>
+                             ) : <User size={40} className="text-neutral-300" />}
                         </div>
                     </motion.div>
                     
-                    <div>
-                        <h2 className="text-5xl font-black tracking-tighter uppercase leading-none mb-3 text-black">{user?.name || 'Guest User'}</h2>
-                        <div className="flex items-center gap-3 justify-center">
-                             <span className="text-neutral-400 font-black text-[10px] uppercase tracking-widest">{user?.email || 'OFFLINE'}</span>
-                             <div className="w-1.5 h-1.5 bg-neutral-100 rounded-full" />
-                             <span className="text-orange-500 font-black text-[10px] uppercase tracking-[0.2em] bg-orange-500/5 px-3 py-1 rounded-full border border-orange-500/10">Authorized Member</span>
+                    <div className="space-y-1">
+                        <h2 className="text-3xl font-bold text-neutral-900">{user?.name || 'Student User'}</h2>
+                        <div className="flex items-center gap-2 justify-center text-sm font-medium text-neutral-500">
+                             <span>{user?.email || 'N/A'}</span>
+                             <div className="w-1 h-1 bg-neutral-300 rounded-full" />
+                             <span className="text-amber-700 font-bold">JIIT Student</span>
                         </div>
                     </div>
                 </div>
 
-                {/* Quick Stats Bento */}
-                <div className="grid grid-cols-2 gap-6">
-                    <div className="bg-white p-8 rounded-[40px] border border-black/5 shadow-premium flex items-center gap-5 group">
-                        <div className="w-14 h-14 bg-orange-500/5 text-orange-500 rounded-[22px] flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-all border border-orange-500/10">
-                             <Zap size={24} />
+                {/* Account Stats */}
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm flex items-center gap-4">
+                        <div className="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center border border-amber-100">
+                             <Zap size={20} />
                         </div>
                         <div>
-                             <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest leading-none mb-2">Total Lab</p>
-                             <p className="text-2xl font-black tracking-tighter uppercase text-black">{myOrders.length}</p>
+                             <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-0.5">Total Prints</p>
+                             <p className="text-xl font-bold text-neutral-900">{myOrders.length}</p>
                         </div>
                     </div>
-                    <div className="bg-white p-8 rounded-[40px] border border-black/5 shadow-premium flex items-center gap-5 group">
-                        <div className="w-14 h-14 bg-neutral-100 text-black rounded-[22px] flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all border border-black/5">
-                             <Wallet size={24} />
+                    <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm flex items-center gap-4">
+                        <div className="w-10 h-10 bg-neutral-50 text-neutral-400 rounded-xl flex items-center justify-center border border-neutral-100">
+                             <Wallet size={20} />
                         </div>
                         <div>
-                             <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest leading-none mb-2">Credits</p>
-                             <p className="text-2xl font-black tracking-tighter uppercase text-black">₹0.00</p>
+                             <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-0.5">Balance</p>
+                             <p className="text-xl font-bold text-neutral-900">₹0.00</p>
                         </div>
                     </div>
                 </div>
 
-                {/* Management Suite */}
-                <div className="bg-white rounded-[56px] border border-black/5 shadow-premium overflow-hidden">
+                {/* Control Menu */}
+                <div className="bg-white rounded-2xl border border-neutral-200 shadow-sm divide-y divide-neutral-100 overflow-hidden">
                     <ListItem 
-                      icon={<FileText size={20} />} 
-                      label="OPEN NEW TICKET" 
-                      desc="Start production sequence"
+                      icon={<FileText size={18} />} 
+                      label="Start New Print Order" 
                       onClick={() => navigate('/order')}
                     />
                     <ListItem 
-                      icon={<CreditCard size={20} />} 
-                      label="FINANCIAL LOGS" 
-                      desc="Transaction history"
+                      icon={<CreditCard size={18} />} 
+                      label="Payment History" 
                     />
                     <ListItem 
-                      icon={<Shield size={20} />} 
-                      label="SECURITY CORE" 
-                      desc="Manage key protocols"
+                      icon={<Shield size={18} />} 
+                      label="Account Security" 
                     />
                     <button onClick={handleLogout} className="w-full text-left">
                         <ListItem 
-                          icon={<LogOut size={20} />} 
-                          label="TERMINATE SESSION" 
-                          desc="Sign out of system"
+                          icon={<LogOut size={18} />} 
+                          label="Sign Out" 
                           isLast 
                           danger
                         />
                     </button>
                 </div>
 
-                {/* History Module */}
-                <div className="space-y-8">
-                    <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-400 px-4">SEQUENCE LOGS</h3>
+                {/* Recent Orders */}
+                <div className="space-y-6">
+                    <div className="flex justify-between items-center px-1">
+                        <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-widest">Recent Pickup History</h3>
+                        <Link to="/orders" className="text-xs font-bold text-amber-600 hover:underline">View All</Link>
+                    </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                         {myOrders.length === 0 ? (
-                            <div className="text-center py-20 bg-neutral-50 rounded-[48px] border-2 border-dashed border-black/5">
-                                <History size={40} className="mx-auto mb-6 text-neutral-200" />
-                                <h4 className="font-black text-2xl tracking-tighter uppercase mb-2 text-black">NO RECORDS</h4>
-                                <p className="text-[10px] font-black text-neutral-400 uppercase tracking-[0.3em]">System standby for new transactions</p>
+                            <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-neutral-200">
+                                <History size={32} className="mx-auto mb-4 text-neutral-200" />
+                                <p className="text-sm font-medium text-neutral-400">Your print history will appear here.</p>
                             </div>
                         ) : (
                             <AnimatePresence mode='popLayout'>
-                                {myOrders.slice(0, 5).map((order) => (
+                                {myOrders.slice(0, 3).map((order) => (
                                     <motion.div 
-                                        layout
                                         key={order.id} 
-                                        className="bg-white p-6 rounded-[40px] border border-black/5 flex items-center justify-between group hover:border-orange-500/20 transition-all shadow-sm"
+                                        className="bg-white p-5 rounded-2xl border border-neutral-100 flex items-center justify-between group hover:border-neutral-300 transition-all shadow-sm"
                                     >
-                                        <div className="flex items-center gap-6">
+                                        <div className="flex items-center gap-5">
                                             <div className={clsx(
-                                                "w-16 h-16 rounded-[28px] flex flex-col items-center justify-center font-black transition-all group-hover:scale-110 shadow-xl",
-                                                order.status === 'collected' ? "bg-neutral-50 text-neutral-400" : "bg-orange-500 text-white"
+                                                "w-12 h-12 rounded-xl flex flex-col items-center justify-center font-bold",
+                                                order.status === 'collected' ? "bg-neutral-50 text-neutral-400" : "bg-amber-600 text-white shadow-sm"
                                             )}>
-                                                <span className="text-2xl tracking-tighter leading-none">{order.otp}</span>
-                                                <span className="text-[8px] uppercase tracking-widest mt-1 opacity-60">OTP</span>
+                                                <span className="text-xl leading-none">{order.otp}</span>
+                                                <span className="text-[7px] uppercase tracking-wider mt-0.5 opacity-70 font-semibold">OTP</span>
                                             </div>
                                             
                                             <div>
-                                                <div className="flex items-center gap-3 mb-1">
-                                                    <h4 className="font-black text-base tracking-tighter uppercase text-black">BATCH-{order.id.slice(0, 6)}</h4>
-                                                    <div className={clsx("w-2 h-2 rounded-full",
-                                                        order.status === 'collected' ? "bg-neutral-200" :
-                                                        order.status === 'printed' ? "bg-blue-500" : "bg-green-500"
-                                                    )} />
-                                                </div>
-                                                <p className="text-[10px] font-black text-neutral-400 uppercase tracking-[0.3em]">
-                                                    {new Date(order.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })} • {order.files.length} ASSETS
+                                                <h4 className="font-bold text-sm text-neutral-800 uppercase tracking-tight">Order #{order.id.slice(-6).toUpperCase()}</h4>
+                                                <p className="text-[10px] font-medium text-neutral-400 mt-0.5">
+                                                    {new Date(order.created_at).toLocaleDateString([], { month: 'short', day: 'numeric' })} • {order.files.length} Document(s)
                                                 </p>
                                             </div>
                                         </div>
 
                                         <div className="text-right">
-                                            <p className="font-black text-xl tracking-tighter uppercase leading-none mb-2 text-black">₹{order.totalAmount}</p>
-                                            <span className={clsx("text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border",
-                                                order.status === 'collected' ? "text-neutral-400 border-neutral-100" :
-                                                order.status === 'printed' ? "text-blue-500 border-blue-100 bg-blue-50/50" : "text-green-500 border-green-100 bg-green-50/50"
+                                            <p className="font-bold text-sm text-neutral-900">₹{order.totalAmount}</p>
+                                            <span className={clsx("text-[9px] font-bold uppercase tracking-wider",
+                                                order.status === 'collected' ? "text-neutral-400" :
+                                                order.status === 'printed' ? "text-blue-600" : "text-amber-700"
                                             )}>
                                                 {order.status === 'paid' ? 'In Queue' : order.status}
                                             </span>
@@ -175,29 +162,23 @@ export default function Profile() {
     );
 }
 
-function ListItem({ icon, label, desc, onClick, isLast, danger }) {
+function ListItem({ icon, label, onClick, isLast, danger }) {
     return (
         <button 
            onClick={onClick}
-           className={clsx(
-                "w-full flex items-center justify-between p-10 hover:bg-neutral-50 transition-all text-left group",
-                !isLast && "border-b border-black/5"
-           )}
+           className="w-full flex items-center justify-between p-5 hover:bg-neutral-50 transition-colors text-left group"
         >
-            <div className="flex items-center gap-6">
-                <div className={clsx("w-14 h-14 rounded-2xl flex items-center justify-center transition-all group-hover:rotate-6 shadow-xl", 
-                    danger ? "bg-red-500 text-white" : "bg-black text-white"
+            <div className="flex items-center gap-4">
+                <div className={clsx("w-10 h-10 rounded-xl flex items-center justify-center", 
+                    danger ? "bg-red-50 text-red-500" : "bg-neutral-50 text-neutral-500 group-hover:bg-neutral-900 group-hover:text-white"
                 )}>
                     {icon}
                 </div>
-                <div>
-                    <h4 className={clsx("font-black text-xs tracking-[0.3em] uppercase transition-colors", 
-                        danger ? "text-red-500" : "text-black"
-                    )}>{label}</h4>
-                    <p className="text-[9px] font-black text-neutral-400 uppercase tracking-[0.1em] mt-1.5 transition-colors">{desc}</p>
-                </div>
+                <span className={clsx("font-bold text-sm", 
+                    danger ? "text-red-500" : "text-neutral-700 group-hover:text-black"
+                )}>{label}</span>
             </div>
-            <ChevronRight size={20} className={clsx("transition-transform group-hover:translate-x-1", danger ? "text-red-500" : "text-neutral-200")} />
+            <ChevronRight size={18} className={clsx("transition-transform group-hover:translate-x-1", danger ? "text-red-300" : "text-neutral-300")} />
         </button>
     );
 }

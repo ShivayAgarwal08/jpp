@@ -1,21 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
   ArrowRight, 
   Lock, 
   School, 
-  Store, 
-  User, 
-  Printer, 
   Zap, 
   Shield, 
-  Download, 
-  Clock, 
-  ChevronDown,
-  Sparkles,
   CheckCircle2,
-  FileText
+  FileText,
+  Clock,
+  Printer,
+  ChevronDown
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -24,9 +20,6 @@ export default function Landing() {
     const navigate = useNavigate();
     const [show128Options, setShow128Options] = useState(false);
     const [show62Popup, setShow62Popup] = useState(false);
-    const heroRef = useRef(null);
-    const { scrollYProgress } = useScroll();
-    const y1 = useTransform(scrollYProgress, [0, 1], [0, -200]);
 
     useEffect(() => {
         if (user) {
@@ -45,37 +38,36 @@ export default function Landing() {
 
     const features = [
       {
-        icon: <Zap className="text-orange-500" />,
-        title: "Instant Digital Lab",
-        desc: "Upload and process in milliseconds. Direct-to-vendor production pipeline."
+        icon: <Zap className="text-amber-600" size={24} />,
+        title: "Fast Turnaround",
+        desc: "Upload your study materials and they'll be ready for pickup in minutes."
       },
       {
-        icon: <Shield className="text-orange-500" />,
-        title: "Secure Protocols",
-        desc: "Encrypted transmission with 4-digit OTP batch verification system."
+        icon: <Shield className="text-amber-600" size={24} />,
+        title: "Simple & Secure",
+        desc: "Pay online and use a unique code for a secure, contact-free pickup."
       },
       {
-        icon: <Store className="text-orange-500" />,
-        title: "Stationery Clusters",
-        desc: "Unified network of verified campus hubs for seamless asset collection."
+        icon: <Printer className="text-amber-600" size={24} />,
+        title: "Quality Prints",
+        desc: "Partnered with local outlets to ensure crisp, clear professional printing."
       }
     ];
 
     return (
-        <div className="min-h-screen bg-white text-black transition-colors duration-500 selection:bg-orange-500/30 font-sans">
+        <div className="min-h-screen bg-white text-neutral-800 font-sans selection:bg-amber-100">
             
-            {/* Navigation Unit */}
-            <nav className="fixed top-0 left-0 w-full z-50 glass-morphism border-b border-black/5 py-5">
-              <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 bg-black rounded-xl flex items-center justify-center font-black text-white shadow-xl rotate-3">J</div>
-                  <span className="font-black text-2xl tracking-tighter uppercase">JPRINT<span className="text-orange-500">.</span></span>
+            {/* Nav */}
+            <nav className="fixed top-0 left-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-neutral-100 py-4">
+              <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-neutral-900 rounded-lg flex items-center justify-center font-bold text-white">J</div>
+                  <span className="font-bold text-xl tracking-tight">JPRINT<span className="text-amber-600">.</span></span>
                 </div>
-                <div className="hidden md:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.3em] text-neutral-400">
+                <div className="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-600">
                   <a href="#features" className="hover:text-black transition-colors">Features</a>
-                  <a href="#about" className="hover:text-black transition-colors">Lab Core</a>
-                  <button onClick={() => navigate('/vendor-login')} className="hover:text-orange-500 transition-colors flex items-center gap-2">
-                    <Lock size={14} /> Terminal Access
+                  <button onClick={() => navigate('/vendor-login')} className="hover:text-amber-600 transition-colors flex items-center gap-1.5">
+                    <Lock size={14} /> Shop Access
                   </button>
                 </div>
                 <button 
@@ -83,269 +75,202 @@ export default function Landing() {
                     const el = document.getElementById('selection');
                     el?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="px-8 py-3 bg-black text-white rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:scale-105 transition-all active:scale-95 shadow-2xl"
+                  className="px-5 py-2 bg-neutral-900 text-white rounded-lg text-sm font-semibold hover:bg-neutral-800 transition-all active:scale-95"
                 >
-                  INITIALIZE
+                  Start Now
                 </button>
               </div>
             </nav>
 
-            {/* Hero Environment */}
-            <section ref={heroRef} className="relative pt-44 pb-32 overflow-hidden flex flex-col items-center">
-              {/* Background Fluidics */}
-              <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-orange-500/5 rounded-full blur-[150px] pointer-events-none animate-pulse" />
-              <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-neutral-100 rounded-full blur-[150px] pointer-events-none" />
-
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                className="container mx-auto px-6 text-center relative z-10"
-              >
-                <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white border border-black/5 shadow-premium text-black text-[10px] font-black tracking-[0.3em] uppercase mb-10">
-                  <Sparkles size={16} className="text-orange-500" /> JPRINT GEN-3 • FOR JIIT NOIDA
-                </div>
-                
-                <h1 className="text-7xl md:text-[10rem] font-black mb-8 leading-[0.85] tracking-tighter text-black uppercase">
-                  PRODUCTION AT THE <br />
-                  <span className="text-orange-500">SPEED OF LIGHT.</span>
-                </h1>
-                
-                <p className="max-w-3xl mx-auto text-xl md:text-2xl text-neutral-400 font-black uppercase tracking-tight mb-14 leading-tight">
-                  High-fidelity academic printing. Upload, authorize, and collect assets with absolute precision logic.
-                </p>
-
-                <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => {
-                        const el = document.getElementById('selection');
-                        el?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="px-12 py-6 bg-black text-white rounded-[24px] font-black uppercase tracking-[0.3em] text-xs shadow-ultra hover:bg-orange-500 transition-all flex items-center gap-4"
-                  >
-                    START PRODUCTION <ArrowRight size={20} />
-                  </motion.button>
-                  <button className="px-12 py-6 rounded-[24px] font-black uppercase tracking-[0.3em] text-[10px] border border-black/5 hover:bg-neutral-50 transition-all text-neutral-400 flex items-center gap-3">
-                    SYSTEM PROTOCOL <ChevronDown size={18} />
-                  </button>
-                </div>
-              </motion.div>
-
-              {/* Parallax Assets */}
-              <div className="relative w-full max-w-6xl mx-auto mt-28 h-[400px] hidden md:block">
+            {/* Hero */}
+            <section className="pt-32 pb-20 overflow-hidden">
+              <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <motion.div 
-                  initial={{ rotate: -10, x: -100, opacity: 0 }}
-                  animate={{ rotate: -10, x: 0, opacity: 1 }}
-                  transition={{ delay: 0.5, duration: 1.2 }}
-                  className="absolute left-[5%] top-10 w-80 p-8 bg-white rounded-[32px] shadow-premium border border-black/5 animate-float"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="text-left"
                 >
-                  <div className="flex items-center gap-5 mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-orange-500/5 text-orange-500 flex items-center justify-center border border-orange-500/10">
-                      <FileText size={28} />
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-50 rounded-full text-amber-700 text-xs font-bold mb-6 border border-amber-100 italic">
+                        New version v3.0 is live!
                     </div>
-                    <div className="text-left font-black text-sm uppercase tracking-tight text-neutral-800">thesis_v3_final.pdf</div>
-                  </div>
-                  <div className="h-2 bg-neutral-50 rounded-full mb-3" />
-                  <div className="h-2 w-2/3 bg-neutral-50 rounded-full" />
+                    
+                    <h1 className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight text-neutral-900">
+                        Reliable Campus Printing <br />
+                        <span className="text-amber-600">Simplified.</span>
+                    </h1>
+                    
+                    <p className="text-lg text-neutral-600 mb-10 leading-relaxed max-w-lg">
+                        Upload your documents online and pick them up from the stationery shop. No more waiting in long lines at the shop.
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <button
+                            onClick={() => {
+                                const el = document.getElementById('selection');
+                                el?.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                            className="px-8 py-4 bg-neutral-900 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-neutral-800 transition-all shadow-lg"
+                        >
+                            Order Your Prints <ArrowRight size={20} />
+                        </button>
+                        <button className="px-8 py-4 bg-white text-neutral-700 border border-neutral-200 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-neutral-50 transition-all">
+                            How it works <ChevronDown size={18} />
+                        </button>
+                    </div>
                 </motion.div>
 
                 <motion.div 
-                  initial={{ rotate: 8, x: 100, opacity: 0 }}
-                  animate={{ rotate: 8, x: 0, opacity: 1 }}
-                  transition={{ delay: 0.8, duration: 1.2 }}
-                  className="absolute right-[8%] top-20 w-80 p-10 bg-black rounded-[40px] shadow-ultra z-20 border border-white/10"
-                  style={{ animation: 'float 8s ease-in-out infinite reverse' }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    className="relative"
                 >
-                  <div className="text-[10px] font-black uppercase text-orange-500 mb-4 tracking-[0.4em]">AUTHORIZED BATCH</div>
-                  <div className="text-5xl font-black mb-3 tracking-[0.2em] text-white uppercase italic">9402</div>
-                  <div className="text-[10px] text-neutral-500 font-black uppercase tracking-[0.3em]">SEC-128 PORTAL READY</div>
+                    <div className="rounded-3xl overflow-hidden shadow-2xl border border-neutral-100">
+                        <img 
+                            src="/professional_printing_hero.png" 
+                            alt="Professional Campus Printing" 
+                            className="w-full h-auto object-cover"
+                        />
+                    </div>
+                    {/* Floating Info Card */}
+                    <div className="absolute -bottom-6 -left-6 bg-white p-5 rounded-2xl shadow-xl border border-neutral-50 hidden md:block">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-green-50 text-green-600 flex items-center justify-center">
+                                <CheckCircle2 size={24} />
+                            </div>
+                            <div>
+                                <p className="text-sm font-bold text-neutral-900">98% Success Rate</p>
+                                <p className="text-xs text-neutral-500">Over 10,000+ prints delivered</p>
+                            </div>
+                        </div>
+                    </div>
                 </motion.div>
-                
-                <motion.div 
-                   style={{ y: y1 }}
-                   className="absolute left-1/2 -translate-x-1/2 bottom-0 w-[800px] h-[500px] bg-gradient-to-t from-orange-500/10 to-transparent blur-[120px] -z-10"
-                />
               </div>
             </section>
 
-            {/* Architecture Section */}
-            <section id="features" className="py-44 bg-neutral-50/50">
-              <div className="container mx-auto px-6 md:px-12">
-                <div className="text-center mb-28">
-                  <h2 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 text-black uppercase">PRESTIGE ARCHITECTURE.</h2>
-                  <p className="text-neutral-400 font-black uppercase text-[10px] tracking-[0.5em]">Engineered for high-performing environments</p>
+            {/* Features */}
+            <section id="features" className="py-24 bg-neutral-50 mt-10">
+              <div className="max-w-7xl mx-auto px-6">
+                <div className="text-center mb-16">
+                  <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">Why choose JPRINT?</h2>
+                  <p className="text-neutral-500 max-w-2xl mx-auto font-medium">We've designed our service to be as efficient and helpful as possible for JIIT students.</p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-10">
+                <div className="grid md:grid-cols-3 gap-8">
                   {features.map((f, i) => (
-                    <motion.div 
-                      key={i}
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.15 }}
-                      className="p-12 bg-white rounded-[56px] border border-black/5 shadow-premium hover:shadow-ultra transition-all group"
-                    >
-                      <div className="w-16 h-16 rounded-2xl bg-black text-white flex items-center justify-center mb-10 group-hover:rotate-12 transition-transform shadow-xl">
+                    <div key={i} className="card-professional">
+                      <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center mb-6">
                         {f.icon}
                       </div>
-                      <h3 className="text-3xl font-black mb-6 tracking-tighter text-black uppercase">{f.title}</h3>
-                      <p className="text-neutral-400 font-black uppercase text-[10px] tracking-widest leading-loose">{f.desc}</p>
-                    </motion.div>
+                      <h3 className="text-xl font-bold mb-3 text-neutral-900">{f.title}</h3>
+                      <p className="text-neutral-500 text-sm leading-relaxed">{f.desc}</p>
+                    </div>
                   ))}
                 </div>
               </div>
             </section>
 
-            {/* Access Portal */}
-            <section id="selection" className="py-56 relative bg-white overflow-hidden">
-               <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-              
-               <div className="container mx-auto px-6 flex flex-col items-center text-center relative z-10">
-                <div className="max-w-xl w-full">
-                   <h2 className="text-6xl font-black tracking-tight mb-6 leading-none text-black uppercase">SELECT CAMPUS<span className="text-orange-500">.</span></h2>
-                   <p className="text-neutral-300 mb-16 font-black uppercase text-[10px] tracking-[0.5em]">Node authentication required</p>
-                   
-                   <div className="grid gap-6">
-                        {!show128Options ? (
-                            <>
-                                <motion.button
-                                    whileHover={{ scale: 1.02, y: -4 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    onClick={handle128Click}
-                                    className="group relative w-full bg-white p-10 rounded-[48px] shadow-premium border border-black/5 flex items-center justify-between transition-all"
-                                >
-                                    <div className="flex items-center gap-8">
-                                        <div className="w-20 h-20 bg-black text-white rounded-[28px] flex items-center justify-center group-hover:rotate-3 transition-transform shadow-2xl">
-                                            <School size={36} />
-                                        </div>
-                                        <div className="text-left">
-                                            <h3 className="font-black text-3xl text-black uppercase tracking-tighter">Sector 128</h3>
-                                            <p className="text-[10px] text-neutral-400 font-black uppercase tracking-[0.3em] mt-1">JIIT Wish Town Core</p>
-                                        </div>
-                                    </div>
-                                    <div className="w-14 h-14 rounded-full border border-black/5 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all">
-                                      <ArrowRight size={24} />
-                                    </div>
-                                </motion.button>
-
-                                <motion.button
-                                    whileHover={{ scale: 1.01 }}
-                                    onClick={handle62Click}
-                                    className="group relative w-full bg-neutral-50 p-10 rounded-[48px] border border-dashed border-neutral-200 flex items-center justify-between opacity-50 grayscale transition-all cursor-not-allowed overflow-hidden"
-                                >
-                                    <div className="flex items-center gap-8">
-                                        <div className="w-20 h-20 bg-neutral-100 rounded-[28px] flex items-center justify-center text-neutral-300">
-                                            <Lock size={36} />
-                                        </div>
-                                        <div className="text-left">
-                                            <h3 className="font-black text-3xl text-neutral-300 uppercase tracking-tighter">Sector 62</h3>
-                                            <p className="text-[10px] text-neutral-300 font-black uppercase tracking-[0.3em] mt-1">Noida Main Campus</p>
-                                        </div>
-                                    </div>
-                                    <div className="text-[9px] font-black uppercase tracking-[0.4em] bg-neutral-100 px-5 py-2 rounded-full text-neutral-400">Offline</div>
-                                </motion.button>
-                            </>
-                        ) : (
-                            <motion.div 
-                                layoutId="selection-portal"
-                                className="bg-black text-white p-14 rounded-[64px] shadow-ultra text-left relative overflow-hidden"
+            {/* Campus Selection */}
+            <section id="selection" className="py-32 bg-white">
+              <div className="max-w-3xl mx-auto px-6 text-center">
+                 <h2 className="text-4xl font-bold text-neutral-900 mb-4 tracking-tight">Select Your Campus</h2>
+                 <p className="text-neutral-500 mb-12 font-medium">Please choose your building to start your order.</p>
+                 
+                 <div className="grid gap-6">
+                    {!show128Options ? (
+                        <>
+                            <button
+                                onClick={handle128Click}
+                                className="group w-full bg-white p-8 rounded-2xl border border-neutral-200 flex items-center justify-between hover:border-amber-600 hover:shadow-md transition-all text-left"
                             >
-                                <div className="absolute top-0 right-0 w-44 h-44 bg-orange-500/20 blur-[80px] pointer-events-none" />
-                                <button onClick={() => setShow128Options(false)} className="text-[9px] font-black uppercase tracking-[0.4em] opacity-40 hover:opacity-100 transition-opacity mb-8 block">← Back to Clusters</button>
-                                <h3 className="text-6xl font-black tracking-tighter mb-14 leading-[0.9] uppercase italic">Sector 128<br />Selection.</h3>
-
-                                <div className="space-y-5 relative z-10">
-                                  <motion.button
-                                      whileHover={{ scale: 1.02, x: 10 }}
-                                      onClick={() => navigate('/login')}
-                                      className="w-full bg-white text-black p-8 rounded-[32px] flex items-center justify-between transition-all font-black group shadow-2xl"
-                                  >
-                                      <div className="flex items-center gap-6">
-                                          <div className="w-14 h-14 bg-neutral-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                            <User size={28} />
-                                          </div>
-                                          <div className="text-left font-black uppercase text-xs tracking-[0.2em]">Authorized Login</div>
-                                      </div>
-                                      <ArrowRight className="group-hover:translate-x-2 transition-transform" />
-                                  </motion.button>
-
-                                  <motion.button
-                                      whileHover={{ scale: 1.02, x: 10 }}
-                                      onClick={() => navigate('/register')}
-                                      className="w-full bg-orange-500 p-8 rounded-[32px] flex items-center justify-between text-white transition-all font-black group shadow-2xl shadow-orange-500/20"
-                                  >
-                                      <div className="flex items-center gap-6">
-                                          <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                                            <Sparkles size={28} />
-                                          </div>
-                                          <div className="text-left font-black uppercase text-xs tracking-[0.2em]">Platform Enrollment</div>
-                                      </div>
-                                      <ArrowRight className="group-hover:translate-x-2 transition-transform" />
-                                  </motion.button>
+                                <div className="flex items-center gap-6">
+                                    <div className="w-14 h-14 bg-neutral-100 rounded-xl flex items-center justify-center text-neutral-900 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                                        <School size={28} />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-xl text-neutral-900">Sector 128</h3>
+                                        <p className="text-sm text-neutral-500 font-medium">Wish Town Campus</p>
+                                    </div>
                                 </div>
-                            </motion.div>
-                        )}
-                   </div>
-                </div>
+                                <ArrowRight size={20} className="text-neutral-300 group-hover:text-amber-600 transition-colors" />
+                            </button>
+
+                            <button
+                                onClick={handle62Click}
+                                className="w-full bg-neutral-50 p-8 rounded-2xl border border-neutral-100 flex items-center justify-between opacity-60 grayscale cursor-not-allowed group text-left"
+                            >
+                                <div className="flex items-center gap-6">
+                                    <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center text-neutral-300">
+                                        <Lock size={28} />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-xl text-neutral-300">Sector 62</h3>
+                                        <p className="text-sm text-neutral-300">Noida Main Campus</p>
+                                    </div>
+                                </div>
+                                <span className="bg-neutral-100 text-neutral-400 px-3 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider">Coming Soon</span>
+                            </button>
+                        </>
+                    ) : (
+                        <motion.div 
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="bg-neutral-900 text-white p-10 rounded-3xl shadow-xl text-left relative overflow-hidden"
+                        >
+                            <button onClick={() => setShow128Options(false)} className="text-xs font-bold text-neutral-400 hover:text-white transition-opacity mb-6 block">← Change Campus</button>
+                            <h3 className="text-3xl font-bold mb-8">Access Sector 128 Portal</h3>
+
+                            <div className="flex flex-col sm:flex-row gap-4">
+                              <button
+                                  onClick={() => navigate('/login')}
+                                  className="flex-1 bg-white text-neutral-900 p-5 rounded-xl flex items-center justify-between font-bold hover:bg-neutral-100 transition-all"
+                              >
+                                  <span>Login as Student</span>
+                                  <ArrowRight size={18} />
+                              </button>
+
+                              <button
+                                  onClick={() => navigate('/register')}
+                                  className="flex-1 bg-amber-600 text-white p-5 rounded-xl flex items-center justify-between font-bold hover:bg-amber-700 transition-all shadow-lg shadow-amber-900/20"
+                              >
+                                  <span>New Student Signup</span>
+                                  <ArrowRight size={18} />
+                              </button>
+                            </div>
+                        </motion.div>
+                    )}
+                 </div>
               </div>
             </section>
 
-            {/* Final Call */}
-            <section className="py-56 relative overflow-hidden bg-black text-white text-center">
-              <div className="absolute inset-0 opacity-20 pointer-events-none">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] bg-orange-500 rounded-full blur-[200px]" />
-              </div>
-
-              <div className="container mx-auto px-6 relative z-10">
-                 <h2 className="text-7xl md:text-[12rem] font-black tracking-tighter mb-12 max-w-7xl mx-auto leading-[0.8] uppercase">JOIN THE <br />PRODUCTION.</h2>
-                 <p className="text-neutral-500 font-black mb-20 text-xs tracking-[0.8em] uppercase">SYSTEM V3.0 • EXCLUSIVE ACCESS</p>
-                 <button 
-                  onClick={() => {
-                    const el = document.getElementById('selection');
-                    el?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                  className="px-24 py-10 bg-white text-black text-xl font-black rounded-full hover:scale-110 active:scale-95 transition-all shadow-ultra uppercase tracking-[0.4em]"
-                 >
-                   INITIALIZE
-                 </button>
-              </div>
-            </section>
-
-            {/* Footer Units */}
-            <footer className="py-24 bg-white text-neutral-400 border-t border-black/5">
-               <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-16">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center font-black text-white rotate-3">J</div>
-                    <span className="font-black text-black tracking-tighter text-2xl uppercase">JPRINT<span className="text-orange-500">.</span></span>
+            {/* Footer */}
+            <footer className="py-20 border-t border-neutral-100">
+               <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 bg-neutral-900 rounded-lg flex items-center justify-center font-bold text-white">J</div>
+                    <span className="font-bold text-neutral-900 text-xl tracking-tight">JPRINT<span className="text-amber-600">.</span></span>
                   </div>
-                  <div className="flex gap-14 text-[10px] font-black uppercase tracking-[0.4em]">
-                    <a href="#" className="hover:text-black transition-colors">Privacy</a>
-                    <a href="#" className="hover:text-black transition-colors">Protocols</a>
-                    <a href="#" className="hover:text-black transition-colors">Core Support</a>
+                  <div className="flex gap-10 text-sm font-medium text-neutral-500">
+                    <a href="#" className="hover:text-black transition-colors">Privacy Policy</a>
+                    <a href="#" className="hover:text-black transition-colors">Terms of Service</a>
+                    <a href="#" className="hover:text-black transition-colors">Contact Support</a>
                   </div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.4em] text-neutral-300">© 2026 SHIVAY AGARWAL • JIIT OPERATIVE.</p>
+                  <p className="text-sm text-neutral-400 font-medium italic">Handcrafted for JIIT Students.</p>
                </div>
             </footer>
 
-            {/* Global Notifications */}
+            {/* Toast Notification */}
             <AnimatePresence>
                 {show62Popup && (
                     <motion.div
-                        initial={{ opacity: 0, y: 50, x: "-50%" }}
-                        animate={{ opacity: 1, y: 0, x: "-50%" }}
-                        exit={{ opacity: 0, y: 30, x: "-50%" }}
-                        className="fixed bottom-12 left-1/2 bg-black text-white px-10 py-6 rounded-[32px] shadow-ultra flex items-center gap-5 whitespace-nowrap z-50 border border-white/10"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        className="fixed bottom-10 left-1/2 -translate-x-1/2 bg-neutral-900 text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-4 z-50 border border-neutral-800"
                     >
-                        <div className="w-12 h-12 bg-orange-500 rounded-2xl flex items-center justify-center text-white animate-pulse">
-                          <CheckCircle2 size={24} />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="font-black text-xs tracking-[0.2em] uppercase">Sector 62 Pipeline Pending</span>
-                          <span className="text-[9px] font-black text-neutral-500 tracking-[0.3em] uppercase">SYNCING NEW NODES FOR NEXT DEPLOYMENT</span>
-                        </div>
+                        <Lock size={20} className="text-amber-500" />
+                        <span className="text-sm font-semibold">Sector 62 services will be available soon!</span>
                     </motion.div>
                 )}
             </AnimatePresence>

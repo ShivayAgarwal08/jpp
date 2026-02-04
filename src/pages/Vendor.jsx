@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useOrder } from '../context/OrderContext';
-import { Search, CheckCircle, Clock, Download, Printer, Check, X, Bell, RefreshCw, TrendingUp, FileText, User, LogOut, Shield, Database, Activity, Zap, ChevronRight, LayoutGrid, ShieldAlert } from 'lucide-react';
+import { Search, CheckCircle, Clock, Download, Printer, Check, X, Bell, RefreshCw, FileText, User, LogOut, Shield, Database, LayoutGrid, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx } from 'clsx';
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,8 +14,6 @@ export default function Vendor() {
     const [otpInput, setOtpInput] = useState('');
     const [verificationResult, setVerificationResult] = useState(null);
     const [activeTab, setActiveTab] = useState('queue');
-    const [lastUpdated, setLastUpdated] = useState(new Date());
-    const [newOrderAlert, setNewOrderAlert] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const audioRef = useRef(null);
     const prevOrdersRef = useRef(orders.length);
@@ -25,15 +23,11 @@ export default function Vendor() {
     }, []);
 
     useEffect(() => {
-        setLastUpdated(new Date());
         const prevCount = prevOrdersRef.current;
         if (orders.length > prevCount) {
-            const latest = orders[0];
-            setNewOrderAlert(`NEW PRODUCTION REQUEST: #${latest.otp}`);
             if (audioRef.current) {
                 audioRef.current.play().catch(() => {});
             }
-            setTimeout(() => setNewOrderAlert(null), 5000);
         }
         prevOrdersRef.current = orders.length;
     }, [orders]);
@@ -43,11 +37,11 @@ export default function Vendor() {
         if (otpInput.length < 4) return;
         const matchingOrder = orders.find(o => o.otp === otpInput && o.status !== 'collected');
         if (matchingOrder) {
-            setVerificationResult({ success: true, message: `AUTHORIZED: #${matchingOrder.id.slice(0,4)}`, orderId: matchingOrder.id });
+            setVerificationResult({ success: true, message: `OTP Verified: Order #${matchingOrder.id.slice(0,6).toUpperCase()}` });
             setOtpInput('');
             setTimeout(() => setVerificationResult(null), 3000);
         } else {
-            setVerificationResult({ success: false, message: 'DENIED: INVALID OTP' });
+            setVerificationResult({ success: false, message: 'Invalid OTP. Please try again.' });
             setTimeout(() => setVerificationResult(null), 2000);
         }
     };
@@ -79,79 +73,76 @@ export default function Vendor() {
     if (!user || user.role !== 'vendor') return null;
 
     return (
-        <div className="min-h-screen bg-white text-black font-sans transition-colors duration-500 overflow-x-hidden">
+        <div className="min-h-screen bg-neutral-50 text-neutral-900 font-sans">
             
             {/* Header */}
-            <header className="sticky top-0 z-50 glass-morphism border-b border-black/5 px-6 py-5">
+            <header className="sticky top-0 z-50 bg-white border-b border-neutral-200 px-6 py-4 shadow-sm">
                 <div className="max-w-7xl mx-auto flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center font-black text-white shadow-xl rotate-3">V</div>
+                        <div className="w-10 h-10 bg-neutral-900 rounded-lg flex items-center justify-center font-bold text-white shadow-md">V</div>
                         <div className="hidden sm:block">
-                            <div className="flex items-center gap-2">
-                                <h1 className="font-black text-lg tracking-tighter uppercase">OPERATIONS CONTROL<span className="text-orange-500">.</span></h1>
-                                <span className="flex items-center gap-1.5 bg-green-500/10 px-3 py-1 rounded-full border border-green-500/10">
-                                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                                    <span className="text-[10px] font-black text-green-500 uppercase tracking-widest">System Live</span>
-                                </span>
+                            <h1 className="font-bold text-lg text-neutral-900">Vendor Dashboard</h1>
+                            <div className="flex items-center gap-1.5">
+                                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                                <span className="text-[10px] font-bold text-green-600 uppercase tracking-widest">System Online</span>
                             </div>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-4">
-                        <Link to="/database" target="_blank" className="p-3 rounded-2xl hover:bg-neutral-50 transition-all text-neutral-400 hover:text-orange-500 border border-transparent hover:border-black/5">
+                        <Link to="/database" target="_blank" className="p-2 text-neutral-400 hover:text-neutral-900 transition-colors">
                              <Database size={20} />
                         </Link>
-                        <button onClick={() => window.location.reload()} className="p-3 rounded-2xl hover:bg-neutral-50 transition-all text-neutral-400 hover:text-green-500 border border-transparent hover:border-black/5">
+                        <button onClick={() => window.location.reload()} className="p-2 text-neutral-400 hover:text-neutral-900 transition-colors">
                              <RefreshCw size={20} />
                         </button>
-                        <div className="w-px h-8 bg-black/5 mx-2" />
-                        <button onClick={handleLogout} className="flex items-center gap-2 px-6 py-3 bg-red-500 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg shadow-red-500/20">
+                        <div className="w-px h-6 bg-neutral-200 mx-2" />
+                        <button onClick={handleLogout} className="flex items-center gap-2 px-4 py-2 bg-neutral-100 text-neutral-700 rounded-lg font-bold text-sm hover:bg-neutral-200 transition-all">
                            <LogOut size={16} />
-                           TERMINATE
+                           Log Out
                         </button>
                     </div>
                 </div>
             </header>
 
-            <main className="max-w-7xl mx-auto p-6 md:p-12 space-y-12 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <main className="max-w-7xl mx-auto p-6 lg:p-10 space-y-10">
                 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     
-                    {/* Security & Analytics */}
-                    <div className="lg:col-span-4 space-y-8">
+                    {/* Left Panel */}
+                    <div className="lg:col-span-4 space-y-6">
                         
-                        {/* OTP Terminal */}
-                        <div className="bg-white p-10 rounded-[48px] border border-black/5 shadow-premium">
-                             <div className="flex items-center justify-between mb-10">
-                                <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-neutral-400">Terminal Authorization</h2>
-                                <Shield size={20} className="text-orange-500" />
+                        {/* OTP Check */}
+                        <div className="bg-white p-8 rounded-2xl border border-neutral-200 shadow-sm">
+                             <div className="flex items-center justify-between mb-6">
+                                <h2 className="text-xs font-bold uppercase tracking-widest text-neutral-500">Verify Customer OTP</h2>
+                                <Shield size={18} className="text-amber-600" />
                              </div>
 
-                             <form onSubmit={handleVerify} className="space-y-8">
+                             <form onSubmit={handleVerify} className="space-y-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-neutral-400 ml-1 uppercase tracking-[0.2em]">Enter Production OTP</label>
+                                    <label className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">Pickup OTP Code</label>
                                     <input
                                         type="text"
                                         placeholder="0000"
                                         value={otpInput}
                                         onChange={(e) => setOtpInput(e.target.value)}
                                         maxLength={4}
-                                        className="w-full bg-neutral-50 border border-transparent rounded-[32px] py-12 text-center text-6xl font-black tracking-[0.2em] focus:outline-none focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500/20 transition-all placeholder:text-neutral-200 text-black"
+                                        className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-6 text-center text-4xl font-bold tracking-[0.2em] focus:outline-none focus:ring-4 focus:ring-amber-500/10 focus:border-amber-600/30 transition-all text-neutral-900"
                                     />
                                 </div>
 
                                 <AnimatePresence>
                                     {verificationResult && (
                                         <motion.div
-                                            initial={{ opacity: 0, y: 10 }}
+                                            initial={{ opacity: 0, y: 5 }}
                                             animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0, y: -10 }}
                                             className={clsx(
-                                                "p-6 rounded-[24px] font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-3 border",
-                                                verificationResult.success ? "bg-green-500/5 text-green-500 border-green-500/20" : "bg-red-500/5 text-red-500 border-red-500/20"
+                                                "p-4 rounded-xl font-bold text-xs flex items-center justify-center gap-3 border text-center",
+                                                verificationResult.success ? "bg-green-50 text-green-700 border-green-100" : "bg-red-50 text-red-700 border-red-100"
                                             )}
                                         >
-                                            {verificationResult.success ? <CheckCircle size={18} /> : <ShieldAlert size={18} />}
+                                            {verificationResult.success ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
                                             {verificationResult.message}
                                         </motion.div>
                                     )}
@@ -160,62 +151,70 @@ export default function Vendor() {
                                 <button
                                     type="submit"
                                     disabled={otpInput.length !== 4}
-                                    className="w-full bg-black text-white font-black py-6 rounded-[28px] uppercase tracking-[0.3em] text-xs hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-20 shadow-2xl"
+                                    className="w-full bg-neutral-900 text-white font-bold py-4 rounded-xl text-sm hover:bg-neutral-800 transition-all disabled:opacity-30 shadow-md"
                                 >
-                                    Execute Access
+                                    Verify Pickup
                                 </button>
                              </form>
                         </div>
 
-                        {/* Bento Stats */}
+                        {/* Summary Stats */}
                         <div className="grid grid-cols-1 gap-4">
-                            <StatCard label="Total Revenue" value={`₹${totalEarnings}`} icon={<Zap size={20} />} color="bg-orange-500" />
-                            <StatCard label="Active Queue" value={queueOrders.length} icon={<Clock size={20} />} color="bg-black" />
-                            <StatCard label="Completed" value={completedOrders.length} icon={<CheckCircle size={20} />} color="bg-neutral-400" />
+                            <StatCard label="Total Revenue" value={`₹${totalEarnings}`} color="bg-amber-600" />
+                            <StatCard label="Current Queue" value={queueOrders.length} color="bg-neutral-900" />
+                            <StatCard label="Completed Orders" value={completedOrders.length} color="bg-neutral-400" />
                         </div>
                     </div>
 
-                    {/* Production Queue */}
+                    {/* Right Panel */}
                     <div className="lg:col-span-8">
-                        <div className="bg-white rounded-[56px] border border-black/5 shadow-premium flex flex-col h-full overflow-hidden">
+                        <div className="bg-white rounded-2xl border border-neutral-200 shadow-sm flex flex-col h-full overflow-hidden">
                             
-                            {/* Toolbar */}
-                            <div className="px-10 py-8 flex items-center justify-between border-b border-black/5">
-                                <div className="flex gap-10">
-                                    <Tab active={activeTab === 'queue'} onClick={() => { setActiveTab('queue'); setSearchQuery(''); }}>
-                                        ACTIVE QUEUE 
-                                        {queueOrders.length > 0 && <span className="ml-3 px-2.5 py-0.5 bg-orange-500 text-white text-[9px] font-black rounded-full">{queueOrders.length}</span>}
-                                    </Tab>
-                                    <Tab active={activeTab === 'completed'} onClick={() => { setActiveTab('completed'); setSearchQuery(''); }}>
-                                        ARCHIVE
-                                    </Tab>
+                            {/* Navbar */}
+                            <div className="px-8 py-6 flex flex-col md:flex-row md:items-center justify-between border-b border-neutral-100 gap-4">
+                                <div className="flex gap-8">
+                                    <button
+                                        onClick={() => { setActiveTab('queue'); setSearchQuery(''); }}
+                                        className={clsx("pb-6 text-sm font-bold tracking-tight transition-all relative border-b-2 -mb-6", 
+                                            activeTab === 'queue' ? "text-neutral-900 border-amber-600" : "text-neutral-400 border-transparent hover:text-neutral-600")}
+                                    >
+                                        Active Queue
+                                        {queueOrders.length > 0 && <span className="ml-2 px-2 py-0.5 bg-neutral-900 text-white text-[10px] rounded-full">{queueOrders.length}</span>}
+                                    </button>
+                                    <button
+                                        onClick={() => { setActiveTab('completed'); setSearchQuery(''); }}
+                                        className={clsx("pb-6 text-sm font-bold tracking-tight transition-all relative border-b-2 -mb-6", 
+                                            activeTab === 'completed' ? "text-neutral-900 border-amber-600" : "text-neutral-400 border-transparent hover:text-neutral-600")}
+                                    >
+                                        Order History
+                                    </button>
                                 </div>
 
-                                <div className="relative group">
-                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-300 group-focus-within:text-black transition-colors" size={16} />
+                                <div className="relative">
+                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" size={16} />
                                     <input
                                         type="text"
-                                        placeholder="SEARCH IDS..."
+                                        placeholder="Search orders..."
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="bg-neutral-50 border border-transparent rounded-[20px] pl-12 pr-6 py-4 text-[10px] font-black tracking-widest focus:outline-none focus:ring-4 focus:ring-black/5 transition-all w-48 focus:w-64"
+                                        className="bg-neutral-50 border border-neutral-200 rounded-lg pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/20 w-full md:w-56"
                                     />
                                 </div>
                             </div>
 
-                            {/* List Module */}
-                            <div className="flex-1 p-8 md:p-10 overflow-y-auto custom-scrollbar min-h-[600px] bg-neutral-50/30">
+                            {/* List Content */}
+                            <div className="flex-1 p-6 lg:p-8 overflow-y-auto custom-scrollbar min-h-[500px]">
                                 <AnimatePresence mode='popLayout'>
                                     {displayedOrders.length === 0 ? (
-                                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center justify-center py-32 text-center">
-                                            <div className="w-24 h-24 bg-white border border-black/5 rounded-[40px] flex items-center justify-center mb-6 text-neutral-200 shadow-sm">
+                                        <div className="flex flex-col items-center justify-center py-24 text-center">
+                                            <div className="w-20 h-20 bg-neutral-50 rounded-2xl flex items-center justify-center mb-6 text-neutral-200">
                                                 <LayoutGrid size={32} />
                                             </div>
-                                            <h3 className="text-2xl font-black uppercase tracking-tight text-black">QUEUE VACANT</h3>
-                                            <p className="text-[10px] font-black text-neutral-400 uppercase tracking-[0.3em] mt-2">Standing by for production requests</p>
-                                        </motion.div>
+                                            <h3 className="text-xl font-bold text-neutral-900">No Orders Found</h3>
+                                            <p className="text-sm text-neutral-400 mt-1 font-medium">Any new orders will show up here as they come in.</p>
+                                        </div>
                                     ) : (
-                                        <div className="space-y-6">
+                                        <div className="space-y-4">
                                             {displayedOrders.map((order) => (
                                                 <OrderCard
                                                     key={order.id}
@@ -232,58 +231,19 @@ export default function Vendor() {
                     </div>
                 </div>
             </main>
-
-            {/* Alert System */}
-            <AnimatePresence>
-                {newOrderAlert && (
-                    <motion.div
-                        initial={{ opacity: 0, x: 50, scale: 0.9 }}
-                        animate={{ opacity: 1, x: 0, scale: 1 }}
-                        exit={{ opacity: 0, x: 50, scale: 0.9 }}
-                        className="fixed bottom-10 right-10 z-[100] bg-black text-white pl-8 pr-10 py-6 rounded-[32px] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] flex items-center gap-5 border border-white/10"
-                    >
-                        <div className="w-12 h-12 bg-orange-500 rounded-2xl flex items-center justify-center text-white animate-pulse shadow-lg shadow-orange-500/40">
-                            <Bell size={24} />
-                        </div>
-                        <div className="flex flex-col">
-                            <span className="text-[8px] font-black text-orange-500 uppercase tracking-[0.3em] mb-1">Incoming Transaction</span>
-                            <span className="text-xs font-black uppercase tracking-widest">{newOrderAlert}</span>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
         </div>
     );
 }
 
-function StatCard({ label, value, icon, color }) {
+function StatCard({ label, value, color }) {
     return (
-        <div className="bg-white p-8 rounded-[40px] border border-black/5 flex items-center justify-between group shadow-sm hover:shadow-premium transition-all">
-            <div className="flex items-center gap-5">
-                <div className={clsx("w-14 h-14 rounded-2xl flex items-center justify-center text-white transition-all group-hover:scale-110 shadow-lg", color)}>
-                    {icon}
-                </div>
-                <div>
-                    <p className="text-[10px] font-black text-neutral-400 uppercase tracking-[0.2em] leading-none mb-2">{label}</p>
-                    <p className="text-3xl font-black tracking-tighter uppercase leading-none text-black">{value}</p>
-                </div>
+        <div className="bg-white p-6 rounded-2xl border border-neutral-200 flex items-center gap-5 shadow-sm">
+            <div className={clsx("w-3 h-12 rounded-full", color)} />
+            <div>
+                <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">{label}</p>
+                <p className="text-2xl font-bold text-neutral-900">{value}</p>
             </div>
-            <ChevronRight size={18} className="text-neutral-200 group-hover:translate-x-1 transition-transform" />
         </div>
-    );
-}
-
-function Tab({ children, active, onClick }) {
-    return (
-        <button
-            onClick={onClick}
-            className={clsx(
-                "pb-6 text-[11px] font-black uppercase tracking-[0.3em] transition-all relative border-b-2",
-                active ? "text-black border-orange-500" : "text-neutral-300 border-transparent hover:text-black"
-            )}
-        >
-            {children}
-        </button>
     );
 }
 
@@ -304,71 +264,71 @@ function OrderCard({ order, onPrint, onCollect }) {
     return (
         <motion.div
             layout
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="group bg-white p-8 rounded-[40px] border border-black/5 shadow-premium relative overflow-hidden"
+            className="p-6 bg-white rounded-2xl border border-neutral-100 shadow-sm hover:border-neutral-300 transition-all"
         >
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                 
-                <div className="flex items-start gap-6">
-                    <div className={clsx("w-20 h-20 rounded-[32px] flex flex-col items-center justify-center font-black transition-all group-hover:scale-105 shadow-xl",
-                        order.status === 'paid' ? "bg-orange-500 text-white" :
-                        order.status === 'printed' ? "bg-black text-white" : "bg-neutral-100 text-neutral-400"
+                <div className="flex items-start gap-5">
+                    <div className={clsx("w-16 h-16 rounded-xl flex flex-col items-center justify-center font-bold text-white shadow-md",
+                        order.status === 'paid' ? "bg-amber-600" :
+                        order.status === 'printed' ? "bg-neutral-900" : "bg-neutral-300"
                     )}>
-                        <span className="text-3xl tracking-tighter leading-none">{order.otp}</span>
-                        <span className="text-[8px] uppercase tracking-[0.4em] mt-1.5 opacity-60">OTP</span>
+                        <span className="text-2xl">{order.otp}</span>
+                        <span className="text-[8px] uppercase tracking-wider opacity-70">OTP</span>
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-1.5">
                         <div className="flex items-center gap-3">
-                            <h3 className="font-black text-lg tracking-tighter uppercase text-black">BATCH #{order.id.slice(0,8)}</h3>
-                            <div className="px-3 py-1 bg-neutral-50 rounded-lg flex items-center gap-2 border border-black/5">
-                                <User size={12} className="text-neutral-400" />
-                                <span className="text-[10px] font-black uppercase tracking-widest text-neutral-500">{order.userEmail?.split('@')[0] || 'GUEST'}</span>
-                            </div>
+                            <h3 className="font-bold text-neutral-900">Order #{order.id.slice(-6).toUpperCase()}</h3>
+                            <span className="text-[10px] font-bold text-neutral-500 bg-neutral-100 px-2 py-0.5 rounded uppercase">
+                                {order.userEmail?.split('@')[0] || 'Guest'}
+                            </span>
                         </div>
 
-                        <div className="flex items-center gap-4 text-[10px] font-black text-neutral-400 uppercase tracking-widest">
-                            <div className="flex items-center gap-2">
-                                <Clock size={14} className="text-orange-500" />
+                        <div className="flex items-center gap-3 text-xs text-neutral-500 font-medium">
+                            <div className="flex items-center gap-1.5 text-amber-700">
+                                <Clock size={14} />
                                 {new Date(order.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </div>
-                            <div className="w-1.5 h-1.5 bg-neutral-200 rounded-full" />
-                            <div className="text-orange-600">₹{order.totalAmount} PAYABLE</div>
+                            <div className="w-1 h-1 bg-neutral-200 rounded-full" />
+                            <div className="font-bold text-neutral-900">₹{order.totalAmount}</div>
                         </div>
 
-                        <div className="flex flex-wrap gap-2 pt-2">
+                        <div className="flex flex-wrap gap-2 pt-1">
                             {order.files.map((file, i) => (
-                                <div key={i} className="flex items-center gap-2 bg-neutral-50 border border-black/5 px-4 py-2 rounded-2xl text-neutral-500 text-[10px] font-black uppercase tracking-tight">
-                                    <FileText size={12} className="text-orange-500" />
-                                    {file.name.slice(0, 15)}...
+                                <div key={i} className="flex items-center gap-1.5 bg-neutral-50 border border-neutral-100 px-3 py-1 rounded-lg text-neutral-500 text-[10px] font-medium">
+                                    <FileText size={10} className="text-amber-600" />
+                                    {file.name.length > 12 ? file.name.slice(0, 10) + '...' : file.name}
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
                     <button
                         onClick={handleDownloadAll}
-                        className="p-5 rounded-[24px] bg-neutral-50 hover:bg-black hover:text-white transition-all text-neutral-400 border border-black/5 shadow-sm"
+                        className="p-3.5 rounded-xl bg-neutral-50 text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 transition-all border border-neutral-200"
+                        title="Download Document"
                     >
-                        <Download size={24} />
+                        <Download size={20} />
                     </button>
 
                     {order.status === 'paid' && (
-                        <button onClick={onPrint} className="flex-1 md:flex-none px-10 py-5 rounded-[24px] bg-black text-white font-black text-[10px] uppercase tracking-[0.3em] hover:bg-orange-500 transition-all shadow-2xl">
-                            INITIALIZE PRINT
+                        <button onClick={onPrint} className="flex-1 md:flex-none px-8 py-3.5 bg-neutral-900 text-white rounded-xl font-bold text-xs uppercase hover:bg-neutral-800 transition-all shadow-md">
+                            Start Printing
                         </button>
                     )}
                     {order.status === 'printed' && (
-                        <button onClick={onCollect} className="flex-1 md:flex-none px-10 py-5 rounded-[24px] bg-orange-500 text-white font-black text-[10px] uppercase tracking-[0.3em] hover:scale-105 active:scale-95 transition-all shadow-xl shadow-orange-500/20">
-                            CONFIRM DELIVERY
+                        <button onClick={onCollect} className="flex-1 md:flex-none px-8 py-3.5 bg-amber-600 text-white rounded-xl font-bold text-xs uppercase hover:bg-amber-700 transition-all shadow-md">
+                            Ready for Pickup
                         </button>
                     )}
                     {order.status === 'collected' && (
-                        <div className="px-10 py-5 rounded-[24px] bg-green-500/10 text-green-600 font-black text-[10px] uppercase tracking-[0.3em] flex items-center gap-2 border border-green-500/20">
-                            <CheckCircle size={18} /> ARCHIVED
+                        <div className="px-6 py-3.5 rounded-xl bg-neutral-100 text-neutral-500 font-bold text-xs uppercase flex items-center gap-2">
+                            <CheckCircle size={16} /> Completed
                         </div>
                     )}
                 </div>

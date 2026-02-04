@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Search, RefreshCw, Database, Table, User, FileText, ChevronRight, Activity, ShieldCheck, ArrowLeft } from 'lucide-react';
+import { Search, RefreshCw, Database, Table, User, FileText, ChevronRight, Activity, ShieldCheck, ArrowLeft, Users, Package } from 'lucide-react';
 import { getApiUrl } from '../config';
 import { useNavigate } from 'react-router-dom';
+import { clsx } from 'clsx';
 
 export default function DatabaseView() {
     const [users, setUsers] = useState([]);
@@ -35,144 +36,121 @@ export default function DatabaseView() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-white text-black font-sans transition-colors duration-500 overflow-x-hidden">
+        <div className="min-h-screen bg-neutral-50 text-neutral-900 font-sans selection:bg-amber-100">
             
-            {/* Nav Header */}
-            <div className="sticky top-0 z-50 glass-morphism border-b border-black/5 py-4">
+            {/* Header */}
+            <header className="sticky top-0 z-50 bg-white border-b border-neutral-200 py-4 shadow-sm">
                 <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-                    <button onClick={() => navigate(-1)} className="p-3 rounded-2xl hover:bg-neutral-50 transition-all text-neutral-400 hover:text-black border border-transparent hover:border-black/5">
+                    <button onClick={() => navigate(-1)} className="p-2 rounded-lg hover:bg-neutral-100 transition-colors text-neutral-500">
                         <ArrowLeft size={24} />
                     </button>
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-black rounded-xl flex items-center justify-center text-white shadow-xl rotate-3">
-                            <Database size={20} />
+                        <div className="w-9 h-9 bg-neutral-900 rounded-lg flex items-center justify-center text-white">
+                            <Database size={18} />
                         </div>
-                        <h1 className="font-black text-lg tracking-tighter uppercase">CORE SYSTEM DB<span className="text-orange-500">.</span></h1>
+                        <h1 className="font-bold text-lg tracking-tight">System Database</h1>
                     </div>
                     <button 
                         onClick={fetchData}
-                        className="flex items-center gap-3 px-6 py-3 bg-black text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg"
+                        disabled={loading}
+                        className="flex items-center gap-2 px-4 py-2 bg-neutral-900 text-white rounded-lg font-bold text-xs uppercase tracking-wider hover:bg-neutral-800 transition-all disabled:opacity-50"
                     >
-                        <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
-                        SYNC
+                        <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
+                        Sync Data
                     </button>
                 </div>
-            </div>
+            </header>
 
-            <main className="max-w-7xl mx-auto p-6 md:p-12 space-y-12 animate-in fade-in slide-in-from-bottom-8 duration-700">
+            <main className="max-w-7xl mx-auto p-6 lg:p-10 space-y-10">
                 
-                {/* Stats Grid */}
+                {/* Stats */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="bg-white p-8 rounded-[40px] border border-black/5 shadow-premium flex items-center justify-between group">
-                        <div className="flex items-center gap-5">
-                            <div className="w-14 h-14 bg-blue-500/5 text-blue-500 rounded-[22px] flex items-center justify-center border border-blue-500/10">
-                                <User size={24} />
-                            </div>
-                            <div>
-                                <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest leading-none mb-2">AUTH USERS</p>
-                                <p className="text-3xl font-black tracking-tighter uppercase text-black">{users.length}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bg-white p-8 rounded-[40px] border border-black/5 shadow-premium flex items-center justify-between group">
-                        <div className="flex items-center gap-5">
-                            <div className="w-14 h-14 bg-orange-500/5 text-orange-500 rounded-[22px] flex items-center justify-center border border-orange-500/10">
-                                <Activity size={24} />
-                            </div>
-                            <div>
-                                <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest leading-none mb-2">LIVE ORDERS</p>
-                                <p className="text-3xl font-black tracking-tighter uppercase text-black">{orders.length}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bg-white p-8 rounded-[40px] border border-black/5 shadow-premium flex items-center justify-between group">
-                        <div className="flex items-center gap-5">
-                            <div className="w-14 h-14 bg-green-500/5 text-green-500 rounded-[22px] flex items-center justify-center border border-green-500/10">
-                                <ShieldCheck size={24} />
-                            </div>
-                            <div>
-                                <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest leading-none mb-2">SYSTEM STATUS</p>
-                                <p className="text-3xl font-black tracking-tighter uppercase text-green-500">OPTIMAL</p>
-                            </div>
-                        </div>
-                    </div>
+                    <StatBox icon={<Users size={20} />} label="Total Users" value={users.length} color="text-blue-600" bg="bg-blue-50" />
+                    <StatBox icon={<Package size={20} />} label="Total Orders" value={orders.length} color="text-amber-600" bg="bg-amber-50" />
+                    <StatBox icon={<ShieldCheck size={20} />} label="System Health" value="Healthy" color="text-green-600" bg="bg-green-50" />
                 </div>
 
-                {/* Main Table Interface */}
-                <div className="bg-white rounded-[56px] border border-black/5 shadow-premium overflow-hidden">
-                    <div className="px-10 py-8 border-b border-black/5 flex items-center gap-10">
-                        <button
+                {/* Main Content */}
+                <div className="bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-hidden min-h-[600px]">
+                    <div className="px-8 border-b border-neutral-100 flex items-center gap-8">
+                        <TabButton 
+                            active={activeTab === 'users'} 
                             onClick={() => setActiveTab('users')}
-                            className={`pb-4 text-[10px] font-black uppercase tracking-[0.3em] transition-all relative border-b-2 ${activeTab === 'users' ? 'text-black border-orange-500 font-black' : 'text-neutral-300 border-transparent hover:text-black'}`}
-                        >
-                            USER CLUSTER
-                        </button>
-                        <button
+                            label="User Directory"
+                        />
+                        <TabButton 
+                            active={activeTab === 'orders'} 
                             onClick={() => setActiveTab('orders')}
-                            className={`pb-4 text-[10px] font-black uppercase tracking-[0.3em] transition-all relative border-b-2 ${activeTab === 'orders' ? 'text-black border-orange-500 font-black' : 'text-neutral-300 border-transparent hover:text-black'}`}
-                        >
-                            TRANSACTION ARCHIVE
-                        </button>
+                            label="Order Ledger"
+                        />
                     </div>
 
-                    <div className="p-4 overflow-x-auto">
+                    <div className="overflow-x-auto">
                         {error ? (
                             <div className="p-20 text-center">
-                                <p className="text-red-500 font-black text-xs uppercase tracking-widest">{error}</p>
-                                <button onClick={fetchData} className="mt-8 px-10 py-5 bg-black text-white rounded-2xl font-black text-[10px] uppercase tracking-widest">Retry Connection</button>
+                                <p className="text-red-500 font-bold text-sm">{error}</p>
+                                <button onClick={fetchData} className="mt-4 px-6 py-2 bg-neutral-900 text-white rounded-lg font-bold text-xs">Retry</button>
                             </div>
                         ) : loading && users.length === 0 ? (
-                            <div className="p-20 text-center text-neutral-300 font-black text-[10px] uppercase tracking-[0.4em] animate-pulse">Syncing local nodes...</div>
+                            <div className="p-20 text-center text-neutral-400 font-medium text-sm animate-pulse">Syncing data from server...</div>
                         ) : (
                             <table className="w-full text-left">
-                                <thead>
-                                    <tr className="border-b border-black/5">
+                                <thead className="bg-neutral-50/50">
+                                    <tr className="border-b border-neutral-100">
                                         {activeTab === 'users' ? (
                                             <>
-                                                <th className="px-8 py-6 text-[10px] font-black text-neutral-400 uppercase tracking-widest">Identity Node</th>
-                                                <th className="px-8 py-6 text-[10px] font-black text-neutral-400 uppercase tracking-widest">Protocol Email</th>
-                                                <th className="px-8 py-6 text-[10px] font-black text-neutral-400 uppercase tracking-widest">Authority Role</th>
-                                                <th className="px-8 py-6 text-[10px] font-black text-neutral-400 uppercase tracking-widest">Created Time</th>
+                                                <th className="px-8 py-5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">User Name</th>
+                                                <th className="px-8 py-5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Email Address</th>
+                                                <th className="px-8 py-5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Access Role</th>
+                                                <th className="px-8 py-5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Created At</th>
                                             </>
                                         ) : (
                                             <>
-                                                <th className="px-8 py-6 text-[10px] font-black text-neutral-400 uppercase tracking-widest">Batch Hash</th>
-                                                <th className="px-8 py-6 text-[10px] font-black text-neutral-400 uppercase tracking-widest">Subject Account</th>
-                                                <th className="px-8 py-6 text-[10px] font-black text-neutral-400 uppercase tracking-widest">Access OTP</th>
-                                                <th className="px-8 py-6 text-[10px] font-black text-neutral-400 uppercase tracking-widest">Asset Value</th>
-                                                <th className="px-8 py-6 text-[10px] font-black text-neutral-400 uppercase tracking-widest">Status Code</th>
+                                                <th className="px-8 py-5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Order ID</th>
+                                                <th className="px-8 py-5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Customer</th>
+                                                <th className="px-8 py-5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Pickup OTP</th>
+                                                <th className="px-8 py-5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Amount</th>
+                                                <th className="px-8 py-5 text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Current Status</th>
                                             </>
                                         )}
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-black/5">
+                                <tbody className="divide-y divide-neutral-100">
                                     {activeTab === 'users' ? 
                                         users.map((user) => (
-                                            <tr key={user.id} className="hover:bg-neutral-50/50 transition-all font-sans">
-                                                <td className="px-8 py-6">
-                                                    <div className="font-black text-sm text-black uppercase tracking-tight">{user.name || 'GUEST'}</div>
-                                                    <div className="text-[9px] font-mono text-neutral-300 mt-1 uppercase">{user.id.slice(0, 16)}...</div>
+                                            <tr key={user.id} className="hover:bg-neutral-50/50 transition-colors">
+                                                <td className="px-8 py-5">
+                                                    <div className="font-bold text-sm text-neutral-900">{user.name || 'Anonymous'}</div>
+                                                    <div className="text-[10px] text-neutral-400 font-mono mt-0.5">{user.id.slice(0, 8)}...</div>
                                                 </td>
-                                                <td className="px-8 py-6 font-black text-[11px] text-neutral-500 uppercase tracking-tight">{user.email}</td>
-                                                <td className="px-8 py-6">
-                                                    <span className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border ${user.role === 'vendor' ? 'bg-orange-50 text-orange-600 border-orange-100' : 'bg-neutral-50 text-neutral-400 border-black/5'}`}>
+                                                <td className="px-8 py-5 text-sm font-medium text-neutral-600 italic">{user.email}</td>
+                                                <td className="px-8 py-5">
+                                                    <span className={clsx(
+                                                        "px-3 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider",
+                                                        user.role === 'vendor' ? "bg-amber-50 text-amber-700 border border-amber-100" : "bg-neutral-100 text-neutral-500"
+                                                    )}>
                                                         {user.role}
                                                     </span>
                                                 </td>
-                                                <td className="px-8 py-6 text-[10px] font-black text-neutral-400 uppercase tracking-tight">{new Date(user.created_at).toLocaleString()}</td>
+                                                <td className="px-8 py-5 text-xs text-neutral-400 font-medium">
+                                                    {new Date(user.created_at).toLocaleDateString()}
+                                                </td>
                                             </tr>
                                         )) :
                                         orders.map((order) => (
-                                            <tr key={order.id} className="hover:bg-neutral-50/50 transition-all font-sans">
-                                                <td className="px-8 py-6 font-mono text-[10px] text-neutral-300 uppercase">{order.id.slice(0, 8)}...</td>
-                                                <td className="px-8 py-6">
-                                                    <div className="font-black text-[11px] text-black uppercase tracking-tight">{order.userEmail}</div>
-                                                    <div className="text-[9px] font-mono text-neutral-300 mt-1 uppercase">{order.userId.slice(0, 8)}...</div>
+                                            <tr key={order.id} className="hover:bg-neutral-50/50 transition-colors">
+                                                <td className="px-8 py-5 font-mono text-[10px] text-neutral-400">{order.id.slice(0, 8)}...</td>
+                                                <td className="px-8 py-5">
+                                                    <div className="font-bold text-sm text-neutral-900">{order.userEmail}</div>
+                                                    <div className="text-[10px] text-neutral-400 font-mono mt-0.5">{order.userId.slice(0, 8)}...</div>
                                                 </td>
-                                                <td className="px-8 py-6 font-black text-xl text-orange-500 tracking-[0.2em]">{order.otp}</td>
-                                                <td className="px-8 py-6 font-black text-sm text-black uppercase tracking-tight">₹{order.totalAmount}</td>
-                                                <td className="px-8 py-6">
-                                                    <span className={`px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest border ${order.status === 'collected' ? 'bg-green-50 text-green-600 border-green-100' : 'bg-orange-50 text-orange-600 border-orange-100'}`}>
+                                                <td className="px-8 py-5 font-bold text-xl text-amber-600 italic tracking-widest">{order.otp}</td>
+                                                <td className="px-8 py-5 font-bold text-sm text-neutral-900">₹{order.totalAmount}</td>
+                                                <td className="px-8 py-5">
+                                                    <span className={clsx(
+                                                        "px-3 py-1 rounded-md text-[9px] font-bold uppercase tracking-wider",
+                                                        order.status === 'collected' ? "bg-green-50 text-green-600 border border-green-100" : "bg-amber-50 text-amber-600 border border-amber-100"
+                                                    )}>
                                                         {order.status}
                                                     </span>
                                                 </td>
@@ -186,5 +164,33 @@ export default function DatabaseView() {
                 </div>
             </main>
         </div>
+    );
+}
+
+function StatBox({ icon, label, value, color, bg }) {
+    return (
+        <div className="bg-white p-6 rounded-2xl border border-neutral-200 shadow-sm flex items-center gap-5">
+            <div className={clsx("w-12 h-12 rounded-xl flex items-center justify-center transition-transform hover:scale-110", bg, color)}>
+                {icon}
+            </div>
+            <div>
+                <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-1">{label}</p>
+                <p className="text-2xl font-bold text-neutral-900">{value}</p>
+            </div>
+        </div>
+    );
+}
+
+function TabButton({ active, onClick, label }) {
+    return (
+        <button
+            onClick={onClick}
+            className={clsx(
+                "py-6 text-[10px] font-bold uppercase tracking-widest border-b-2 transition-all relative",
+                active ? "text-neutral-900 border-amber-600" : "text-neutral-400 border-transparent hover:text-neutral-600"
+            )}
+        >
+            {label}
+        </button>
     );
 }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, Mail, Lock, User, ArrowRight, Shield } from 'lucide-react';
+import { Loader2, Mail, Lock, User, ChevronRight, Shield } from 'lucide-react';
 
 export default function Register() {
     const [name, setName] = useState('');
@@ -23,84 +23,74 @@ export default function Register() {
             await register(name, email, password, role);
             navigate('/home');
         } catch (err) {
-            setError(err || 'Failed to register');
+            setError(err || 'Failed to create account. Please try again.');
         } finally {
             setIsLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen bg-white text-black flex flex-col items-center justify-center p-6 relative overflow-hidden transition-colors duration-500 selection:bg-orange-500/20 font-sans">
+        <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center p-6 font-sans selection:bg-amber-100">
             
-            {/* Background Aesthetics */}
-            <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
-              <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-orange-500/5 rounded-full blur-[120px]" />
-              <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[120px]" />
-            </div>
-
             <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ type: "spring", damping: 20 }}
-                className="w-full max-w-sm relative z-10"
+                className="w-full max-w-sm"
             >
-                {/* Brand Identity */}
+                {/* Brand */}
                 <div className="text-center mb-10">
-                    <motion.div 
-                      whileHover={{ scale: 1.05, rotate: -5 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-20 h-20 bg-black rounded-[24px] flex items-center justify-center font-black text-4xl text-white shadow-2xl mx-auto mb-8 cursor-pointer"
-                    >
-                        J
-                    </motion.div>
-                    <h1 className="text-4xl font-black tracking-tighter mb-2 uppercase text-black">CREATE ACCOUNT.</h1>
-                    <p className="text-neutral-400 font-bold text-[10px] tracking-[0.3em] uppercase opacity-60">Initialize your student profile</p>
+                    <Link to="/" className="inline-flex items-center gap-2 mb-8 group">
+                         <div className="w-10 h-10 bg-neutral-900 rounded-xl flex items-center justify-center font-bold text-white group-hover:bg-amber-600 transition-colors">J</div>
+                         <span className="font-bold text-xl tracking-tight text-neutral-900">JPRINT<span className="text-amber-600">.</span></span>
+                    </Link>
+                    <h1 className="text-2xl font-bold text-neutral-900 mb-2">Create your account</h1>
+                    <p className="text-sm text-neutral-500 font-medium">Join over 5,000+ students printing with ease.</p>
                 </div>
 
-                {/* Registration Interface */}
-                <div className="glass-morphism p-10 rounded-[48px] border border-black/5 shadow-premium">
+                {/* Card */}
+                <div className="bg-white p-8 rounded-[32px] border border-neutral-200 shadow-sm">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-neutral-400 ml-1 uppercase tracking-[0.2em]">Full Identity</label>
+                            <label className="text-xs font-bold text-neutral-500 ml-1">Full Name</label>
                             <div className="relative group">
-                                <User className="absolute left-5 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-orange-500 transition-colors" size={18} />
+                                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-300 group-focus-within:text-amber-600 transition-colors" size={18} />
                                 <input
                                     type="text"
                                     required
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    placeholder="Name Surname..."
-                                    className="w-full bg-black/5 border border-transparent rounded-[24px] pl-14 pr-6 py-5 text-sm font-black focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/30 transition-all placeholder:text-neutral-300"
+                                    placeholder="e.g. Rahul Sharma"
+                                    className="w-full bg-neutral-50 border border-neutral-200 rounded-xl pl-12 pr-4 py-4 text-sm font-medium focus:outline-none focus:ring-4 focus:ring-amber-500/5 focus:border-amber-600/30 transition-all"
                                 />
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-neutral-400 ml-1 uppercase tracking-[0.2em]">Institutional Email</label>
+                            <label className="text-xs font-bold text-neutral-500 ml-1">Email Address</label>
                             <div className="relative group">
-                                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-orange-500 transition-colors" size={18} />
+                                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-300 group-focus-within:text-amber-600 transition-colors" size={18} />
                                 <input
                                     type="email"
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="student@jiit.ac.in"
-                                    className="w-full bg-black/5 border border-transparent rounded-[24px] pl-14 pr-6 py-5 text-sm font-black focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/30 transition-all placeholder:text-neutral-300"
+                                    placeholder="your@email.com"
+                                    className="w-full bg-neutral-50 border border-neutral-200 rounded-xl pl-12 pr-4 py-4 text-sm font-medium focus:outline-none focus:ring-4 focus:ring-amber-500/5 focus:border-amber-600/30 transition-all"
                                 />
                             </div>
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-neutral-400 ml-1 uppercase tracking-[0.2em]">Security Key</label>
+                            <label className="text-xs font-bold text-neutral-500 ml-1">Create Password</label>
                             <div className="relative group">
-                                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-orange-500 transition-colors" size={18} />
+                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-300 group-focus-within:text-amber-600 transition-colors" size={18} />
                                 <input
                                     type="password"
                                     required
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="••••••••"
-                                    className="w-full bg-black/5 border border-transparent rounded-[24px] pl-14 pr-6 py-5 text-sm font-black focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/30 transition-all placeholder:text-neutral-300"
+                                    className="w-full bg-neutral-50 border border-neutral-200 rounded-xl pl-12 pr-4 py-4 text-sm font-medium focus:outline-none focus:ring-4 focus:ring-amber-500/5 focus:border-amber-600/30 transition-all"
                                 />
                             </div>
                         </div>
@@ -110,8 +100,7 @@ export default function Register() {
                               <motion.div
                                   initial={{ opacity: 0, scale: 0.95 }}
                                   animate={{ opacity: 1, scale: 1 }}
-                                  exit={{ opacity: 0, scale: 0.95 }}
-                                  className="bg-red-500/5 text-red-500 text-[10px] font-black uppercase tracking-widest p-4 rounded-2xl border border-red-500/10 flex items-center gap-3"
+                                  className="bg-red-50 text-red-600 text-[11px] font-bold p-4 rounded-xl border border-red-100 flex items-center gap-3"
                               >
                                   <Shield size={14} />
                                   <span>{error}</span>
@@ -122,23 +111,23 @@ export default function Register() {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full bg-black text-white py-6 rounded-[24px] font-black text-sm shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-3 group relative overflow-hidden"
+                            className="w-full bg-neutral-900 text-white py-4 rounded-xl font-bold text-sm shadow-md hover:bg-neutral-800 transition-all active:scale-95 flex items-center justify-center gap-2 group disabled:opacity-50"
                         >
                             {isLoading ? <Loader2 className="animate-spin" size={20} /> : (
-                              <div className="flex items-center gap-3 relative z-10">
-                                <span className="uppercase tracking-widest">Verify & Initialize</span>
-                                <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                              </div>
+                              <>
+                                <span>Create Account</span>
+                                <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform text-amber-500" />
+                              </>
                             )}
                         </button>
                     </form>
                 </div>
 
-                <div className="text-center mt-12">
-                    <p className="text-neutral-400 text-[10px] font-black uppercase tracking-widest">
-                        Already existing?{' '}
-                        <Link to="/login" className="text-orange-500 font-black hover:underline underline-offset-4 decoration-2">
-                            SIGN IN
+                <div className="text-center mt-8">
+                    <p className="text-neutral-500 text-sm font-medium">
+                        Already have an account?{' '}
+                        <Link to="/login" className="text-amber-600 font-bold hover:underline">
+                            Login here
                         </Link>
                     </p>
                 </div>
@@ -146,4 +135,3 @@ export default function Register() {
         </div>
     );
 }
-
