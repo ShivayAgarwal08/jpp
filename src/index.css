@@ -9,29 +9,28 @@
   --primary: 151 70% 50%;
   --primary-glow: 151 70% 50% / 0.15;
   --accent: 35 100% 52%;
+  
+  /* Premium Light Theme Tokens */
   --bg-app: 0 0% 100%;
-  --bg-subtle: 0 0% 97%;
+  --bg-subtle: 0 0% 98%;
   --text-main: 240 10% 4%;
   --text-muted: 240 5% 45%;
-  --border: 240 6% 90%;
-  --glass: 0 0% 100% / 0.7;
+  --border: 240 6% 92%;
+  --glass: 0 0% 100% / 0.8;
 
   --radius-xl: 1.5rem;
   --radius-2xl: 2rem;
 
-  --shadow-premium: 0 20px 50px -12px rgba(0, 0, 0, 0.08);
+  --shadow-premium: 0 20px 50px -12px rgba(0, 0, 0, 0.05), 0 0 1px rgba(0, 0, 0, 0.1);
+  --shadow-ultra: 0 40px 80px -20px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.1);
+  --shadow-sm-premium: 0 10px 30px -5px rgba(0, 0, 0, 0.03), 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
-.dark {
-  --bg-app: 240 10% 4%;
-  --bg-subtle: 240 10% 8%;
-  --text-main: 0 0% 98%;
-  --text-muted: 240 5% 65%;
-  --border: 240 6% 15%;
-  --glass: 240 10% 4% / 0.7;
-  --shadow-premium: 0 20px 50px -12px rgba(0, 0, 0, 0.5);
-}
+.shadow-premium { box-shadow: var(--shadow-premium); }
+.shadow-ultra { box-shadow: var(--shadow-ultra); }
+.shadow-sm-premium { box-shadow: var(--shadow-sm-premium); }
 
+/* Remove Dark Mode Specifics for a strict Light Theme experience */
 body {
   font-family: "Plus Jakarta Sans", sans-serif;
   background-color: hsl(var(--bg-app));
@@ -52,15 +51,9 @@ h6 {
 
 /* Premium Animations */
 @keyframes float {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-10px) rotate(1deg);
-  }
-  100% {
-    transform: translateY(0px) rotate(0deg);
-  }
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
 }
 
 .animate-float {
@@ -71,13 +64,14 @@ h6 {
   background: hsla(var(--glass));
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid hsla(var(--border) / 0.5);
+  border: 1px solid hsla(var(--border));
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #fff 0%, #ffffff88 100%);
+  background: linear-gradient(135deg, #000 0%, #00000088 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Custom Scrollbar */
@@ -91,12 +85,12 @@ h6 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsla(var(--text-muted) / 0.2);
+  background: hsla(var(--text-muted) / 0.1);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsla(var(--text-muted) / 0.4);
+  background: hsla(var(--text-muted) / 0.2);
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -104,27 +98,23 @@ h6 {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: hsla(var(--text-muted) / 0.1);
+  background: hsla(var(--text-muted) / 0.05);
   border-radius: 99px;
 }
 
 .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-  background: hsla(var(--text-muted) / 0.3);
+  background: hsla(var(--text-muted) / 0.15);
 }
 
 .stunning-card {
-  @apply relative overflow-hidden transition-all duration-500 hover:scale-[1.02] active:scale-[0.98];
-  background: hsl(var(--bg-subtle));
+  @apply relative overflow-hidden transition-all duration-500 hover:scale-[1.01] active:scale-[0.99];
+  background: hsl(var(--bg-app));
   border: 1px solid hsl(var(--border));
   box-shadow: var(--shadow-premium);
 }
 
 .btn-primary {
-  @apply px-8 py-4 bg-black text-white rounded-full font-bold transition-all duration-300 hover:bg-neutral-800 hover:shadow-2xl hover:shadow-black/20 active:scale-95 flex items-center gap-2;
-}
-
-.dark .btn-primary {
-  @apply bg-white text-black hover:bg-neutral-200;
+  @apply px-8 py-4 bg-black text-white rounded-full font-bold transition-all duration-300 hover:bg-neutral-800 hover:shadow-2xl hover:shadow-black/10 active:scale-95 flex items-center gap-2;
 }
 
 /* High-end Masking */
@@ -134,5 +124,13 @@ h6 {
 
 .mask-top {
   mask-image: linear-gradient(to bottom, transparent, black 15%);
+}
+
+/* Light-specific utilities */
+.text-gradient-orange {
+  background: linear-gradient(135deg, #f97316 0%, #fbbf24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 

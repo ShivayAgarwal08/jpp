@@ -53,50 +53,53 @@ export default function FeedbackForm() {
     };
 
     return (
-        <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 mb-6">
-            <div className="flex items-center gap-2 mb-4">
-                <Star className="text-yellow-500 fill-yellow-500" size={20} />
-                <h3 className="font-bold text-gray-900 text-lg">Rate Your Experience</h3>
+        <div className="bg-white rounded-[40px] p-10 shadow-premium border border-black/5 mb-10 font-sans">
+            <div className="flex items-center gap-3 mb-8">
+                <Star className="text-orange-500 fill-orange-500" size={24} />
+                <h3 className="text-2xl font-black tracking-tighter uppercase text-black">RATE SESSION.</h3>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="flex justify-center gap-2">
+            <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="flex justify-center gap-4">
                     {[1, 2, 3, 4, 5].map((star) => (
                         <button
                             key={star}
                             type="button"
                             onClick={() => setRating(star)}
-                            className="p-2 transition-transform hover:scale-110 focus:outline-none"
+                            className="p-1 transition-transform hover:scale-125 focus:outline-none group"
                         >
                             <Star
-                                size={32}
-                                className={`transition-colors ${star <= rating
-                                    ? 'text-yellow-400 fill-yellow-400'
-                                    : 'text-gray-200 fill-gray-100'
+                                size={40}
+                                className={`transition-all duration-300 ${star <= rating
+                                    ? 'text-orange-500 fill-orange-500 drop-shadow-[0_0_8px_rgba(249,115,22,0.4)]'
+                                    : 'text-neutral-200 fill-neutral-50 group-hover:text-neutral-300'
                                     }`}
                             />
                         </button>
                     ))}
                 </div>
 
-                <textarea
-                    value={feedback}
-                    onChange={(e) => setFeedback(e.target.value)}
-                    placeholder="Tell us what you think..."
-                    rows="3"
-                    className="w-full p-4 bg-gray-50 border border-transparent rounded-2xl focus:bg-white focus:border-black/10 focus:ring-4 focus:ring-black/5 outline-none transition-all resize-none text-sm font-medium placeholder:text-gray-400"
-                />
+                <div className="space-y-2">
+                    <label className="text-[10px] font-black text-neutral-400 ml-1 uppercase tracking-[0.2em]">Transmission Notes</label>
+                    <textarea
+                        value={feedback}
+                        onChange={(e) => setFeedback(e.target.value)}
+                        placeholder="DEPLOY YOUR FEEDBACK..."
+                        rows="4"
+                        className="w-full p-6 bg-black/5 border border-transparent rounded-[32px] focus:ring-4 focus:ring-orange-500/10 transition-all resize-none text-sm font-black uppercase tracking-tight placeholder:text-neutral-300 outline-none"
+                    />
+                </div>
 
                 <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-black text-white py-3.5 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-black text-white py-5 rounded-[24px] font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50"
                 >
                     {isSubmitting ? (
-                        'Sending...'
+                        'UPLOADING...'
                     ) : (
                         <>
-                            Send Feedback <Send size={16} />
+                            TRANSMIT REVIEW <Send size={18} />
                         </>
                     )}
                 </button>

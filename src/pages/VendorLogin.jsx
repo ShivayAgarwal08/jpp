@@ -28,12 +28,12 @@ export default function VendorLogin() {
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-black flex flex-col items-center justify-center p-6 text-black dark:text-white relative overflow-hidden transition-colors duration-500">
+        <div className="min-h-screen bg-white text-black flex flex-col items-center justify-center p-6 relative overflow-hidden transition-colors duration-500 font-sans">
 
             {/* Background Aesthetics - Matching Login.jsx */}
             <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
-              <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-orange-500/10 rounded-full blur-[120px]" />
-              <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[120px]" />
+              <div className="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] bg-orange-500/5 rounded-full blur-[120px]" />
+              <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-[120px]" />
             </div>
 
             <motion.div
@@ -44,15 +44,15 @@ export default function VendorLogin() {
                 <div className="text-center mb-12">
                     <motion.div 
                       whileHover={{ scale: 1.05, rotate: 5 }}
-                      className="w-20 h-20 bg-black dark:bg-white rounded-[24px] flex items-center justify-center mx-auto mb-8 shadow-2xl group cursor-pointer"
+                      className="w-20 h-20 bg-black rounded-[24px] flex items-center justify-center mx-auto mb-8 shadow-2xl group cursor-pointer"
                     >
-                        <ShieldCheck size={40} className="text-white dark:text-black group-hover:text-orange-500 transition-colors" />
+                        <ShieldCheck size={40} className="text-white group-hover:text-orange-500 transition-colors" />
                     </motion.div>
-                    <h1 className="text-4xl font-black tracking-tighter mb-2 uppercase">VENDOR PORTAL.</h1>
-                    <p className="text-neutral-500 dark:text-neutral-400 font-bold text-sm tracking-tight uppercase tracking-widest opacity-60">Authorized personnel only</p>
+                    <h1 className="text-4xl font-black tracking-tighter mb-2 uppercase text-black">VENDOR PORTAL.</h1>
+                    <p className="text-neutral-400 font-bold text-[10px] tracking-[0.3em] uppercase opacity-60">Authorized personnel only</p>
                 </div>
 
-                <div className="glass-morphism p-10 rounded-[48px] border border-black/5 dark:border-white/5 shadow-3xl">
+                <div className="glass-morphism p-10 rounded-[48px] border border-black/5 shadow-premium">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="space-y-2">
                             <label className="text-[10px] font-black text-neutral-400 ml-1 uppercase tracking-[0.2em]">Administrative Email</label>
@@ -64,7 +64,7 @@ export default function VendorLogin() {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="admin@jprint.com"
-                                    className="w-full bg-black/5 dark:bg-white/5 border border-transparent rounded-[24px] pl-14 pr-6 py-5 text-sm font-black focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/30 transition-all placeholder:text-neutral-500"
+                                    className="w-full bg-black/5 border border-transparent rounded-[24px] pl-14 pr-6 py-5 text-sm font-black focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/30 transition-all placeholder:text-neutral-300"
                                 />
                             </div>
                         </div>
@@ -79,7 +79,7 @@ export default function VendorLogin() {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="••••••••"
-                                    className="w-full bg-black/5 dark:bg-white/5 border border-transparent rounded-[24px] pl-14 pr-6 py-5 text-sm font-black focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/30 transition-all placeholder:text-neutral-500"
+                                    className="w-full bg-black/5 border border-transparent rounded-[24px] pl-14 pr-6 py-5 text-sm font-black focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500/30 transition-all placeholder:text-neutral-300"
                                 />
                             </div>
                         </div>
@@ -90,7 +90,7 @@ export default function VendorLogin() {
                                   initial={{ opacity: 0, scale: 0.95 }}
                                   animate={{ opacity: 1, scale: 1 }}
                                   exit={{ opacity: 0, scale: 0.95 }}
-                                  className="bg-red-500/10 text-red-500 text-[10px] font-black uppercase tracking-widest p-4 rounded-2xl border border-red-500/20 flex items-center gap-3"
+                                  className="bg-red-500/5 text-red-500 text-[10px] font-black uppercase tracking-widest p-4 rounded-2xl border border-red-500/10 flex items-center gap-3"
                               >
                                   <ShieldAlert size={14} />
                                   <span>{error}</span>
@@ -101,15 +101,14 @@ export default function VendorLogin() {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full bg-black dark:bg-white text-white dark:text-black py-5 rounded-[24px] font-black text-sm shadow-xl shadow-black/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-3 group relative overflow-hidden"
+                            className="w-full bg-black text-white py-6 rounded-[24px] font-black text-sm shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-3 group relative overflow-hidden"
                         >
                             {isLoading ? <Loader2 className="animate-spin" size={20} /> : (
                               <div className="flex items-center gap-3 relative z-10">
-                                <span>ENTER DASHBOARD</span>
+                                <span className="uppercase tracking-widest">Verify & Enter</span>
                                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                               </div>
                             )}
-                            <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-amber-500 opacity-0 group-hover:opacity-10 transition-opacity" />
                         </button>
                     </form>
                 </div>
@@ -118,7 +117,7 @@ export default function VendorLogin() {
                     <button
                         type="button"
                         onClick={() => navigate('/')}
-                        className="text-neutral-400 text-[10px] font-black uppercase tracking-[0.3em] hover:text-black dark:hover:text-white transition-colors"
+                        className="text-neutral-300 text-[10px] font-black uppercase tracking-[0.3em] hover:text-black transition-colors"
                     >
                         CANCEL ACCESS
                     </button>
