@@ -94,9 +94,10 @@ app.post('/api/login', async (req, res) => {
     // Vendor Hardcoded Check (Case Insensitive)
     if (role === 'vendor') {
         const normalizedEmail = email.toLowerCase().trim();
-        const vendorEmail = 'vender@gmail.com';
+        const vendorEmail = process.env.VENDOR_EMAIL || 'vender@gmail.com';
+        const vendorPassword = process.env.VENDOR_PASSWORD || 'vender123';
 
-        if (normalizedEmail === vendorEmail && password === 'vender123') {
+        if (normalizedEmail === vendorEmail.toLowerCase() && password === vendorPassword) {
             console.log('Vendor login success:', vendorEmail);
             return res.json({
                 id: 'vendor_admin',
