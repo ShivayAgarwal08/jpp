@@ -191,7 +191,7 @@ export const OrderProvider = ({ children }) => {
 
                 setCurrentOrder({ files: [], settings: { copies: 1, color: false, doubleSided: false } });
                 setIsProcessingPayment(false);
-                return { success: true, otp: result.otp };
+                return { success: true, otp: result.otp, id: result.id };
             } else {
                 throw new Error(result.error || "Order failed");
             }

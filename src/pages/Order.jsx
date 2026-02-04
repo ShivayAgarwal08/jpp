@@ -23,7 +23,7 @@ import { useOrder } from '../context/OrderContext';
 import { clsx } from 'clsx';
 
 export default function Order() {
-    const { currentOrder, addFile, removeFile, updateFilePageCount, updateSettings, calculateTotal, placeOrder } = useOrder();
+    const { currentOrder, orders, addFile, removeFile, updateFilePageCount, updateSettings, calculateTotal, placeOrder } = useOrder();
     const navigate = useNavigate();
     const [step, setStep] = useState(1); // 1: Upload, 2: Settings, 3: Success
     const [isProcessing, setIsProcessing] = useState(false);
@@ -34,6 +34,10 @@ export default function Order() {
     const hasFiles = currentOrder.files.length > 0;
     const isAllStationery = hasFiles && currentOrder.files.every(f => f.type === 'stationery');
 
+    // Get live status of completed order
+    const liveOrder = completedOrder ? orders.find(o => o.id === completedOrder.id) : null;
+    const currentStatus = liveOrder?.status || 'paid';
+
     const handleNext = () => {
         if (step === 1 && hasFiles) setStep(2);
     };
@@ -43,7 +47,7 @@ export default function Order() {
         try {
             const result = await placeOrder(total);
             if (result && result.success) {
-                setCompletedOrder({ otp: result.otp });
+                setCompletedOrder({ otp: result.otp, id: result.id });
                 setStep(3);
             } else {
                 setDebugError(`Order failed: ${result?.error || "Unknown Error"}`);
@@ -66,22 +70,66 @@ export default function Order() {
                 <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="w-24 h-24 bg-green-500 rounded-3xl flex items-center justify-center text-white mb-8 shadow-xl"
+                    className={clsx(
+                        "w-24 h-24 rounded-3xl flex items-center justify-center text-white mb-8 shadow-xl transition-colors duration-500",
+                        currentStatus === 'collected' ? "bg-neutral-400" :
+                        currentStatus === 'printed' ? "bg-blue-600" :
+                        "bg-green-500"
+                    )}
                 >
-                    <CheckCircle2 size={48} strokeWidth={2.5} />
+                    {currentStatus === 'collected' ? <CheckCircle2 size={48} strokeWidth={2.5} /> :
+                     currentStatus === 'printed' ? <Printer size={48} strokeWidth={2.5} /> :
+                     <CheckCircle2 size={48} strokeWidth={2.5} />}
                 </motion.div>
 
                 <div className="max-w-md w-full">
-                  <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-2">Order Confirmed!</h2>
-                  <p className="text-neutral-500 font-medium mb-10">Your documents are now in the shop queue for printing.</p>
+                  <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-2">
+                    {currentStatus === 'collected' ? 'Order Collected' :
+                     currentStatus === 'printed' ? 'Ready for Pickup!' :
+                     'Order Confirmed!'}
+                  </h2>
+                  <p className="text-neutral-500 font-medium mb-10">
+                    {currentStatus === 'collected' ? 'Thank you for using JPrint.' :
+                     currentStatus === 'printed' ? 'Your documents are printed and ready at the counter.' :
+                     'Your documents are now in the shop queue for printing.'}
+                  </p>
 
-                  <div className="bg-white border border-neutral-200 rounded-[32px] p-10 shadow-sm mb-10 relative overflow-hidden">
+                  <div className="bg-white border border-neutral-200 rounded-[32px] p-10 shadow-sm mb-10 relative overflow-hidden transition-all duration-500">
+                      
+                      {/* Status Indicator */}
+                      <div className={clsx(
+                          "absolute top-0 left-0 w-full h-1.5 transition-colors duration-500",
+                          currentStatus === 'collected' ? "bg-neutral-300" :
+                          currentStatus === 'printed' ? "bg-blue-500" :
+                          "bg-amber-500 animate-pulse"
+                      )} />
+
                       <div className="relative z-10">
                         <p className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-4">Pickup Code (OTP)</p>
-                        <div className="text-6xl font-bold text-neutral-900 tracking-widest flex gap-2 justify-center italic">
+                        <div className={clsx(
+                            "text-6xl font-bold tracking-widest flex gap-2 justify-center italic transition-colors duration-500",
+                            currentStatus === 'collected' ? "text-neutral-300 decoration-slice" : "text-neutral-900"
+                        )}>
                             {completedOrder.otp}
                         </div>
-                        <p className="text-xs text-neutral-400 font-medium mt-6">Show this code at the counter to collect your order.</p>
+                        
+                        <div className="mt-8 flex items-center justify-center gap-3">
+                            <div className={clsx("w-2 h-2 rounded-full transition-colors duration-300", currentStatus === 'paid' ? "bg-amber-500" : "bg-neutral-200")} />
+                            <div className={clsx("h-0.5 w-8 transition-colors duration-300", currentStatus === 'printed' || currentStatus === 'collected' ? "bg-blue-500" : "bg-neutral-200")} />
+                            <div className={clsx("w-2 h-2 rounded-full transition-colors duration-300", currentStatus === 'printed' ? "bg-blue-500" : currentStatus === 'collected' ? "bg-blue-200" : "bg-neutral-200")} />
+                            <div className={clsx("h-0.5 w-8 transition-colors duration-300", currentStatus === 'collected' ? "bg-neutral-400" : "bg-neutral-200")} />
+                            <div className={clsx("w-2 h-2 rounded-full transition-colors duration-300", currentStatus === 'collected' ? "bg-neutral-400" : "bg-neutral-200")} />
+                        </div>
+                        
+                        <p className={clsx("text-xs font-bold uppercase tracking-widest mt-3 transition-colors duration-500", 
+                            currentStatus === 'paid' ? "text-amber-600" :
+                            currentStatus === 'printed' ? "text-blue-600" :
+                            "text-neutral-400"
+                        )}>
+                            {currentStatus === 'paid' ? 'Processing' :
+                             currentStatus === 'printed' ? 'Ready to Collect' :
+                             'Completed'}
+                        </p>
                       </div>
                   </div>
 
