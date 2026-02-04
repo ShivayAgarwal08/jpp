@@ -34,6 +34,9 @@ Your project is already configured for deployment.
 2.  Go to **Variables**.
 3.  Add the following variables:
     - `DATABASE_URL`: `${{Postgres.DATABASE_URL}}` (Railway assumes this syntax or you can manually copy the connection string from the Postgres service "Connect" tab).
+    - `VENDOR_EMAIL`: Set your admin email (e.g., `vender@gmail.com`).
+    - `VENDOR_PASSWORD`: Set your admin password (e.g., `vender123`).
+    - `JWT_SECRET`: A long random string for token security.
     - `NODE_ENV`: `production` (Optional, but recommended).
     - `PORT`: Railway automatically sets this (usually 80 or similar), no need to add it manually unless you want a specific internal port, but let Railway handle it.
 
